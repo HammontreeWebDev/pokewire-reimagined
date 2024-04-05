@@ -3,27 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  --pkmn-yellow: #FFCB05;
+  --pkmn-blue: #2A75BB;
+  --dark-yellow: #C7A008;
+  --dark-blue: #3C5AA6;
+  --pkmn-red: #FB1B1B;
+  --pkmn-black: #000000;
+  --pkmn-white: #FFFFFF;
 }
 
 @layer utilities {
