@@ -5,9 +5,9 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 
 const navigation = [
   { name: 'PokéFinder', href: '/dashboard', current: true },
-  { name: 'WiréDex', href: '#', current: false },
-  { name: 'GaméDex', href: '#', current: false },
-  { name: 'RoutéList', href: '#', current: false },
+  { name: 'WiréDex', href: '/dashboard/wiredex', current: false },
+  { name: 'GaméDex', href: '/dashboard/gamedex', current: false },
+  { name: 'RoutéList', href: '/dashboard/routelist', current: false },
 ]
 
 function classNames(...classes) {
