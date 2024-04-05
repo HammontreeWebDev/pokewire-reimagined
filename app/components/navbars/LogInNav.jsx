@@ -3,7 +3,7 @@ import { Disclosure, } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 
 const navigation = [
-  { name: 'Log In', href: '/', current: false },
+  { name: 'Log In', href: '/login', current: false },
 ]
 
 function classNames(...classes) {
@@ -12,7 +12,7 @@ function classNames(...classes) {
 
 export default function LogInNav() {
   return (
-    <Disclosure as="nav" className="bg-gray-800">
+    <Disclosure as="nav" className="bg-poke-yellow antialiased">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -44,7 +44,7 @@ export default function LogInNav() {
                         key={item.name}
                         href={item.href}
                         className={classNames(
-                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                          item.current ? 'bg-[var(--poke-blue)] text-white' : 'text-poke-blue hover:bg-[var(--dark-blue)] hover:text-white',
                           'rounded-md px-3 py-2 text-sm font-medium'
                         )}
                         aria-current={item.current ? 'page' : undefined}
@@ -66,7 +66,7 @@ export default function LogInNav() {
                   as="a"
                   href={item.href}
                   className={classNames(
-                    item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                    item.current ? 'bg-[var(--poke-blue)] text-white' : 'text-poke-blue hover:bg-[var(--dark-blue)] hover:text-white',
                     'block rounded-md px-3 py-2 text-base font-medium'
                   )}
                   aria-current={item.current ? 'page' : undefined}
