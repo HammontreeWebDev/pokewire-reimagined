@@ -12,6 +12,11 @@
   --pkmn-white: #FFFFFF;
 }
 
+html, body {
+  /* Follows PokéBall Color Scheme */
+  background: linear-gradient(var(--pkmn-red), var(--pkmn-black), var(--pkmn-white));
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
