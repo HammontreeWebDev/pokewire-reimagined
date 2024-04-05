@@ -1,4 +1,3 @@
-import Image from "next/image";
 import LogInNav from "@/app/components/navbars/LogInNav";
 
 export default function Home() {
