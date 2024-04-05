@@ -3,18 +3,64 @@
 @tailwind utilities;
 
 :root {
-  --pkmn-yellow: #FFCB05;
-  --pkmn-blue: #2A75BB;
+  --poke-yellow: #FFCB05;
+  --poke-blue: #2A75BB;
   --dark-yellow: #C7A008;
   --dark-blue: #3C5AA6;
-  --pkmn-red: #FB1B1B;
-  --pkmn-black: #000000;
-  --pkmn-white: #FFFFFF;
+  --poke-red: #FB1B1B;
+  --poke-black: #000000;
+  --poke-white: #FFFFFF;
 }
 
 html, body {
   /* Follows PokéBall Color Scheme */
-  background: linear-gradient(var(--pkmn-red), var(--pkmn-black), var(--pkmn-white));
+  background: linear-gradient(var(--poke-red), var(--poke-black), var(--poke-white));
+}
+
+/* * Background Color Classes */
+.bg-poke-yellow{
+  background-color: var(--poke-yellow);
+}
+.bg-poke-blue{
+  background-color: var(--poke-blue);
+}
+.bg-dark-yellow{
+  background-color: var(--dark-yellow);
+}
+.bg-dark-blue{
+  background-color: var(--dark-blue);
+}
+.bg-poke-red{
+  background-color: var(--poke-red);
+}
+.bg-poke-black{
+  background-color: var(--poke-black);
+}
+.bg-poke-white{
+  background-color: var(--poke-white);
+}
+
+/*  * Text Color Classes */
+.text-poke-yellow{
+  color: var(--poke-yellow);
+}
+.text-poke-blue{
+  color: var(--poke-blue);
+}
+.text-dark-yellow{
+  color: var(--dark-yellow);
+}
+.text-dark-blue{
+  color: var(--dark-blue);
+}
+.text-poke-red{
+  color: var(--poke-red);
+}
+.text-poke-black{
+  color: var(--poke-black);
+}
+.text-poke-white{
+  color: var(--poke-white);
 }
 
 @layer utilities {
