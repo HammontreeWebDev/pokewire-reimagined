@@ -1,7 +1,6 @@
 'use client'
 import { useState } from "react";
 import validatePassword from "@/app/scripts/utils/validatePassword";
-import createUser from "@/app/scripts/api/createUser";
 
 export default function SignUpForm() {
 
@@ -20,16 +19,14 @@ export default function SignUpForm() {
         }
 
         if (!validatePassword(password)) {
-            setErrorMessage('Password does not meet the complexity requirements');
-            alert(
-                `
-                Passwords Must Contain:
-                1 Upper Case Letter
-                1 Lower Case Letter
-                1 Special Character
-                Minimum Of 8 Characters
-                `
-            );
+            setErrorMessage(`
+            Passwords Must Contain:
+            - At least 1 upper case letter (A-Z)
+            - At least 1 lower case letter (a-z)
+            - At least 1 special character (!@#$%^&*)
+            - At least 1 number (0-9)
+            - Minimum of 8 characters in length
+        `);
             return;
         }
 
@@ -41,7 +38,7 @@ export default function SignUpForm() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({name, email, password}),
+                body: JSON.stringify({ name, email, password }),
             });
 
             if (!response.ok) {
@@ -53,10 +50,10 @@ export default function SignUpForm() {
             setPassword('');
             setConfirmPassword('');
             setErrorMessage('');
-        } catch(error) {
+        } catch (error) {
             setErrorMessage(error.message);
         }
-    }
+    };
 
     return (
         <>
@@ -79,7 +76,11 @@ export default function SignUpForm() {
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form className="space-y-6" action="#" method="POST">
+                    <form
+                        className="space-y-6"
+                        action="#"
+                        onSubmit={handleSubmit}
+                        method="POST">
 
                         {/* // ! Name */}
                         <div>
@@ -91,13 +92,15 @@ export default function SignUpForm() {
                                     id="name"
                                     name="name"
                                     type="text"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
                                     autoComplete="name"
                                     required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                                 />
                             </div>
                         </div>
-                        
+
                         {/* // ! Email */}
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-poke-blue">
@@ -108,6 +111,8 @@ export default function SignUpForm() {
                                     id="email"
                                     name="email"
                                     type="email"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
                                     autoComplete="email"
                                     required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -116,7 +121,7 @@ export default function SignUpForm() {
                         </div>
 
                         {/* // ! Password */}
-                        
+
                         <div>
                             <div className="flex items-center justify-between">
                                 <label htmlFor="password" className="block text-sm font-medium leading-6 text-poke-blue">
@@ -128,6 +133,8 @@ export default function SignUpForm() {
                                     id="password"
                                     name="password"
                                     type="password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
                                     autoComplete="current-password"
                                     required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -136,7 +143,7 @@ export default function SignUpForm() {
                         </div>
 
                         {/* // ! Confirm Password */}
-                        
+
                         <div>
                             <div className="flex items-center justify-between">
                                 <label htmlFor="password" className="block text-sm font-medium leading-6 text-poke-blue">
@@ -148,6 +155,8 @@ export default function SignUpForm() {
                                     id="password"
                                     name="password"
                                     type="password"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
                                     autoComplete="current-password"
                                     required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -162,6 +171,7 @@ export default function SignUpForm() {
                             >
                                 Create My Account
                             </button>
+
                         </div>
                     </form>
 
@@ -176,3 +186,10 @@ export default function SignUpForm() {
         </>
     )
 }
+
+
+// {errorMessage &&
+//     <div className="mt-4 w-full overflow-hidden rounded-md bg-red-100 p-2 text-left text-sm text-poke-red">
+//         <pre className="whitespace-pre-wrap">{errorMessage}</pre>
+//     </div>
+// }
