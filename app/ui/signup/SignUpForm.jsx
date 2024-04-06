@@ -1,5 +1,7 @@
 'use client'
 import { useState } from "react";
+import validatePassword from "@/app/scripts/utils/validatePassword";
+import createUser from "@/app/scripts/api/createUser";
 
 export default function SignUpForm() {
 
@@ -8,6 +10,53 @@ export default function SignUpForm() {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        if (password !== confirmPassword) {
+            setErrorMessage('Passwords do not match!');
+            return;
+        }
+
+        if (!validatePassword(password)) {
+            setErrorMessage('Password does not meet the complexity requirements');
+            alert(
+                `
+                Passwords Must Contain:
+                1 Upper Case Letter
+                1 Lower Case Letter
+                1 Special Character
+                Minimum Of 8 Characters
+                `
+            );
+            return;
+        }
+
+        // API CALL
+        try {
+            // ! may need to update path
+            const response = await fetch('/api/createUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({name, email, password}),
+            });
+
+            if (!response.ok) {
+                throw new Error('Failed to create the account');
+            }
+
+            setName('');
+            setEmail('');
+            setPassword('');
+            setConfirmPassword('');
+            setErrorMessage('');
+        } catch(error) {
+            setErrorMessage(error.message);
+        }
+    }
 
     return (
         <>
