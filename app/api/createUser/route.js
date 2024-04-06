@@ -1,17 +1,17 @@
 import { PrismaClient } from "@prisma/client";
 import bcrypt from 'bcrypt';
-import validatePassword from "../utils/validatePassword";
+import validatePassword from "../../utils/validatePassword";
 
 const prisma = new PrismaClient();
 
-export default async function createUser(req, res) {
-    const { email, name, password } = req.body;
+export async function POST(request) {
+    const { email, name, password } = await request.json();
 
     if (!validatePassword(password)) {
-        return res.status(400).json({
+        return new Response(JSON.stringify({
             error: "Password does not meet the complexity requirements."
-        });
-    };
+        }), { status: 400, headers: { 'Content-Type': 'application/json' } });
+    }
 
     const saltRounds = 10;
 
@@ -28,11 +28,14 @@ export default async function createUser(req, res) {
 
         // omit password from response
         const { password, ...userWithoutPassword } = newUser;
-        res.status(200).json(userWithoutPassword);
+        return new Response(JSON.stringify(userWithoutPassword), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' },
+        });
     } catch (error) {
         console.error("Error creating user:", error);
-        res.status(500).json({
+        return new Response(JSON.stringify({
             error: "Failed to create user"
-        });
-    };
+        }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+    }
 }
