@@ -1,6 +1,7 @@
 'use client'
 import { useState } from "react";
-import validatePassword from "@/app/scripts/utils/validatePassword";
+import validatePassword from "@/app/utils/validatePassword";
+import ListAlert from "@/app/ui/alerts/ListAlert";
 
 export default function SignUpForm() {
 
@@ -8,25 +9,29 @@ export default function SignUpForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [errorMessage, setErrorMessage] = useState('');
+    const [errorMessage, setErrorMessage] = useState([]);
+    const [errorTitle, setErrorTitle] = useState('');
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
         if (password !== confirmPassword) {
-            setErrorMessage('Passwords do not match!');
+            setErrorTitle('There was an error processing your request:');
+            setErrorMessage(['Passwords do not match!']);
             return;
         }
 
         if (!validatePassword(password)) {
-            setErrorMessage(`
-            Passwords Must Contain:
-            - At least 1 upper case letter (A-Z)
-            - At least 1 lower case letter (a-z)
-            - At least 1 special character (!@#$%^&*)
-            - At least 1 number (0-9)
-            - Minimum of 8 characters in length
-        `);
+            setErrorTitle('Please review the password requirements:');
+            setErrorMessage(
+                [
+                    'At least 1 upper case letter (A-Z)',
+                    'At least 1 lower case letter (a-z)',
+                    'At least 1 special character (!@#$%^&*)',
+                    'At least 1 number (0-9)',
+                    'Minimum of 8 characters in length'
+                ]
+            );
             return;
         }
 
@@ -49,9 +54,11 @@ export default function SignUpForm() {
             setEmail('');
             setPassword('');
             setConfirmPassword('');
-            setErrorMessage('');
+            setErrorMessage([]);
+            setErrorTitle('');
         } catch (error) {
-            setErrorMessage(error.message);
+            setErrorTitle('There was an error processing your request:')
+            setErrorMessage([error.message]);
         }
     };
 
@@ -152,7 +159,7 @@ export default function SignUpForm() {
                             </div>
                             <div className="mt-2">
                                 <input
-                                    id="password"
+                                    id="confirm-password"
                                     name="password"
                                     type="password"
                                     value={confirmPassword}
@@ -172,6 +179,13 @@ export default function SignUpForm() {
                                 Create My Account
                             </button>
 
+                            {errorMessage.length > 0 && (
+                                <ListAlert
+                                    errorTitle={errorTitle}
+                                    errorListItems={errorMessage}
+                                />
+                            )}
+
                         </div>
                     </form>
 
@@ -186,10 +200,3 @@ export default function SignUpForm() {
         </>
     )
 }
-
-
-// {errorMessage &&
-//     <div className="mt-4 w-full overflow-hidden rounded-md bg-red-100 p-2 text-left text-sm text-poke-red">
-//         <pre className="whitespace-pre-wrap">{errorMessage}</pre>
-//     </div>
-// }

@@ -73,7 +73,7 @@ export default function LogInForm() {
 
                     <p className="mt-10 text-center text-sm text-poke-red">
                         Don't have an account?{' '}
-                        <a href="/login/signup" className="font-semibold leading-6 text-dark-blue hover:text-[var(--poke-blue)]">
+                        <a href="/signup" className="font-semibold leading-6 text-dark-blue hover:text-[var(--poke-blue)]">
                             Sign up
                         </a>
                     </p>
