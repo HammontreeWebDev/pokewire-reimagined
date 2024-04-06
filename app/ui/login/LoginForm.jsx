@@ -24,7 +24,7 @@ export default function LogInForm() {
                     <form className="space-y-6" action="#" method="POST">
                         <div>
                             <label htmlFor="email" className="block text-sm font-medium leading-6 text-poke-blue">
-                                Email address
+                                Email Address
                             </label>
                             <div className="mt-2">
                                 <input
