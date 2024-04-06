@@ -1,5 +1,6 @@
 'use client'
 import { useState } from "react";
+import { redirect } from "next/navigation";
 import validatePassword from "@/app/utils/validatePassword";
 import ListAlert from "@/app/ui/alerts/ListAlert";
 
@@ -11,6 +12,7 @@ export default function SignUpForm() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState([]);
     const [errorTitle, setErrorTitle] = useState('');
+    const [userCreated, setUserCreated] = useState(false);
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -56,11 +58,17 @@ export default function SignUpForm() {
             setConfirmPassword('');
             setErrorMessage([]);
             setErrorTitle('');
+
+            alert('Account created successfully! You will be redirected to login.');
+            setUserCreated(true);
+
         } catch (error) {
             setErrorTitle('There was an error processing your request:')
             setErrorMessage([error.message]);
         }
     };
+
+    userCreated ? redirect('/login') : null;
 
     return (
         <>
