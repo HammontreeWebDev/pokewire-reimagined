@@ -1,5 +1,4 @@
-
-export default function LogInForm() {
+export default function SignUpForm() {
     return (
         <>
             <div className="antialiased bg-poke-yellow flex min-h-full flex-1 flex-col justify-center px-6 py-12 rounded-2xl lg:px-8">
@@ -11,11 +10,11 @@ export default function LogInForm() {
                     />
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                         <span className="text-poke-white">
-                            Sign in
+                            Sign Up
                         </span>
 
                         <span className="text-poke-red">
-                            &nbsp;to your account
+                            &nbsp;For A New Account
                         </span>
                     </h2>
                 </div>
@@ -73,7 +72,7 @@ export default function LogInForm() {
 
                     <p className="mt-10 text-center text-sm text-poke-red">
                         Don't have an account?{' '}
-                        <a href="/login/signup" className="font-semibold leading-6 text-dark-blue hover:text-[var(--poke-blue)]">
+                        <a href="#" className="font-semibold leading-6 text-dark-blue hover:text-[var(--poke-blue)]">
                             Sign up
                         </a>
                     </p>
