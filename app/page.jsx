@@ -1,4 +1,4 @@
-import LogInNav from "@/app/components/navbars/LogInNav";
+import LogInNav from "@/app/ui/navbars/LogInNav";
 
 export default function Home() {
   return (

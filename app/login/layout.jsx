@@ -1,4 +1,4 @@
-import BasicNav from "../components/navbars/BasicNav";
+import BasicNav from "../ui/navbars/BasicNav";
 
 export default function Layout({ children }) {
     return (

@@ -1,4 +1,4 @@
-import LoggedInNav from "@/app/components/navbars/LoggedInNav";
+import LoggedInNav from "@/app/ui/navbars/LoggedInNav";
 
 export default function Layout({ children }) {
     return (
