@@ -1,12 +1,20 @@
-import { useState } from "react";
-import { signIn } from "next-auth/react";
-import { redirect } from "next/navigation";
+'use client'
+
+import { useState, useEffect } from "react";
+import { signIn, useSession } from "next-auth/react";
 
 export default function LogInForm() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
+    const {data: session, status} = useSession();
+
+    useEffect(() => {
+        if (status === "authenticated") {
+            window.location.href = '/dashboard';
+        }
+    }, [session, status]);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -18,10 +26,9 @@ export default function LogInForm() {
 
         if (result.error) {
             setError(result.error);
-        } else {
-            redirect('/dashboard');
         }
     }
+
     return (
         <>
             <div className="antialiased bg-poke-yellow flex min-h-full flex-1 flex-col justify-center px-6 py-12 rounded-2xl lg:px-8">

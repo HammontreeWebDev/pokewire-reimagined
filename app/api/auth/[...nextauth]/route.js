@@ -5,7 +5,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-export default NextAuth({
+const authHandler = NextAuth({
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -14,19 +14,23 @@ export default NextAuth({
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
+        if (!credentials) return null;
         const user = await prisma.user.findUnique({
           where: { email: credentials.email }
         });
 
-        if (user && await bcrypt.compare(credentials.password, user.password)) {
-          // Return user object on successful authentication
-          return { id: user.id, email: user.email, name: user.name };
-        } else {
-          // Return null to signal failed authentication
-          throw new Error("Invalid email or password");
-        }
+        if (!user) return null;
+        const isValid = await bcrypt.compare(credentials.password, user.password);
+        if (!isValid) return null;
+
+        // Returning user details on successful authentication
+        return { id: user.id, name: user.name, email: user.email };
       }
     })
   ],
-  // Additional NextAuth.js configuration...
+  // Include any additional NextAuth.js configuration as needed
 });
+
+// Export the handler for both GET and POST requests
+export const GET = authHandler;
+export const POST = authHandler;
