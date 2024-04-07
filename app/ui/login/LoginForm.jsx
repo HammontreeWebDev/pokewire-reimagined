@@ -1,20 +1,23 @@
 'use client'
 
-import { useState, useEffect } from "react";
-import { signIn, useSession } from "next-auth/react";
+import { useState } from "react";
+import { signIn } from "next-auth/react";
+
+// import { redirect } from "next/navigation";
 
 export default function LogInForm() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    const {data: session, status} = useSession();
+    
+    // const {data: session, status} = useSession();
 
-    useEffect(() => {
-        if (status === "authenticated") {
-            window.location.href = '/dashboard';
-        }
-    }, [session, status]);
+    // useEffect(() => {
+    //     if (status === "authenticated") {
+    //         redirect('/dashboard');
+    //     }
+    // }, [session, status]);
 
     async function handleSubmit(e) {
         e.preventDefault();
