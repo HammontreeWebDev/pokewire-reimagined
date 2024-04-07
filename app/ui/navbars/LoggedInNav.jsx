@@ -1,7 +1,9 @@
 'use client'
-import { Fragment } from 'react'
-import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Fragment } from 'react';
+import { Disclosure, Menu, Transition } from '@headlessui/react';
+import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { signOut } from 'next-auth/react';
+// import { redirect } from "next/navigation";
 
 const navigation = [
   { name: 'PokéFinder', href: '/dashboard', current: true },
@@ -15,6 +17,19 @@ function classNames(...classes) {
 }
 
 export default function LoggedInNav() {
+
+  // const {data: session, status} = useSession();
+
+    // useEffect(() => {
+    //     if (status === "authenticated") {
+    //         redirect('/dashboard');
+    //     }
+    // }, [session, status]);
+
+    async function handleSignOut() {
+      await signOut({redirect: true, callbackUrl: '/login'});
+    }
+
   return (
     <Disclosure as="nav" className="bg-dark-blue antialiased">
       {({ open }) => (
@@ -114,12 +129,12 @@ export default function LoggedInNav() {
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
+                          <button
+                            onClick={handleSignOut}
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Sign out
-                          </a>
+                          </button>
                         )}
                       </Menu.Item>
                     </Menu.Items>
