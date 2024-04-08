@@ -15,6 +15,7 @@
 html, body {
   /* Follows PokéBall Color Scheme */
   background: linear-gradient(var(--poke-red), var(--poke-black), var(--poke-white));
+  background-attachment: fixed;
 }
 
 /* * Background Color Classes */
