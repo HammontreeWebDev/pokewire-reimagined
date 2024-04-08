@@ -3,7 +3,6 @@ import { Fragment } from 'react';
 import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { signOut } from 'next-auth/react';
-// import { redirect } from "next/navigation";
 
 const navigation = [
   { name: 'PokéFinder', href: '/dashboard', current: true },
@@ -17,14 +16,6 @@ function classNames(...classes) {
 }
 
 export default function LoggedInNav() {
-
-  // const {data: session, status} = useSession();
-
-    // useEffect(() => {
-    //     if (status === "authenticated") {
-    //         redirect('/dashboard');
-    //     }
-    // }, [session, status]);
 
     async function handleSignOut() {
       await signOut({redirect: true, callbackUrl: '/login'});
