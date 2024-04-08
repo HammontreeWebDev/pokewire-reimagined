@@ -9,10 +9,12 @@ export default function PageNotFound() {
         <header className="mx-auto w-full max-w-7xl px-6 pt-6 sm:pt-10 lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:px-8">
           <a href="/login">
             <span className="sr-only">PokéWire Re-Imagined</span>
-            <img
+            <Image
               className="h-10 w-auto sm:h-12"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-              alt=""
+              src="/img/logos/poke-logo.png"
+              alt="poke ball"
+              width={1920}
+              height={1920}
             />
           </a>
         </header>
