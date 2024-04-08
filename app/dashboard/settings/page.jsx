@@ -3,8 +3,7 @@ import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
 import { useEffect } from "react";
 
-export default function Dashboard() {
-
+export default function Settings() {
 
     // ! Checks whether user is authenticated
 
@@ -16,7 +15,8 @@ export default function Dashboard() {
         }
     }, [session, status]);
 
+
     return (
-        <p>This is the dashboard!</p>
+        <p>This is the Settings!</p>
     )
 }

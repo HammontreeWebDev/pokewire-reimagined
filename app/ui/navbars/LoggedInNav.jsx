@@ -5,6 +5,8 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { signOut } from 'next-auth/react';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -12,23 +14,24 @@ function classNames(...classes) {
 
 export default function LoggedInNav() {
 
+  const pathname = usePathname();
+
   const [navigation, setNavigation] = useState([
     { name: 'PokéFinder', href: '/dashboard', current: false },
     { name: 'WiréDex', href: '/dashboard/wiredex', current: false },
     { name: 'GaméDex', href: '/dashboard/gamedex', current: false },
     { name: 'RoutéList', href: '/dashboard/routelist', current: false },
-  ])
+  ]);
 
   useEffect(() => {
-    const currentPath = window.location.pathname;
-
-    const update = navigation.map(item => ({
+    // Update the navigation state based on the current pathname
+    const updatedNavigation = navigation.map(item => ({
       ...item,
-      current: item.href === currentPath,
+      current: item.href === pathname,
     }));
 
-    setNavigation(update);
-  }, [])
+    setNavigation(updatedNavigation);
+  }, [pathname]); // Depend on pathname to re-run the effect on path changes
 
   async function handleSignOut() {
     await signOut({ redirect: true, callbackUrl: '/login' });
@@ -65,7 +68,7 @@ export default function LoggedInNav() {
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <Link
                         key={item.name}
                         href={item.href}
                         className={classNames(
@@ -75,7 +78,7 @@ export default function LoggedInNav() {
                         aria-current={item.current ? 'page' : undefined}
                       >
                         {item.name}
-                      </a>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -115,22 +118,22 @@ export default function LoggedInNav() {
                     <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
+                          <Link
+                            href="/dashboard/profile"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Your Profile
-                          </a>
+                          </Link>
                         )}
                       </Menu.Item>
                       <Menu.Item>
                         {({ active }) => (
-                          <a
-                            href="#"
+                          <Link
+                            href="/dashboard/settings"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Settings
-                          </a>
+                          </Link>
                         )}
                       </Menu.Item>
                       <Menu.Item>
