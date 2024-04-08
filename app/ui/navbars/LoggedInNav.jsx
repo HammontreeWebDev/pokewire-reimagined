@@ -4,13 +4,7 @@ import { Disclosure, Menu, Transition } from '@headlessui/react';
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline';
 import { signOut } from 'next-auth/react';
 import Image from 'next/image';
-
-const navigation = [
-  { name: 'PokéFinder', href: '/dashboard', current: true },
-  { name: 'WiréDex', href: '/dashboard/wiredex', current: false },
-  { name: 'GaméDex', href: '/dashboard/gamedex', current: false },
-  { name: 'RoutéList', href: '/dashboard/routelist', current: false },
-]
+import { useState, useEffect } from 'react';
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
@@ -18,9 +12,27 @@ function classNames(...classes) {
 
 export default function LoggedInNav() {
 
-    async function handleSignOut() {
-      await signOut({redirect: true, callbackUrl: '/login'});
-    }
+  const [navigation, setNavigation] = useState([
+    { name: 'PokéFinder', href: '/dashboard', current: false },
+    { name: 'WiréDex', href: '/dashboard/wiredex', current: false },
+    { name: 'GaméDex', href: '/dashboard/gamedex', current: false },
+    { name: 'RoutéList', href: '/dashboard/routelist', current: false },
+  ])
+
+  useEffect(() => {
+    const currentPath = window.location.pathname;
+
+    const update = navigation.map(item => ({
+      ...item,
+      current: item.href === currentPath,
+    }));
+
+    setNavigation(update);
+  }, [])
+
+  async function handleSignOut() {
+    await signOut({ redirect: true, callbackUrl: '/login' });
+  }
 
   return (
     <Disclosure as="nav" className="bg-dark-blue antialiased">
