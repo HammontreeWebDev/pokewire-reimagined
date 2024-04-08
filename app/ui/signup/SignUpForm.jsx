@@ -203,7 +203,7 @@ export default function SignUpForm() {
                     <p className="mt-10 text-center text-sm text-poke-red">
                         Already Have An Account?{' '}
                         <a href="/login" className="font-semibold leading-6 text-dark-blue hover:text-[var(--poke-blue)]">
-                            Log In
+                            Sign In
                         </a>
                     </p>
                 </div>

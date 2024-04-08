@@ -4,7 +4,7 @@ import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
 import Image from 'next/image';
 
 const navigation = [
-  { name: 'Log In', href: '/login', current: false },
+  { name: 'Sign In', href: '/login', current: false },
 ]
 
 function classNames(...classes) {

@@ -105,7 +105,7 @@ export default function LogInForm() {
                                 type="submit"
                                 className="flex w-full justify-center rounded-md bg-dark-blue px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[var(--poke-blue)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                             >
-                                Log In
+                                Sign In
                             </button>
                         </div>
                     </form>
