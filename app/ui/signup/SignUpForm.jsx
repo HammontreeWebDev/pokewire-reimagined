@@ -3,6 +3,7 @@ import { useState } from "react";
 import { redirect } from "next/navigation";
 import validatePassword from "@/app/utils/validatePassword";
 import ListAlert from "@/app/ui/alerts/ListAlert";
+import Image from "next/image";
 
 export default function SignUpForm() {
 
@@ -74,10 +75,12 @@ export default function SignUpForm() {
         <>
             <div className="antialiased bg-poke-yellow flex min-h-full flex-1 flex-col justify-center px-6 py-12 rounded-2xl lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                    <img
+                    <Image
                         className="mx-auto h-10 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+                        src="/img/logos/poke-logo.png"
                         alt="Your Company"
+                        width={1920}
+                        height={1920}
                     />
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                         <span className="text-poke-white">

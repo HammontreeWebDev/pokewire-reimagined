@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { signIn } from "next-auth/react";
+import Image from "next/image";
 
 // import { redirect } from "next/navigation";
 
@@ -10,7 +11,7 @@ export default function LogInForm() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-    
+
     // const {data: session, status} = useSession();
 
     // useEffect(() => {
@@ -36,10 +37,12 @@ export default function LogInForm() {
         <>
             <div className="antialiased bg-poke-yellow flex min-h-full flex-1 flex-col justify-center px-6 py-12 rounded-2xl lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                    <img
+                    <Image
                         className="mx-auto h-10 w-auto"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-                        alt="Your Company"
+                        src="/img/logos/poke-logo.png"
+                        alt="PokéWire Re-Imagined"
+                        width={1920}
+                        height={1920}
                     />
                     <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                         <span className="text-poke-white">
