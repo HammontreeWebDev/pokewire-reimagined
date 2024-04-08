@@ -4,21 +4,11 @@ import { useState } from "react";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 
-// import { redirect } from "next/navigation";
-
 export default function LogInForm() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
-
-    // const {data: session, status} = useSession();
-
-    // useEffect(() => {
-    //     if (status === "authenticated") {
-    //         redirect('/dashboard');
-    //     }
-    // }, [session, status]);
 
     async function handleSubmit(e) {
         e.preventDefault();
@@ -29,7 +19,13 @@ export default function LogInForm() {
         });
 
         if (result.error) {
-            setError(result.error);
+
+            if (result.error === 'CredentialsSignin') {
+                setError(`Your email/password combination does not match.`);
+            } else {
+                setError(`Error Code ${result.status} : ${result.error}`);
+            }
+
         }
     }
 
