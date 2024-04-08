@@ -7,15 +7,15 @@ export default function RouteList() {
 
     // ! Checks whether user is authenticated
 
-    const {data: session, status} = useSession();
+    const { data: session, status } = useSession();
 
     useEffect(() => {
         if (status === "unauthenticated") {
-            redirect('/login');
+            redirect('/not_allowed');
         }
     }, [session, status]);
 
     return (
-            <p>This is the RouteList!</p>
+        <p>This is the RouteList!</p>
     )
 }
