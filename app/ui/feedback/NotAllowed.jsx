@@ -14,7 +14,7 @@ export default function NotAllowed() {
         <main className="relative isolate min-h-full">
             {/* Photo by Carolina Castilla Arias: https://www.pexels.com/photo/close-up-photo-of-pokemon-pikachu-figurine-1716861/ */}
           <Image
-            src={'/img/notfoundpage/pikachu-stop.jpg'}
+            src={'/img/feedback/pikachu-stop.jpg'}
             alt="pikachu figurine"
             className="absolute inset-0 -z-10 h-full w-full object-cover object-top"
             width={2976}
