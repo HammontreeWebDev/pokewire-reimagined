@@ -1,10 +1,10 @@
 'use client'
 import userAuthentication from "@/app/utils/userAuthentication";
 
-export default function ChangeEmailAddress() {
+export default function HelpMe() {
     userAuthentication();
 
     return (
-                <p>This is the change email address page</p>
+                <p>This is the help page</p>
     )
 }
