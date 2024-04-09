@@ -15,7 +15,7 @@ const navigation = [
   { name: 'Change Avatar', href: '/settings/change-avatar', icon: UserCircleIcon, current: false },
   { name: 'Change Email Address', href: '/settings/change-email-address', icon: AtSymbolIcon, current: false },
   { name: 'Change Password', href: '/settings/change-password', icon: LockClosedIcon, current: false },
-  { name: 'Help', href: 'settings/help-me', icon: QuestionMarkCircleIcon, current: false },
+  { name: 'Help', href: '/settings/help-me', icon: QuestionMarkCircleIcon, current: false },
 ]
 
 function classNames(...classes) {
