@@ -1,19 +1,21 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import {
-  CalendarIcon,
-  DocumentDuplicateIcon,
-  FolderIcon,
+  AtSymbolIcon,
   HomeIcon,
   UsersIcon,
-} from '@heroicons/react/24/outline'
+  UserCircleIcon,
+  LockClosedIcon,
+  QuestionMarkCircleIcon,
+} from '@heroicons/react/24/outline';
 
 const navigation = [
-  { name: 'Home', href: 'settings/home', icon: HomeIcon, current: false },
+  { name: 'Home', href: '/home', icon: HomeIcon, current: false },
   { name: 'My Pokémon', href: '/settings/pokemon', icon: UsersIcon, current: false },
-  { name: 'Avatar', href: '/settings/avatar', icon: FolderIcon, current: false },
-  { name: 'Email Address', href: '/settings/email-address', icon: CalendarIcon, current: false },
-  { name: 'Help', href: 'settings/help', icon: DocumentDuplicateIcon, current: false },
+  { name: 'Change Avatar', href: '/settings/change-avatar', icon: UserCircleIcon, current: false },
+  { name: 'Change Email Address', href: '/settings/change-email-address', icon: AtSymbolIcon, current: false },
+  { name: 'Change Password', href: '/settings/change-password', icon: LockClosedIcon, current: false },
+  { name: 'Help', href: 'settings/help', icon: QuestionMarkCircleIcon, current: false },
 ]
 
 function classNames(...classes) {
@@ -54,8 +56,8 @@ export default function SideNav() {
           </li>
           <li className="-mx-6 mt-auto">
             <Link
-              href="#"
-              className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-gray-800"
+              href="/profile"
+              className="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-white hover:bg-[var(--poke-blue)]"
             >
               <img
                 className="h-8 w-8 rounded-full bg-gray-800"
