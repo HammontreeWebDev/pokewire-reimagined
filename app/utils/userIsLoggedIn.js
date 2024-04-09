@@ -8,7 +8,7 @@ function userIsLoggedIn() {
 
     useEffect(() => {
         if (status === "authenticated") {
-            redirect('/dashboard');
+            redirect('/home');
         }
     }, [session, status]);
 }

@@ -17,10 +17,11 @@ export default function LoggedInNav() {
   const pathname = usePathname();
 
   const [navigation, setNavigation] = useState([
-    { name: 'PokéFinder', href: '/dashboard', current: false },
-    { name: 'WiréDex', href: '/dashboard/wiredex', current: false },
-    { name: 'GaméDex', href: '/dashboard/gamedex', current: false },
-    { name: 'RoutéList', href: '/dashboard/routelist', current: false },
+    { name: 'Home', href: '/home', current: false },
+    { name: 'PokéFinder', href: '/pokefinder', current: false },
+    { name: 'WiréDex', href: '/wiredex', current: false },
+    { name: 'GaméDex', href: '/gamedex', current: false },
+    { name: 'RoutéList', href: '/routelist', current: false },
   ]);
 
   useEffect(() => {
@@ -129,7 +130,7 @@ export default function LoggedInNav() {
                       <Menu.Item>
                         {({ active }) => (
                           <Link
-                            href="/dashboard/settings"
+                            href="/settings"
                             className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                           >
                             Settings
