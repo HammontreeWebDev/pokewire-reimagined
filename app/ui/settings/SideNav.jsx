@@ -7,10 +7,12 @@ import {
   UserCircleIcon,
   LockClosedIcon,
   QuestionMarkCircleIcon,
+  ArrowRightStartOnRectangleIcon,
 } from '@heroicons/react/24/outline';
 
 const navigation = [
-  { name: 'Home', href: '/home', icon: HomeIcon, current: false },
+  { name: 'Back To Home', href: '/home', icon: HomeIcon, current: false },
+  { name: 'Getting Started', href: '/settings', icon: ArrowRightStartOnRectangleIcon, current: false },
   { name: 'My Pokémon', href: '/settings/pokemon', icon: UsersIcon, current: false },
   { name: 'Change Avatar', href: '/settings/change-avatar', icon: UserCircleIcon, current: false },
   { name: 'Change Email Address', href: '/settings/change-email-address', icon: AtSymbolIcon, current: false },
