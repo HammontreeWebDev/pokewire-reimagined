@@ -1,11 +1,10 @@
 'use client'
 import userAuthentication from "@/app/utils/userAuthentication";
-import ProfileBase from "@/app/ui/profile/ProfileBase";
 
-export default function Profile() {
+export default function UserHome() {
     userAuthentication();
 
     return (
-        <ProfileBase />
+        <p>This is the User Home Page!</p>
     )
 }
