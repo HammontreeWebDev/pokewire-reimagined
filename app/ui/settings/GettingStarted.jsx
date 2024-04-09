@@ -1,4 +1,4 @@
-export default function GettingStarted() {
+export default function GettingStarted({titleText, content}) {
     return (
       <div className="sm:flex">
         <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
@@ -14,10 +14,9 @@ export default function GettingStarted() {
           </svg>
         </div>
         <div>
-          <h4 className="text-lg font-bold">Lorem ipsum</h4>
-          <p className="mt-1">
-            Repudiandae sint consequuntur vel. Amet ut nobis explicabo numquam expedita quia omnis voluptatem. Minus
-            quidem ipsam quia iusto.
+          <h4 className="text-lg font-bold text-poke-yellow">{titleText}</h4>
+          <p className="mt-1 text-poke-white">
+            {content}
           </p>
         </div>
       </div>
