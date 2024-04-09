@@ -11,7 +11,7 @@ import {
 const navigation = [
   { name: 'Home', href: 'settings/home', icon: HomeIcon, current: false },
   { name: 'My Pokémon', href: '/settings/pokemon', icon: UsersIcon, current: false },
-  { name: 'Avatar', href: 'gamedex', icon: FolderIcon, current: false },
+  { name: 'Avatar', href: '/settings/avatar', icon: FolderIcon, current: false },
   { name: 'Email Address', href: '/settings/email-address', icon: CalendarIcon, current: false },
   { name: 'Help', href: 'settings/help', icon: DocumentDuplicateIcon, current: false },
 ]
