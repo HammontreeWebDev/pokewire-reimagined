@@ -24,7 +24,7 @@ function classNames(...classes) {
 
 export default function SideNav() {
   return (
-    <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-dark-blue px-6">
+    <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-dark-blue px-6 max-w-80">
       <div className="flex h-16 shrink-0 items-center">
         <Image
           className="h-8 w-auto"
