@@ -1,17 +1,16 @@
-export default function GettingStarted({titleText, content}) {
+import Image from "next/image";
+
+export default function GettingStarted({titleText, content, imageSrc, imageAlt}) {
     return (
       <div className="sm:flex">
         <div className="mb-4 flex-shrink-0 sm:mb-0 sm:mr-4">
-          <svg
-            className="h-32 w-full border border-gray-300 bg-white text-gray-300 sm:w-32"
-            preserveAspectRatio="none"
-            stroke="currentColor"
-            fill="none"
-            viewBox="0 0 200 200"
-            aria-hidden="true"
-          >
-            <path vectorEffect="non-scaling-stroke" strokeWidth={1} d="M0 0l200 200M0 200L200 0" />
-          </svg>
+          <Image 
+          src={imageSrc}
+          className="w-20"
+          alt={imageAlt}
+          width={1920}
+          height={1920}
+          />
         </div>
         <div>
           <h4 className="text-lg font-bold text-poke-yellow">{titleText}</h4>
