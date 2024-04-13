@@ -18,36 +18,26 @@ export default function SettingsPage() {
             <GettingStarted
                 titleText={'My Pokémon'}
                 content={'This section will allow you to . . . '}
-                imageSrc={'/img/profile_settings/MyPokemonIcon.png'}
-                imageAlt={'Park Ball'}
             />
 
             <GettingStarted
                 titleText={'Change Avatar'}
                 content={'This section will allow you to . . . '}
-                imageSrc={'/img/profile_settings/ChangeAvatarIcon.png'}
-                imageAlt={'Dream Ball'}
             />
 
             <GettingStarted
                 titleText={'Change Email Address'}
                 content={'This section will allow you to . . . '}
-                imageSrc={'/img/profile_settings/ChangeEmailAddressIcon.png'}
-                imageAlt={'Sports Ball'}
             />
 
             <GettingStarted
                 titleText={'Change Password'}
                 content={'This section will allow you to . . . '}
-                imageSrc={'/img/profile_settings/ChangePasswordIcon.png'}
-                imageAlt={'Captains Ball'}
             />
 
             <GettingStarted
                 titleText={'Help'}
                 content={'This section will allow you to . . . '}
-                imageSrc={'/img/profile_settings/HelpIcon.png'}
-                imageAlt={'Ultra Ball'}
             />
 
         </>
