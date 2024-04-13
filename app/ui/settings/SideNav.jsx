@@ -1,3 +1,5 @@
+'use client'
+
 import Image from 'next/image';
 import Link from 'next/link';
 import {
@@ -9,6 +11,9 @@ import {
   QuestionMarkCircleIcon,
   ArrowRightStartOnRectangleIcon,
 } from '@heroicons/react/24/outline';
+
+import { usePathname } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const navigation = [
   { name: 'Back To Home', href: '/home', icon: HomeIcon, current: false },
@@ -25,12 +30,50 @@ function classNames(...classes) {
 }
 
 export default function SideNav() {
+  const pathname = usePathname();
+  const [chooseLogo, setChooseLogo] = useState('/img/logos/poke-logo.png');
+
+
+  // paths
+  const settingsPage = '/settings';
+  const pokemonPage = '/settings/pokemon';
+  const avatarPage = '/settings/change-avatar';
+  const emailAddressPage = '/settings/change-email-address';
+  const passwordPage = '/settings/change-password';
+  const helpPage = '/settings/help-me';
+
+  // icons
+  const gettingStartedIcon = '/img/profile_settings/GettingStartedIcon.png';
+  const myPokemonIcon = '/img/profile_settings/MyPokemonIcon.png';
+  const avatarIcon = '/img/profile_settings/ChangeAvatarIcon.png';
+  const emailAddressIcon = '/img/profile_settings/ChangeEmailAddressIcon.png';
+  const passwordIcon = '/img/profile_settings/ChangePasswordIcon.png';
+  const helpIcon = '/img/profile_settings/HelpIcon.png';
+
+  useEffect(() => {
+
+    if (pathname === settingsPage) {
+      setChooseLogo(gettingStartedIcon);
+    } else if (pathname === pokemonPage) {
+      setChooseLogo(myPokemonIcon);
+    } else if (pathname === avatarPage) {
+      setChooseLogo(avatarIcon);
+    } else if (pathname === emailAddressPage) {
+      setChooseLogo(emailAddressIcon);
+    } else if (pathname === passwordPage) {
+      setChooseLogo(passwordIcon);
+    } else if (pathname === helpPage) {
+      setChooseLogo(helpIcon);
+    }
+
+  })
+
   return (
     <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-dark-blue px-6 max-w-80">
       <div className="flex h-16 shrink-0 items-center">
         <Image
           className="h-8 w-auto"
-          src="/img/logos/poke-logo.png"
+          src={chooseLogo}
           alt="Your Company"
           width={1920}
           height={1920}
