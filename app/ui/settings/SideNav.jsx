@@ -14,6 +14,7 @@ import {
 
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 
 const navigation = [
   { name: 'Back To Home', href: '/home', icon: HomeIcon, current: false },
@@ -68,6 +69,17 @@ export default function SideNav() {
 
   })
 
+  // * Get user session information
+  const { data: session, status } = useSession();
+  const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+    if (session) {
+      setUserName(session.user.name)
+    }
+  }, [session])
+
+
   return (
     <div className="flex grow flex-col gap-y-5 overflow-y-auto bg-dark-blue px-6 max-w-80">
       <div className="flex h-16 shrink-0 items-center">
@@ -110,7 +122,19 @@ export default function SideNav() {
                 alt=""
               />
               <span className="sr-only">Your profile</span>
-              <span aria-hidden="true">Tom Cook</span>
+              <span aria-hidden="true">{
+
+                status === 'loading'
+
+                  ?
+
+                  <p> Loading . . . </p>
+
+                  :
+
+                  userName
+
+              }</span>
             </Link>
           </li>
         </ul>
