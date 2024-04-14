@@ -17,27 +17,83 @@ export default function SettingsPage() {
 
             <GettingStarted
                 titleText={'My Pokémon'}
-                content={'This section will allow you to . . . '}
+                content={
+                    <div className="flex flex-col items-center">
+                    <ul className="text-poke-white list-disc text-left rounded-2xl p-6 mt-3">
+                        <li>
+                            Set or change your favorite pokémon.
+                        </li>
+
+                        <li>
+                            Set pokémon picture display preferences
+                        </li>
+                    </ul>
+                    </div>
+                }
             />
 
             <GettingStarted
                 titleText={'Change Avatar'}
-                content={'This section will allow you to . . . '}
+                content={
+                    <div className="flex flex-col items-center">
+                    <ul className="text-poke-white list-disc text-left rounded-2xl p-6 mt-3">
+                        <li>
+                            Upload a profile picture or avatar
+                        </li>
+
+                        <li>
+                            Change existing profile picture or avatar
+                        </li>
+                    </ul>
+                    </div>
+                }
             />
 
             <GettingStarted
                 titleText={'Change Email Address'}
-                content={'This section will allow you to . . . '}
+                content={
+                    <div className="flex flex-col items-center">
+                    <ul className="text-poke-white list-disc text-left rounded-2xl p-6 mt-3">
+                        <li>
+                            Update email address
+                        </li>
+                    </ul>
+                    </div>
+                }
             />
 
             <GettingStarted
                 titleText={'Change Password'}
-                content={'This section will allow you to . . . '}
+                content={
+                    <div className="flex flex-col items-center">
+                    <ul className="text-poke-white list-disc text-left rounded-2xl p-6 mt-3">
+                        <li>
+                            Update password
+                        </li>
+                    </ul>
+                    </div>
+                }
             />
 
             <GettingStarted
                 titleText={'Help'}
-                content={'This section will allow you to . . . '}
+                content={
+                    <div className="flex flex-col items-center">
+                    <ul className="text-poke-white list-disc text-left rounded-2xl p-6 mt-3">
+                        <li>
+                            Browse FAQ's
+                        </li>
+
+                        <li>
+                            Submit questions to the dev team
+                        </li>
+
+                        <li>
+                            Report Bugs / Glitches
+                        </li>
+                    </ul>
+                    </div>
+                }
             />
 
         </>

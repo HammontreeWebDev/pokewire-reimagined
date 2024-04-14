@@ -34,9 +34,7 @@ export default function GettingStarted({ titleText, content, imageSrc, imageAlt 
 
           <div className="w-full">
             <h4 className="text-lg font-bold text-poke-yellow text-center bg-poke-blue rounded-2xl p-2">{titleText}</h4>
-            <p className="mt-1 text-poke-white text-center">
-              {content}
-            </p>
+            {content}
           </div>
       }
     </div>
