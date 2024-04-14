@@ -7,12 +7,13 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
+import { useSession } from 'next-auth/react';
 
 export default function LoggedInNav() {
+
+  function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+  }
 
   const pathname = usePathname();
 
@@ -37,6 +38,16 @@ export default function LoggedInNav() {
   async function handleSignOut() {
     await signOut({ redirect: true, callbackUrl: '/login' });
   }
+
+  // * Get user session information
+  const { data: session, status } = useSession();
+  const [userName, setUserName] = useState('');
+
+  useEffect(() => {
+    if (session) {
+      setUserName(session.user.name)
+    }
+  }, [session])
 
   return (
     <Disclosure as="nav" className="bg-dark-blue antialiased">
@@ -96,7 +107,7 @@ export default function LoggedInNav() {
 
                 {/* Profile dropdown */}
                 <Menu as="div" className="relative ml-3">
-                  <div>
+                  <div className='flex items-center'>
                     <Menu.Button className="relative flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                       <span className="absolute -inset-1.5" />
                       <span className="sr-only">Open user menu</span>
@@ -106,6 +117,19 @@ export default function LoggedInNav() {
                         alt=""
                       />
                     </Menu.Button>
+                    <p className='p-2 text-poke-white'>{
+
+                      status === 'loading'
+
+                        ?
+
+                        'Loading . . . '
+
+                        :
+
+                        userName
+
+                    }</p>
                   </div>
                   <Transition
                     as={Fragment}
