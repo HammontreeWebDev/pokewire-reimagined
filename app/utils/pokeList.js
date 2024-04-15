@@ -1025,3 +1025,5 @@ const pokeList = [
     "Terapagos",
     "Pecharunt"
 ]
+
+export default pokeList;
