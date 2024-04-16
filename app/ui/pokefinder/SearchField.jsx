@@ -4,6 +4,7 @@ import { CheckIcon } from '@heroicons/react/20/solid';
 import { Combobox } from '@headlessui/react';
 import pokeList from '@/app/utils/pokeList';
 import Image from 'next/image';
+import { usePokemon } from '@/app/context/PokemonContext';
 
 const pokemonList = pokeList;
 
@@ -13,7 +14,7 @@ function classNames(...classes) {
 
 export default function SearchField() {
     const [query, setQuery] = useState('')
-    const [selectedPokemon, setSelectedPokemon] = useState(null)
+    const [selectedPokemon, setSelectedPokemon] = usePokemon();
 
     const filteredPokemon = query.length >= 3
         ? pokemonList.filter((pokemon) =>
