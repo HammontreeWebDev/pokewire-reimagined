@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { CheckIcon } from '@heroicons/react/20/solid';
 import { Combobox } from '@headlessui/react';
 import pokeList from '@/app/utils/pokeList';
@@ -20,14 +20,21 @@ export default function SearchField() {
             pokemon.toLowerCase().startsWith(query.toLowerCase()))
         : [];
 
+    // set value to local storage to be able to be used in other parts of the application. . .
+    useEffect(() => {
+        if (selectedPokemon) {
+            localStorage.setItem('selectedPokemon', selectedPokemon);
+        }
+    }, [selectedPokemon]);
+
     return (
         <Combobox as="div" value={selectedPokemon} onChange={setSelectedPokemon}>
             <div className='flex flex-col items-center'>
-                <Image 
-                src={'/img/profile_settings/MyPokemonIcon.png'}
-                alt={'pokeball'}
-                width={100}
-                height={100}
+                <Image
+                    src={'/img/profile_settings/MyPokemonIcon.png'}
+                    alt={'pokeball'}
+                    width={100}
+                    height={100}
                 />
                 <Combobox.Label className="block font-medium p-2 text-poke-white">Search for a pokemon:</Combobox.Label>
             </div>

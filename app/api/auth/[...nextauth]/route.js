@@ -2,7 +2,6 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 import { PrismaClient } from "@prisma/client";
-import { SERVER_PROPS_GET_INIT_PROPS_CONFLICT } from "next/dist/lib/constants";
 
 const prisma = new PrismaClient();
 
@@ -31,25 +30,6 @@ const authHandler = NextAuth({
   ],
   // Include any additional NextAuth.js configuration as needed
   secret: process.env.SECRET,
-  session: {
-    strategy: "jwt"
-  },
-  callbacks: {
-    async jwt({ token, user, account }) {
-
-      if (account && user) {
-        token.uid = user.id;
-        token.selectedPokemon = "";
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      session.user.id = token.uid;
-      session.selectedPokemon = token.selectedPokemon;
-      return session;
-    }
-  }
-
 });
 
 // Export the handler for both GET and POST requests
