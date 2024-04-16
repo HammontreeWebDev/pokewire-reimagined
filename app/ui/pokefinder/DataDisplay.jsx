@@ -4,7 +4,7 @@ import { usePokemon } from "@/app/context/PokemonContext";
 
 export default function DataDisplay() {
 
-    const [selectedPokemon, setSelectedPokemon] = usePokemon();
+    const [selectedPokemon] = usePokemon();
 
     return (
         <>
