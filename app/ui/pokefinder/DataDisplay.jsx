@@ -1,10 +1,28 @@
 'use client'
-
 import { usePokemon } from "@/app/context/PokemonContext";
+import { useEffect, useState } from "react";
 
 export default function DataDisplay() {
 
     const [selectedPokemon] = usePokemon();
+
+    const genericURL = `https://pokeapi.co/api/v2/pokemon/${selectedPokemon.toLowerCase()}`;
+
+    useEffect(() => {
+        if (selectedPokemon.length > 3) {
+            fetch(genericURL)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log(data)
+        })
+        }
+    }, [selectedPokemon])
+
 
     return (
         <>

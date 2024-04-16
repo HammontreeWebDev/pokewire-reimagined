@@ -12,11 +12,13 @@ export const usePokemon = () => {
 }
 
 export const PokemonProvider = ({ children }) => {
-    const [selectedPokemon, setSelectedPokemon] = useState(() => {
-        return localStorage.getItem('selectedPokemon') || '';
-    });
+
+    const [selectedPokemon, setSelectedPokemon] = useState('');
 
     useEffect(() => {
+
+        // initialize
+        setSelectedPokemon(localStorage.getItem('selectedPokemon'));
 
         const handleStorageChange = () => {
             setSelectedPokemon(localStorage.getItem('selectedPokemon') || '');
