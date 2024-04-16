@@ -1,23 +1,13 @@
 'use client'
 
 import { usePokemon } from "@/app/context/PokemonContext";
-import { useEffect } from "react";
 
 export default function DataDisplay() {
 
     const [selectedPokemon, setSelectedPokemon] = usePokemon();
 
-    useEffect(() => {
-        console.log(`updated Pokemon: ${selectedPokemon}`);
-    }, [selectedPokemon])
-
     return (
         <>
-            <div>
-                <button className="bg-poke-yellow rounded p-2 text-poke-white">
-                    Find That Pokémon!
-                </button>
-            </div>
             <div className='bg-dark-blue p-10 mt-3 rounded'>
                 <div className="px-4 sm:px-0">
                     <h3 className="text-base font-semibold leading-7 text-white">PokéFinder</h3>
