@@ -138,7 +138,7 @@ export default function DataDisplay() {
 
                                         :
 
-                                        <p className="text-poke-red bg-poke-black p-3 rounded-2xl">There is no legacy cry available for {selectedPokemon}!</p>
+                                        <p className="text-poke-red bg-poke-black p-3 rounded-2xl">There is no latest cry available for {selectedPokemon}!</p>
 
                                 }
                             </dd>
