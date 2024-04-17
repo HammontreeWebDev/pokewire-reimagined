@@ -40,20 +40,26 @@ export default function DataDisplay() {
                         const abilitiesPromises = data.abilities.map(async ability => {
                             const abilityResponse = await fetch(ability.ability.url);
                             const abilityData = await abilityResponse.json();
-                            const abilityEffect = abilityData.effect_entries;
+                            const abilityEffectEntries = abilityData.effect_entries;
+
+                            // Find effect entry in english
+                            const englishEffectEntry = abilityEffectEntries.find(entry => entry.language.name === "en");
+                            const englishEffect = englishEffectEntry ? englishEffectEntry.effect : 'No english description found!';
+
+
                             return {
                                 ...ability,
                                 // ability: { ...ability.ability, details: abilityData },
                                 name: ability.ability.name,
                                 details: abilityData,
-                                effect: abilityEffect,
+                                effect: englishEffect,
                                 isHidden: ability.is_hidden,
                                 slot: ability.slot
                             };
                         });
 
                         const abilitiesDetails = await Promise.all(abilitiesPromises);
-                        console.log(abilitiesDetails);
+                        console.log('ability details: ', abilitiesDetails);
                         setAbilities(abilitiesDetails);
                     } else {
                         setAbilities([]);
@@ -133,8 +139,12 @@ export default function DataDisplay() {
                                 {
                                     abilities.map((ability, index) => (
                                         <div key={index}>
+                                            <p className="text-poke-yellow">
                                             {ability.name}
-                                            {ability.url}
+                                            </p>
+                                            <p className="text-poke-white">
+                                                {ability.effect}
+                                                </p>
                                         </div>
                                     ))
                                 }
