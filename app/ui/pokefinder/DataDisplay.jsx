@@ -34,12 +34,32 @@ export default function DataDisplay() {
                     setBaseExperience(data.base_experience ?? 'This stat cannot be found!');
                     setHeight(data.height ?? 'This stat cannot be found!');
                     setWeight(data.weight ?? 'This stat cannot be found');
-                    setAbilities(data.abilities ? data.abilities.map(ability => ({
-                        name: ability.ability.name,
-                        url: ability.ability.url,
-                        isHidden: ability.is_hidden,
-                        slot: ability.slot
-                    })) : []);
+
+                    // ! Process Abilities and fetch other url
+                    if (data.abilities) {
+                        const abilitiesPromises = data.abilities.map(async ability => {
+                            const abilityResponse = await fetch(ability.ability.url);
+                            const abilityData = await abilityResponse.json();
+                            const abilityEffect = abilityData.effect_entries;
+                            return {
+                                ...ability,
+                                // ability: { ...ability.ability, details: abilityData },
+                                name: ability.ability.name,
+                                details: abilityData,
+                                effect: abilityEffect,
+                                isHidden: ability.is_hidden,
+                                slot: ability.slot
+                            };
+                        });
+
+                        const abilitiesDetails = await Promise.all(abilitiesPromises);
+                        console.log(abilitiesDetails);
+                        setAbilities(abilitiesDetails);
+                    } else {
+                        setAbilities([]);
+                    }
+
+                    // ! Process moves
                     setMoves(data.moves ? data.moves.map(move => ({
                         name: move.move.name,
                         url: move.url
