@@ -27,8 +27,7 @@ const AudioPlayer = ({ imageURL, imageAlt, soundTitle, audioSrc }) => {
 
     return (
         <>
-            <main className="flex min-h-screen flex-col items-center justify-center bg-background">
-                <div className="bg-accent flex h-fit max-w-fit flex-col rounded-lg border-2 border-cyan-700 pb-4 text-center shadow">
+                <div className="bg-poke-black flex h-fit max-w-fit flex-col rounded-2xl pb-4 text-center shadow">
                     <div className="relative flex flex-col space-y-0">
                         <Image
                             width={200}
@@ -67,7 +66,6 @@ const AudioPlayer = ({ imageURL, imageAlt, soundTitle, audioSrc }) => {
                     </div>
                 </div>
                 <audio ref={pokeRef} src={audioSrc} />
-            </main>
         </>
     )
 }

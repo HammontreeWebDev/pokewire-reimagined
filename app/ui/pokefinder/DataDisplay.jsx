@@ -14,6 +14,7 @@ export default function DataDisplay() {
     const [latestCry, setLatestCry] = useState('');
     const [legacyCry, setLegacyCry] = useState('');
     const [frontShiny, setFrontShiny] = useState('');
+    const [backShiny, setBackShiny] = useState('');
 
     const genericURL = `https://pokeapi.co/api/v2/pokemon/${selectedPokemon.toLowerCase()}`;
 
@@ -50,6 +51,7 @@ export default function DataDisplay() {
                     setLatestCry(data.cries.latest ?? '');
                     setFrontShiny(data.sprites.front_shiny ?? data.sprites.front_default);
                     setLegacyCry(data.cries.legacy ?? '');
+                    setBackShiny(data.sprites.back_shiny ?? data.sprites.back_default);
                     setBaseExperience(data.base_experience ?? 'This stat cannot be found!');
                     setHeight(displayHeight ?? 'This stat cannot be found!');
                     setWeight(data.weight ?? 'This stat cannot be found');
@@ -122,23 +124,42 @@ export default function DataDisplay() {
 
                         {/* //! Pokémon Latest cry */}
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 text-white">{`${selectedPokemon}'s Latest Cry`}</dt>
+                            <dt className="text-sm font-medium leading-6 text-white">{`Latest Cry`}</dt>
                             <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
-                                <AudioPlayer 
-                                imageURL={frontShiny} 
-                                imageAlt={`${selectedPokemon}`} 
-                                soundTitle={`${selectedPokemon}'s latest cry`} 
-                                audioSrc={latestCry}
-                                />
+
+                                {
+                                    latestCry ?
+                                        <AudioPlayer
+                                            imageURL={frontShiny}
+                                            imageAlt={`${selectedPokemon}`}
+                                            soundTitle={`${selectedPokemon}`}
+                                            audioSrc={latestCry}
+                                        />
+
+                                        :
+
+                                        <p className="text-poke-red bg-poke-black p-3 rounded-2xl">There is no legacy cry available for {selectedPokemon}!</p>
+
+                                }
                             </dd>
                         </div>
 
                         {/* //! Pokémon Legacy cry */}
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 text-white">{`${selectedPokemon}'s Legacy Cry`}</dt>
+                            <dt className="text-sm font-medium leading-6 text-white">{`Legacy Cry`}</dt>
                             <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
                                 {/* // TODO: need to make it so that only the current pokemons legacy cry shows - at the moment it is displaying prev pokemons legacy cry if there was not one found for current pokemon selected */}
-                                <audio src={legacyCry} controls></audio>
+                                {
+                                    legacyCry ?
+                                        <AudioPlayer
+                                            imageURL={backShiny}
+                                            imageAlt={`${selectedPokemon}`}
+                                            soundTitle={`${selectedPokemon}`}
+                                            audioSrc={legacyCry}
+                                        />
+                                        :
+                                        <p className="text-poke-red bg-poke-black p-3 rounded-2xl">There is no legacy cry available for {selectedPokemon}!</p>
+                                }
                             </dd>
                         </div>
 
