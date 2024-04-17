@@ -27,30 +27,30 @@ const AudioPlayer = ({ imageURL, imageAlt, soundTitle, audioSrc }) => {
 
     return (
         <>
-                <div className="bg-poke-black flex h-fit max-w-fit flex-col rounded-2xl pb-4 text-center shadow">
-                    <div className="relative flex flex-col space-y-0">
+                <div className="bg-poke-black flex h-fit max-w-fit flex-col rounded-2xl p-6 text-center shadow">
+                    <div className="flex flex-col space-y-0 items-center">
                         <Image
                             width={200}
                             height={200}
-                            className="mx-auto max-h-48 w-full flex-shrink-0 rounded-t-lg pb-2"
+                            className="h-auto w-full flex-shrink-0 rounded-t-lg pb-2"
                             src={imageURL}
                             alt={imageAlt}
                         />
+                        <dl className="my-1 flex flex-col">
+                            <dd className="text-lg text-white">{soundTitle}</dd>
+                        </dl>
                         <button
                             onClick={toggleAudio}
                             type="button"
-                            className="absolute right-5 left-0 top-[15%] m-auto w-9 rounded-full p-2 text-white shadow-sm"
+                            className="rounded-full text-white shadow-sm"
                         >
                             {!play ? (
-                                <PlayIcon className="h-12 w-12" aria-hidden="true" />
+                                <PlayIcon className="h-10 w-10" aria-hidden="true" />
                             ) : (
-                                <PauseIcon className="h-12 w-12" aria-hidden="true" />
+                                <PauseIcon className="h-10 w-10" aria-hidden="true" />
                             )}
                         </button>
-                        <dl className="mt-1 flex flex-col p-4 ">
-                            <dd className="text-lg text-white">{soundTitle}</dd>
-                        </dl>
-                        <div className="mx-4 flex">
+                        <div className="flex">
                             <input
                                 type="range"
                                 className="mr-2 w-full accent-cyan-700"

@@ -7,6 +7,7 @@ import Image from "next/image";
 export default function DataDisplay() {
 
     const [selectedPokemon] = usePokemon();
+    const [data, setData] = useState(null);
     const [baseExperience, setBaseExperience] = useState('');
     const [height, setHeight] = useState('');
     const [weight, setWeight] = useState('');
@@ -23,89 +24,79 @@ export default function DataDisplay() {
 
     useEffect(() => {
         const fetchData = async () => {
-            if (selectedPokemon.length > 3) {
+            const cacheKey = `data-${selectedPokemon}`;
+            const cachedData = localStorage.getItem(cacheKey);
+            if (cachedData) {
+                console.log("Using cached data for:", selectedPokemon);
+                setData(JSON.parse(cachedData));
+            } else if (selectedPokemon.length > 3) {
                 try {
                     const response = await fetch(genericURL);
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
-                    const data = await response.json();
-
-                    // TODO: Clear Console log that views data output
-                    console.log(data);
-                    // console.log('Dreamworld:', data.sprites.other.dream_world.front_default)
-                    // console.log('Other:', data.sprites.other.showdown.front_shiny)
-
-                    // * update height to recognizable value - it is currently in decimeters
-                    const totalFeet = data.height / 3.048;
-                    const feet = Math.floor(totalFeet);
-                    let inches = Math.ceil((totalFeet - feet) * 12);
-
-                    let updatedFeet = feet;
-                    let displayHeight;
-
-                    if (inches === 12) {
-                        updatedFeet += 1;
-                        displayHeight = `${updatedFeet} ft.`;
-                    } else {
-                        displayHeight = `${updatedFeet} ft. ${inches} in.`;
-                    }
-
-                    //  ! Update states based on the response //
-                    setArtworkShiny(data.sprites.other.showdown.front_shiny ?? data.sprites.other.dream_world.front_default);
-                    setArtworkDefault(data.sprites.other.showdown.front_default ?? data.sprites.other.dream_world.front_default);
-                    setLatestCry(data.cries.latest ?? '');
-                    setFrontLatest(data.sprites.other.dream_world.front_default ?? data.sprites.front_shiny);
-                    setLegacyCry(data.cries.legacy ?? '');
-                    setFrontLegacy(data.sprites.front_default ?? data.sprites.back_default);
-                    setBaseExperience(data.base_experience ?? 'This stat cannot be found!');
-                    setHeight(displayHeight ?? 'This stat cannot be found!');
-                    setWeight(data.weight ?? 'This stat cannot be found');
-
-                    // ! Process Abilities and fetch other url
-                    if (data.abilities) {
-                        const abilitiesPromises = data.abilities.map(async ability => {
-                            const abilityResponse = await fetch(ability.ability.url);
-                            const abilityData = await abilityResponse.json();
-                            const abilityEffectEntries = abilityData.effect_entries;
-
-                            // Find effect entry in english
-                            const englishEffectEntry = abilityEffectEntries.find(entry => entry.language.name === "en");
-                            const englishEffect = englishEffectEntry ? englishEffectEntry.effect : 'No english description found!';
-
-
-                            return {
-                                ...ability,
-                                // ability: { ...ability.ability, details: abilityData },
-                                name: ability.ability.name,
-                                details: abilityData,
-                                effect: englishEffect,
-                                isHidden: ability.is_hidden,
-                                slot: ability.slot
-                            };
-                        });
-
-                        const abilitiesDetails = await Promise.all(abilitiesPromises);
-                        console.log('ability details: ', abilitiesDetails);
-                        setAbilities(abilitiesDetails);
-                    } else {
-                        setAbilities([]);
-                    }
-
-                    // ! Process moves
-                    setMoves(data.moves ? data.moves.map(move => ({
-                        name: move.move.name,
-                        url: move.url
-                    })) : []);
-
+                    const freshData = await response.json();
+                    localStorage.setItem(cacheKey, JSON.stringify(freshData));
+                    setData(freshData);
                 } catch (error) {
                     console.error("Failed to fetch data:", error);
                 }
             }
         };
-
         fetchData();
     }, [selectedPokemon]);
+
+    useEffect(() => {
+        if (data) {
+            console.log(data); // This now correctly logs the data
+
+            // Process and update all the relevant states based on the new data
+            const totalFeet = data.height / 3.048;
+            const feet = Math.floor(totalFeet);
+            let inches = Math.ceil((totalFeet - feet) * 12);
+
+            let updatedFeet = feet;
+            let displayHeight = inches === 12 ? `${updatedFeet + 1} ft.` : `${updatedFeet} ft. ${inches} in.`;
+
+            setArtworkShiny(data.sprites.other.showdown.front_shiny ?? data.sprites.other.dream_world.front_default);
+            setArtworkDefault(data.sprites.other.showdown.front_default ?? data.sprites.other.dream_world.front_default);
+            setLatestCry(data.cries.latest ?? '');
+            setFrontLatest(data.sprites.other.dream_world.front_default ?? data.sprites.front_shiny);
+            setLegacyCry(data.cries.legacy ?? '');
+            setFrontLegacy(data.sprites.front_default ?? data.sprites.back_default);
+            setBaseExperience(data.base_experience ?? 'This stat cannot be found!');
+            setHeight(displayHeight ?? 'This stat cannot be found!');
+            setWeight(data.weight ?? 'This stat cannot be found');
+
+            // Process abilities if present
+            if (data.abilities) {
+                const abilitiesPromises = data.abilities.map(async ability => {
+                    const abilityResponse = await fetch(ability.ability.url);
+                    const abilityData = await abilityResponse.json();
+                    const abilityEffectEntries = abilityData.effect_entries;
+                    const englishEffectEntry = abilityEffectEntries.find(entry => entry.language.name === "en");
+                    const englishEffect = englishEffectEntry ? englishEffectEntry.effect : 'No english description found!';
+                    return {
+                        ...ability,
+                        name: ability.ability.name,
+                        details: abilityData,
+                        effect: englishEffect,
+                        isHidden: ability.is_hidden,
+                        slot: ability.slot
+                    };
+                });
+                Promise.all(abilitiesPromises).then(setAbilities);
+            } else {
+                setAbilities([]);
+            }
+
+            // Process moves if present
+            setMoves(data.moves ? data.moves.map(move => ({
+                name: move.move.name,
+                url: move.url
+            })) : []);
+        }
+    }, [data]);  // This useEffect depends on data
 
 
     return (
@@ -126,7 +117,7 @@ export default function DataDisplay() {
                                     <div className="flex flex-col items-center">
                                         <Image
                                             src={artworkShiny}
-                                            alt={`${selectedPokemon}`}
+                                            alt={selectedPokemon}
                                             width={80}
                                             height={80}
                                         />
@@ -136,7 +127,7 @@ export default function DataDisplay() {
                                     <div className="flex flex-col items-center">
                                         <Image
                                             src={artworkDefault}
-                                            alt={`${selectedPokemon}`}
+                                            alt={selectedPokemon}
                                             width={80}
                                             height={80}
                                         />
@@ -155,7 +146,7 @@ export default function DataDisplay() {
                                     latestCry ?
                                         <AudioPlayer
                                             imageURL={frontLatest}
-                                            imageAlt={`${selectedPokemon}`}
+                                            imageAlt={selectedPokemon}
                                             soundTitle={`${selectedPokemon}`}
                                             audioSrc={latestCry}
                                         />
@@ -177,7 +168,7 @@ export default function DataDisplay() {
                                     legacyCry ?
                                         <AudioPlayer
                                             imageURL={frontLegacy}
-                                            imageAlt={`${selectedPokemon}`}
+                                            imageAlt={selectedPokemon}
                                             soundTitle={`${selectedPokemon}`}
                                             audioSrc={legacyCry}
                                         />
