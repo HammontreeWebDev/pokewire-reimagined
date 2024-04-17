@@ -1,6 +1,7 @@
 'use client'
 import { usePokemon } from "@/app/context/PokemonContext";
 import { useEffect, useState } from "react";
+import AudioPlayer from "@/app/ui/audio/AudioPlayer";
 
 export default function DataDisplay() {
 
@@ -12,6 +13,7 @@ export default function DataDisplay() {
     const [moves, setMoves] = useState([]);
     const [latestCry, setLatestCry] = useState('');
     const [legacyCry, setLegacyCry] = useState('');
+    const [frontShiny, setFrontShiny] = useState('');
 
     const genericURL = `https://pokeapi.co/api/v2/pokemon/${selectedPokemon.toLowerCase()}`;
 
@@ -27,6 +29,7 @@ export default function DataDisplay() {
 
                     // TODO: Clear Console log that views data output
                     console.log(data);
+                    // console.log('Shiny Pic:', data.sprites.front_shiny)
 
                     // * update height to recognizable value - it is currently in decimeters
                     const totalFeet = data.height / 3.048;
@@ -45,6 +48,7 @@ export default function DataDisplay() {
 
                     //  ! Update states based on the response //
                     setLatestCry(data.cries.latest ?? '');
+                    setFrontShiny(data.sprites.front_shiny ?? data.sprites.front_default);
                     setLegacyCry(data.cries.legacy ?? '');
                     setBaseExperience(data.base_experience ?? 'This stat cannot be found!');
                     setHeight(displayHeight ?? 'This stat cannot be found!');
@@ -120,9 +124,12 @@ export default function DataDisplay() {
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                             <dt className="text-sm font-medium leading-6 text-white">{`${selectedPokemon}'s Latest Cry`}</dt>
                             <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
-                                <audio src={latestCry}>
-                                    It looks like your browser doesn't support this audio player.
-                                </audio>
+                                <AudioPlayer 
+                                imageURL={frontShiny} 
+                                imageAlt={`${selectedPokemon}`} 
+                                soundTitle={`${selectedPokemon}'s latest cry`} 
+                                audioSrc={latestCry}
+                                />
                             </dd>
                         </div>
 

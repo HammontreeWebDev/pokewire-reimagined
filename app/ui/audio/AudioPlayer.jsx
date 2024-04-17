@@ -3,10 +3,10 @@ import { SpeakerWaveIcon } from "@heroicons/react/24/outline";
 import { PlayIcon, PauseIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
 
-export default function AudioPlayer({ imageURL, imageAlt, soundTitle, audioSrc }) {
+const AudioPlayer = ({ imageURL, imageAlt, soundTitle, audioSrc }) => {
 
     const [play, setPlay] = useState(false);
-    const pokeRef = useRef < HTMLAudioElement > (null);
+    const pokeRef = useRef(null);
     const MAX = 20;
 
     function toggleAudio() {
@@ -71,3 +71,5 @@ export default function AudioPlayer({ imageURL, imageAlt, soundTitle, audioSrc }
         </>
     )
 }
+
+export default AudioPlayer;
