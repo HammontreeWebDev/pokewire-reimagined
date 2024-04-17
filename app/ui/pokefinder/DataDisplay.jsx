@@ -28,11 +28,26 @@ export default function DataDisplay() {
                     // TODO: Clear Console log that views data output
                     console.log(data);
 
-                    // Update states based on the response
+                    // * update height to recognizable value - it is currently in decimeters
+                    const totalFeet = data.height / 3.048;
+                    const feet = Math.floor(totalFeet);
+                    let inches = Math.ceil((totalFeet - feet) * 12);
+
+                    let updatedFeet = feet;
+                    let displayHeight;
+
+                    if (inches === 12) {
+                        updatedFeet += 1;
+                        displayHeight = `${updatedFeet} ft.`;
+                    } else {
+                        displayHeight = `${updatedFeet} ft. ${inches} in.`;
+                    }
+
+                    //  ! Update states based on the response //
                     setLatestCry(data.cries.latest ?? '');
                     setLegacyCry(data.cries.legacy ?? '');
                     setBaseExperience(data.base_experience ?? 'This stat cannot be found!');
-                    setHeight(data.height ?? 'This stat cannot be found!');
+                    setHeight(displayHeight ?? 'This stat cannot be found!');
                     setWeight(data.weight ?? 'This stat cannot be found');
 
                     // ! Process Abilities and fetch other url
@@ -83,7 +98,7 @@ export default function DataDisplay() {
 
     return (
         <>
-            <div className='bg-dark-blue p-10 mt-3 rounded'>
+            <div className='bg-dark-blue p-10 mt-3 rounded antialiased'>
                 <div className="px-4 sm:px-0">
                     <h3 className="text-base font-semibold leading-7 text-white">PokéFinder</h3>
                     <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-400">Discover your favorite pokémon</p>
@@ -94,7 +109,11 @@ export default function DataDisplay() {
                         {/* //! Pokémon Name */}
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                             <dt className="text-sm font-medium leading-6 text-white">Pokémon</dt>
-                            <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">{selectedPokemon}</dd>
+                            <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
+                                <div className="bg-poke-black p-3 rounded-2xl my-1">
+                                    <p className="text-poke-yellow">{selectedPokemon}</p>
+                                </div>
+                            </dd>
                         </div>
 
                         {/* //! Pokémon Latest cry */}
@@ -117,13 +136,23 @@ export default function DataDisplay() {
                         {/* //! Pokémon Base Experience */}
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                             <dt className="text-sm font-medium leading-6 text-white">Base Experience</dt>
-                            <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">{baseExperience}</dd>
+                            <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
+                                <div className="bg-poke-black p-3 rounded-2xl my-1">
+                                    <p className="text-poke-yellow">{baseExperience}</p>
+                                </div>
+                            </dd>
                         </div>
 
                         {/* //! Pokémon Height */}
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 text-white">Height</dt>
-                            <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">{height}</dd>
+                            <dt className="text-sm font-medium leading-6 text-white"> Average Height</dt>
+                            <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
+                                <div className="bg-poke-black p-3 rounded-2xl my-1">
+                                    <p className="text-poke-yellow">
+                                        {height}
+                                    </p>
+                                </div>
+                            </dd>
                         </div>
 
                         {/* //! Pokémon Weight */}
@@ -138,13 +167,13 @@ export default function DataDisplay() {
                             <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
                                 {
                                     abilities.map((ability, index) => (
-                                        <div key={index}>
-                                            <p className="text-poke-yellow">
-                                            {ability.name}
+                                        <div className="bg-poke-black p-3 rounded-2xl my-1" key={index}>
+                                            <p className="text-poke-yellow uppercase my-1">
+                                                {ability.name}
                                             </p>
                                             <p className="text-poke-white">
                                                 {ability.effect}
-                                                </p>
+                                            </p>
                                         </div>
                                     ))
                                 }
