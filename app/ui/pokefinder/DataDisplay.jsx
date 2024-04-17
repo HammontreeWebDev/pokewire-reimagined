@@ -2,6 +2,7 @@
 import { usePokemon } from "@/app/context/PokemonContext";
 import { useEffect, useState } from "react";
 import AudioPlayer from "@/app/ui/audio/AudioPlayer";
+import Image from "next/image";
 
 export default function DataDisplay() {
 
@@ -13,8 +14,10 @@ export default function DataDisplay() {
     const [moves, setMoves] = useState([]);
     const [latestCry, setLatestCry] = useState('');
     const [legacyCry, setLegacyCry] = useState('');
-    const [frontShiny, setFrontShiny] = useState('');
-    const [backShiny, setBackShiny] = useState('');
+    const [frontLatest, setFrontLatest] = useState('');
+    const [frontLegacy, setFrontLegacy] = useState('');
+    const [artworkShiny, setArtworkShiny] = useState('');
+    const [artworkDefault, setArtworkDefault] = useState('');
 
     const genericURL = `https://pokeapi.co/api/v2/pokemon/${selectedPokemon.toLowerCase()}`;
 
@@ -30,7 +33,8 @@ export default function DataDisplay() {
 
                     // TODO: Clear Console log that views data output
                     console.log(data);
-                    // console.log('Shiny Pic:', data.sprites.front_shiny)
+                    // console.log('Dreamworld:', data.sprites.other.dream_world.front_default)
+                    // console.log('Other:', data.sprites.other.showdown.front_shiny)
 
                     // * update height to recognizable value - it is currently in decimeters
                     const totalFeet = data.height / 3.048;
@@ -48,10 +52,12 @@ export default function DataDisplay() {
                     }
 
                     //  ! Update states based on the response //
+                    setArtworkShiny(data.sprites.other.showdown.front_shiny ?? data.sprites.other.dream_world.front_default);
+                    setArtworkDefault(data.sprites.other.showdown.front_default ?? data.sprites.other.dream_world.front_default);
                     setLatestCry(data.cries.latest ?? '');
-                    setFrontShiny(data.sprites.front_shiny ?? data.sprites.front_default);
+                    setFrontLatest(data.sprites.other.dream_world.front_default ?? data.sprites.front_shiny);
                     setLegacyCry(data.cries.legacy ?? '');
-                    setBackShiny(data.sprites.back_shiny ?? data.sprites.back_default);
+                    setFrontLegacy(data.sprites.front_default ?? data.sprites.back_default);
                     setBaseExperience(data.base_experience ?? 'This stat cannot be found!');
                     setHeight(displayHeight ?? 'This stat cannot be found!');
                     setWeight(data.weight ?? 'This stat cannot be found');
@@ -116,8 +122,26 @@ export default function DataDisplay() {
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                             <dt className="text-sm font-medium leading-6 text-white">Pokémon</dt>
                             <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
-                                <div className="bg-poke-black p-3 rounded-2xl my-1">
-                                    <p className="text-poke-yellow">{selectedPokemon}</p>
+                                <div className="bg-poke-black p-3 rounded-2xl my-1 max-w-fit flex justify-center items-center">
+                                    <div className="flex flex-col items-center">
+                                        <Image
+                                            src={artworkShiny}
+                                            alt={`${selectedPokemon}`}
+                                            width={80}
+                                            height={80}
+                                        />
+                                        <p className="font-bold text-poke-blue">Shiny</p>
+                                    </div>
+                                    <p className="text-poke-yellow mx-5 font-extrabold">{selectedPokemon}</p>
+                                    <div className="flex flex-col items-center">
+                                        <Image
+                                            src={artworkDefault}
+                                            alt={`${selectedPokemon}`}
+                                            width={80}
+                                            height={80}
+                                        />
+                                        <p className="font-bold text-poke-white">Default</p>
+                                    </div>
                                 </div>
                             </dd>
                         </div>
@@ -130,7 +154,7 @@ export default function DataDisplay() {
                                 {
                                     latestCry ?
                                         <AudioPlayer
-                                            imageURL={frontShiny}
+                                            imageURL={frontLatest}
                                             imageAlt={`${selectedPokemon}`}
                                             soundTitle={`${selectedPokemon}`}
                                             audioSrc={latestCry}
@@ -152,7 +176,7 @@ export default function DataDisplay() {
                                 {
                                     legacyCry ?
                                         <AudioPlayer
-                                            imageURL={backShiny}
+                                            imageURL={frontLegacy}
                                             imageAlt={`${selectedPokemon}`}
                                             soundTitle={`${selectedPokemon}`}
                                             audioSrc={legacyCry}
