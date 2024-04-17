@@ -16,36 +16,43 @@ export default function DataDisplay() {
     const genericURL = `https://pokeapi.co/api/v2/pokemon/${selectedPokemon.toLowerCase()}`;
 
     useEffect(() => {
-        if (selectedPokemon.length > 3) {
-            fetch(genericURL)
-                .then(response => {
+        const fetchData = async () => {
+            if (selectedPokemon.length > 3) {
+                try {
+                    const response = await fetch(genericURL);
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
                     }
-                    return response.json();
-                })
-                .then(data => {
-                    console.log(data)
-                    setLatestCry(data.cries.latest);
-                    setLegacyCry(data.cries.legacy);
-                    setBaseExperience(data.base_experience);
-                    setHeight(data.height);
-                    setWeight(data.weight);
+                    const data = await response.json();
 
-                    setAbilities(data.abilities.map(ability => ({
+                    // TODO: Clear Console log that views data output
+                    console.log(data);
+
+                    // Update states based on the response
+                    setLatestCry(data.cries.latest ?? '');
+                    setLegacyCry(data.cries.legacy ?? '');
+                    setBaseExperience(data.base_experience ?? 'This stat cannot be found!');
+                    setHeight(data.height ?? 'This stat cannot be found!');
+                    setWeight(data.weight ?? 'This stat cannot be found');
+                    setAbilities(data.abilities ? data.abilities.map(ability => ({
                         name: ability.ability.name,
+                        url: ability.ability.url,
                         isHidden: ability.is_hidden,
                         slot: ability.slot
-                    })));
-
-                    setMoves(data.moves.map(move => ({
+                    })) : []);
+                    setMoves(data.moves ? data.moves.map(move => ({
                         name: move.move.name,
                         url: move.url
-                    })));
-                })
-                .catch(error => console.error("Failed to fetch data:", error));
-        }
-    }, [selectedPokemon])
+                    })) : []);
+
+                } catch (error) {
+                    console.error("Failed to fetch data:", error);
+                }
+            }
+        };
+
+        fetchData();
+    }, [selectedPokemon]);
 
 
     return (
@@ -107,6 +114,7 @@ export default function DataDisplay() {
                                     abilities.map((ability, index) => (
                                         <div key={index}>
                                             {ability.name}
+                                            {ability.url}
                                         </div>
                                     ))
                                 }
