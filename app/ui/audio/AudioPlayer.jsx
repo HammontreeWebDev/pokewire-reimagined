@@ -3,11 +3,11 @@ import { SpeakerWaveIcon } from "@heroicons/react/24/outline";
 import { PlayIcon, PauseIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
 
-const AudioPlayer = ({ imageURL, imageAlt, soundTitle, audioSrc }) => {
+const AudioPlayer = ({ imageURL, imageAlt, audioSrc }) => {
 
     const [play, setPlay] = useState(false);
     const pokeRef = useRef(null);
-    const MAX = 20;
+    const MAX = 10;
 
     function toggleAudio() {
         if (play) {
@@ -35,10 +35,8 @@ const AudioPlayer = ({ imageURL, imageAlt, soundTitle, audioSrc }) => {
                             className="h-auto w-full flex-shrink-0 rounded-t-lg pb-2"
                             src={imageURL}
                             alt={imageAlt}
+                            unoptimized
                         />
-                        <dl className="my-1 flex flex-col">
-                            <dd className="text-lg text-white">{soundTitle}</dd>
-                        </dl>
                         <button
                             onClick={toggleAudio}
                             type="button"

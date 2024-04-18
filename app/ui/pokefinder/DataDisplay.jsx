@@ -15,10 +15,9 @@ export default function DataDisplay() {
     const [moves, setMoves] = useState([]);
     const [latestCry, setLatestCry] = useState('');
     const [legacyCry, setLegacyCry] = useState('');
-    const [frontLatest, setFrontLatest] = useState('');
-    const [frontLegacy, setFrontLegacy] = useState('');
-    const [artworkShiny, setArtworkShiny] = useState('');
-    const [artworkDefault, setArtworkDefault] = useState('');
+    const [mainPokemonPicture, setMainPokemonPicture] = useState('');
+    const [legacyPokemonPicture, setLegacyPokemonPicture] = useState('');
+    const [latestPokemonPicture, setLatestPokemonPicture] = useState('');
 
     const genericURL = `https://pokeapi.co/api/v2/pokemon/${selectedPokemon.toLowerCase()}`;
 
@@ -57,16 +56,26 @@ export default function DataDisplay() {
 
             let updatedFeet = feet;
             let displayHeight = inches === 12 ? `${updatedFeet + 1} ft.` : `${updatedFeet} ft. ${inches} in.`;
-
-            setArtworkShiny(data.sprites.other.showdown.front_shiny ?? data.sprites.other.dream_world.front_default);
-            setArtworkDefault(data.sprites.other.showdown.front_default ?? data.sprites.other.dream_world.front_default);
             setLatestCry(data.cries.latest ?? '');
-            setFrontLatest(data.sprites.other.dream_world.front_default ?? data.sprites.front_shiny);
             setLegacyCry(data.cries.legacy ?? '');
-            setFrontLegacy(data.sprites.front_default ?? data.sprites.back_default);
             setBaseExperience(data.base_experience ?? 'This stat cannot be found!');
             setHeight(displayHeight ?? 'This stat cannot be found!');
             setWeight(data.weight ?? 'This stat cannot be found');
+            setMainPokemonPicture(
+                data.sprites.other['official-artwork'].front_default
+                ??
+                data.sprites.front_default
+                );
+            setLatestPokemonPicture(
+                data.sprites.other.dream_world.front_default
+                ??
+                data.sprites.front_default
+                );
+            setLegacyPokemonPicture(
+                data.sprites.other.showdown.front_default
+                ??
+                data.sprites.front_default
+                );
 
             // Process abilities if present
             if (data.abilities) {
@@ -101,7 +110,7 @@ export default function DataDisplay() {
 
     return (
         <>
-            <div className='bg-dark-blue p-10 mt-3 rounded antialiased'>
+            <div className='bg-dark-blue p-10 mt-3 rounded antialiased w-3/4'>
                 <div className="px-4 sm:px-0">
                     <h3 className="text-base font-semibold leading-7 text-white">PokéFinder</h3>
                     <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-400">Discover your favorite pokémon</p>
@@ -115,23 +124,13 @@ export default function DataDisplay() {
                             <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
                                 <div className="bg-poke-black p-3 rounded-2xl my-1 max-w-fit flex justify-center items-center">
                                     <div className="flex flex-col items-center">
+                                    <p className="text-poke-yellow m-5 font-extrabold">{selectedPokemon}</p>
                                         <Image
-                                            src={artworkShiny}
+                                            src={mainPokemonPicture}
                                             alt={selectedPokemon}
-                                            width={80}
-                                            height={80}
+                                            width={300}
+                                            height={300}
                                         />
-                                        <p className="font-bold text-poke-blue">Shiny</p>
-                                    </div>
-                                    <p className="text-poke-yellow mx-5 font-extrabold">{selectedPokemon}</p>
-                                    <div className="flex flex-col items-center">
-                                        <Image
-                                            src={artworkDefault}
-                                            alt={selectedPokemon}
-                                            width={80}
-                                            height={80}
-                                        />
-                                        <p className="font-bold text-poke-white">Default</p>
                                     </div>
                                 </div>
                             </dd>
@@ -145,9 +144,8 @@ export default function DataDisplay() {
                                 {
                                     latestCry ?
                                         <AudioPlayer
-                                            imageURL={frontLatest}
+                                            imageURL={latestPokemonPicture}
                                             imageAlt={selectedPokemon}
-                                            soundTitle={`${selectedPokemon}`}
                                             audioSrc={latestCry}
                                         />
 
@@ -167,9 +165,8 @@ export default function DataDisplay() {
                                 {
                                     legacyCry ?
                                         <AudioPlayer
-                                            imageURL={frontLegacy}
+                                            imageURL={legacyPokemonPicture}
                                             imageAlt={selectedPokemon}
-                                            soundTitle={`${selectedPokemon}`}
                                             audioSrc={legacyCry}
                                         />
                                         :
