@@ -78,12 +78,37 @@ export default function DataDisplay() {
                 data.sprites.front_default
             );
             // Process types if present
-            setTypes(data.types ? data.types.map(types => ({
-                name: types.type.name,
-                url: types.type.url
-            })) : []);
+            const typeDetailsPromises = data.types ? data.types.map(async typeInfo => {
+                const typeCacheKey = `type-${typeInfo.type.name}`;
+                let typeData = await localForage.getItem(typeCacheKey);
 
-            console.log('types: ', types);
+                if (!typeData) {
+                    const response = await fetch(typeInfo.type.url);
+                    if (!response.ok) throw new Error(`Failed to fetch type data for ${typeInfo.type.name}`);
+                    typeData = await response.json();
+                    await localForage.setItem(typeCacheKey, typeData);
+                } else {
+                    console.log('using cached type data for', typeInfo.type.name);
+                }
+
+                return {
+                    name: typeInfo.type.name,
+                    damageRelations: {
+                        doubleDamageTo: typeData.damage_relations.double_damage_to.map(d => d.name),
+                        doubleDamageFrom: typeData.damage_relations.double_damage_from.map(d => d.name),
+                        halfDamageTo: typeData.damage_relations.half_damage_to.map(d => d.name),
+                        halfDamageFrom: typeData.damage_relations.half_damage_from.map(d => d.name),
+                        noDamageTo: typeData.damage_relations.no_damage_to.map(d => d.name),
+                        noDamageFrom: typeData.damage_relations.no_damage_from.map(d => d.name),
+                    }
+                };
+            }) : Promise.resolve([]);
+
+            Promise.all(typeDetailsPromises).then(fetchedTypes => {
+                setTypes(fetchedTypes.length ? fetchedTypes : [{
+                    name: "No type data available"
+                }]);
+            });
 
             // Process abilities if present
             if (data.abilities) {
@@ -160,13 +185,99 @@ export default function DataDisplay() {
                             <dt className="text-sm font-medium leading-6 text-white"> Type(s)</dt>
                             <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
                                 <div className="bg-poke-black p-3 rounded-2xl my-1">
-                                        {
-                                           types.map((types, index) => (
-                                            <div key={index} className="text-poke-yellow capitalize">
-                                                {types.name}
+                                    {
+                                        types.map((types, index) => (
+                                            <div key={index}>
+                                                <h2 className="text-poke-yellow capitalize mt-3">
+                                                    {types.name}
+                                                </h2>
+
+                                                {/* //* double damage to */}
+                                                <div className="flex">
+                                                    <h3 className="mr-1 text-poke-white">Double Damage To:</h3>
+                                                    <p className="capitalize text-poke-blue">
+                                                        {
+                                                            types.damageRelations.doubleDamageTo.length > 0
+                                                                ?
+                                                                types.damageRelations.doubleDamageTo.join(", ")
+                                                                :
+                                                                <span className="text-poke-red">None</span>
+                                                        }
+                                                    </p>
+                                                </div>
+
+                                                {/* //* double damage from */}
+                                                <div className="flex">
+                                                    <h3 className="mr-1 text-poke-white">Double Damage From:</h3>
+                                                    <p className="capitalize text-poke-blue">
+                                                        {
+                                                            types.damageRelations.doubleDamageFrom.length > 0
+                                                                ?
+                                                                types.damageRelations.doubleDamageFrom.join(", ")
+                                                                :
+                                                                <span className="text-poke-red">None</span>
+                                                        }
+                                                    </p>
+                                                </div>
+
+                                                {/* //* half damage to */}
+                                                <div className="flex">
+                                                    <h3 className="mr-1 text-poke-white">Half Damage To:</h3>
+                                                    <p className="capitalize text-poke-blue">
+                                                        {
+                                                            types.damageRelations.halfDamageTo.length > 0
+                                                                ?
+                                                                types.damageRelations.halfDamageTo.join(", ")
+                                                                :
+                                                                <span className="text-poke-red">None</span>
+                                                        }
+                                                    </p>
+                                                </div>
+
+                                                {/* //* half damage from */}
+                                                <div className="flex">
+                                                    <h3 className="mr-1 text-poke-white">Half Damage From:</h3>
+                                                    <p className="capitalize text-poke-blue">
+                                                        {
+                                                            types.damageRelations.halfDamageFrom.length > 0
+                                                                ?
+                                                                types.damageRelations.halfDamageFrom.join(", ")
+                                                                :
+                                                                <span className="text-poke-red">None</span>
+                                                        }
+                                                    </p>
+                                                </div>
+
+                                                {/* //* no damage to */}
+                                                <div className="flex">
+                                                    <h3 className="mr-1 text-poke-white">No Damage To:</h3>
+                                                    <p className="capitalize text-poke-blue">
+                                                        {
+                                                            types.damageRelations.noDamageTo.length > 0
+                                                                ?
+                                                                types.damageRelations.noDamageTo.join(", ")
+                                                                :
+                                                                <span className="text-poke-red">None</span>
+                                                        }
+                                                    </p>
+                                                </div>
+
+                                                {/* //* no damage from */}
+                                                <div className="flex">
+                                                    <h3 className="mr-1 text-poke-white">No Damage From:</h3>
+                                                    <p className="capitalize text-poke-blue">
+                                                        {
+                                                            types.damageRelations.noDamageFrom.length > 0
+                                                                ?
+                                                                types.damageRelations.noDamageFrom.join(", ")
+                                                                :
+                                                                <span className="text-poke-red">None</span>
+                                                        }
+                                                    </p>
+                                                </div>
                                             </div>
                                         ))
-                                        }
+                                    }
                                 </div>
                             </dd>
                         </div>
