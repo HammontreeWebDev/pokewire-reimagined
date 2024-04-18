@@ -168,7 +168,7 @@ export default function DataDisplay() {
                             <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
                                 <div className="bg-poke-black p-3 rounded-2xl my-1 max-w-fit flex justify-center items-center">
                                     <div className="flex flex-col items-center">
-                                        <p className="text-poke-yellow m-5 font-extrabold">{selectedPokemon}</p>
+                                        <h2 className="text-poke-yellow capitalize my-3 text-center text-2xl font-extrabold">{selectedPokemon}</h2>
                                         <Image
                                             src={mainPokemonPicture}
                                             alt={selectedPokemon}
@@ -188,7 +188,7 @@ export default function DataDisplay() {
                                     {
                                         types.map((types, index) => (
                                             <div key={index}>
-                                                <h2 className="text-poke-yellow capitalize mt-3">
+                                                <h2 className="text-poke-yellow capitalize my-3 text-center border-b text-2xl font-extrabold">
                                                     {types.name}
                                                 </h2>
 
@@ -356,9 +356,9 @@ export default function DataDisplay() {
                                 {
                                     abilities.map((ability, index) => (
                                         <div className="bg-poke-black p-3 rounded-2xl my-1" key={index}>
-                                            <p className="text-poke-yellow uppercase my-1">
+                                            <h2 className="text-poke-yellow capitalize my-3 text-center border-b text-2xl font-extrabold">
                                                 {ability.name}
-                                            </p>
+                                            </h2>
                                             <p className="text-poke-white">
                                                 {ability.effect}
                                             </p>
