@@ -65,26 +65,38 @@ export default function DataDisplay() {
                 data.sprites.other['official-artwork'].front_default
                 ??
                 data.sprites.front_default
-                );
+            );
             setLatestPokemonPicture(
                 data.sprites.other.dream_world.front_default
                 ??
                 data.sprites.front_default
-                );
+            );
             setLegacyPokemonPicture(
                 data.sprites.other.showdown.front_default
                 ??
                 data.sprites.front_default
-                );
+            );
 
             // Process abilities if present
             if (data.abilities) {
                 const abilitiesPromises = data.abilities.map(async ability => {
-                    const abilityResponse = await fetch(ability.ability.url);
-                    const abilityData = await abilityResponse.json();
+
+                    const abilityCacheKey = `ability-${ability.ability.name}`;
+                    let abilityData = localStorage.getItem(abilityCacheKey);
+
+                    if (!abilityData) {
+                        const abilityResponse = await fetch(ability.ability.url);
+                        abilityData = await abilityResponse.json();
+                        localStorage.setItem(abilityCacheKey, JSON.stringify(abilityData));
+                    } else {
+                        console.log('using cached ability data for', abilityCacheKey)
+                        abilityData = JSON.parse(abilityData);
+                    }
+
                     const abilityEffectEntries = abilityData.effect_entries;
                     const englishEffectEntry = abilityEffectEntries.find(entry => entry.language.name === "en");
                     const englishEffect = englishEffectEntry ? englishEffectEntry.effect : 'No english description found!';
+
                     return {
                         ...ability,
                         name: ability.ability.name,
@@ -124,7 +136,7 @@ export default function DataDisplay() {
                             <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
                                 <div className="bg-poke-black p-3 rounded-2xl my-1 max-w-fit flex justify-center items-center">
                                     <div className="flex flex-col items-center">
-                                    <p className="text-poke-yellow m-5 font-extrabold">{selectedPokemon}</p>
+                                        <p className="text-poke-yellow m-5 font-extrabold">{selectedPokemon}</p>
                                         <Image
                                             src={mainPokemonPicture}
                                             alt={selectedPokemon}
