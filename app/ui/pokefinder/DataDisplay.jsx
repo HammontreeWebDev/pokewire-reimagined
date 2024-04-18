@@ -194,8 +194,8 @@ export default function DataDisplay() {
 
                                                 {/* //* double damage to */}
                                                 <div className="flex">
-                                                    <h3 className="mr-1 text-poke-white">Double Damage To:</h3>
-                                                    <p className="capitalize text-poke-blue">
+                                                    <h3 className="mr-1 text-poke-yellow font-bold">Double Damage To:</h3>
+                                                    <p className="capitalize text-poke-white font-bold">
                                                         {
                                                             types.damageRelations.doubleDamageTo.length > 0
                                                                 ?
@@ -208,8 +208,8 @@ export default function DataDisplay() {
 
                                                 {/* //* double damage from */}
                                                 <div className="flex">
-                                                    <h3 className="mr-1 text-poke-white">Double Damage From:</h3>
-                                                    <p className="capitalize text-poke-blue">
+                                                    <h3 className="mr-1 text-poke-yellow font-bold">Double Damage From:</h3>
+                                                    <p className="capitalize text-poke-white font-bold">
                                                         {
                                                             types.damageRelations.doubleDamageFrom.length > 0
                                                                 ?
@@ -222,8 +222,8 @@ export default function DataDisplay() {
 
                                                 {/* //* half damage to */}
                                                 <div className="flex">
-                                                    <h3 className="mr-1 text-poke-white">Half Damage To:</h3>
-                                                    <p className="capitalize text-poke-blue">
+                                                    <h3 className="mr-1 text-poke-yellow font-bold">Half Damage To:</h3>
+                                                    <p className="capitalize text-poke-white font-bold">
                                                         {
                                                             types.damageRelations.halfDamageTo.length > 0
                                                                 ?
@@ -236,8 +236,8 @@ export default function DataDisplay() {
 
                                                 {/* //* half damage from */}
                                                 <div className="flex">
-                                                    <h3 className="mr-1 text-poke-white">Half Damage From:</h3>
-                                                    <p className="capitalize text-poke-blue">
+                                                    <h3 className="mr-1 text-poke-yellow font-bold">Half Damage From:</h3>
+                                                    <p className="capitalize text-poke-white font-bold">
                                                         {
                                                             types.damageRelations.halfDamageFrom.length > 0
                                                                 ?
@@ -250,8 +250,8 @@ export default function DataDisplay() {
 
                                                 {/* //* no damage to */}
                                                 <div className="flex">
-                                                    <h3 className="mr-1 text-poke-white">No Damage To:</h3>
-                                                    <p className="capitalize text-poke-blue">
+                                                    <h3 className="mr-1 text-poke-yellow font-bold">No Damage To:</h3>
+                                                    <p className="capitalize text-poke-white font-bold">
                                                         {
                                                             types.damageRelations.noDamageTo.length > 0
                                                                 ?
@@ -264,8 +264,8 @@ export default function DataDisplay() {
 
                                                 {/* //* no damage from */}
                                                 <div className="flex">
-                                                    <h3 className="mr-1 text-poke-white">No Damage From:</h3>
-                                                    <p className="capitalize text-poke-blue">
+                                                    <h3 className="mr-1 text-poke-yellow font-bold">No Damage From:</h3>
+                                                    <p className="capitalize text-poke-white font-bold">
                                                         {
                                                             types.damageRelations.noDamageFrom.length > 0
                                                                 ?
