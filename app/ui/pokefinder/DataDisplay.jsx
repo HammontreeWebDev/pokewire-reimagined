@@ -21,10 +21,16 @@ export default function DataDisplay() {
     const [mainPokemonPicture, setMainPokemonPicture] = useState('');
     const [legacyPokemonPicture, setLegacyPokemonPicture] = useState('');
     const [latestPokemonPicture, setLatestPokemonPicture] = useState('');
-
-    const genericURL = `https://pokeapi.co/api/v2/pokemon/${selectedPokemon.toLowerCase()}`;
+    let genericURL;
 
     useEffect(() => {
+        
+        selectedPokemon 
+        ?
+        genericURL = `https://pokeapi.co/api/v2/pokemon/${selectedPokemon.toLowerCase()}`
+        :
+        null;
+
         const fetchData = async () => {
             const cacheKey = `data-${selectedPokemon}`;
             try {
@@ -154,7 +160,10 @@ export default function DataDisplay() {
 
     return (
         <>
-            <div className='bg-dark-blue p-10 mt-3 rounded antialiased w-3/4'>
+            {
+                selectedPokemon
+                ?
+                <div className='bg-dark-blue p-10 mt-3 rounded antialiased w-3/4'>
                 <div className="px-4 sm:px-0">
                     <h3 className="text-base font-semibold leading-7 text-white">PokéFinder</h3>
                     <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-400">Discover your favorite pokémon</p>
@@ -384,6 +393,9 @@ export default function DataDisplay() {
                     </dl>
                 </div>
             </div>
+            :
+            null
+            }
         </>
     )
 }
