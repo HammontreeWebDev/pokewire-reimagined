@@ -14,6 +14,7 @@ function classNames(...classes) {
 
 export default function SearchField() {
     const [query, setQuery] = useState('')
+    const [tempSelectedPokemon, setTempSelectedPokemon] = useState('');
     const [selectedPokemon, setSelectedPokemon] = usePokemon();
 
     const filteredPokemon = query.length >= 3
@@ -28,8 +29,13 @@ export default function SearchField() {
         }
     }, [selectedPokemon]);
 
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        setSelectedPokemon(tempSelectedPokemon);
+    }
+
     return (
-        <Combobox as="div" value={selectedPokemon} onChange={setSelectedPokemon}>
+        <Combobox as="form" onSubmit={handleSubmit} value={tempSelectedPokemon} onChange={setTempSelectedPokemon} className="space-y-4 flex flex-col">
             <div className='flex flex-col items-center'>
                 <Image
                     src={'/img/profile_settings/MyPokemonIcon.png'}
@@ -80,6 +86,7 @@ export default function SearchField() {
                     </Combobox.Options>
                 )}
             </div>
+            <button type='submit' className='mt-4 px-4 py-2 bg-dark-blue text-poke-white rounded shadow hover:bg-[var(--dark-yellow)] hover:text-[var(--poke-red)]'>Submit</button>
         </Combobox>
     )
 }
