@@ -1,8 +1,10 @@
 'use client'
 import { usePokemon } from "@/app/context/PokemonContext";
 import { useEffect, useState } from "react";
+import localForage from "localforage";
 import AudioPlayer from "@/app/ui/audio/AudioPlayer";
 import Image from "next/image";
+
 
 export default function DataDisplay() {
 
@@ -24,22 +26,20 @@ export default function DataDisplay() {
     useEffect(() => {
         const fetchData = async () => {
             const cacheKey = `data-${selectedPokemon}`;
-            const cachedData = localStorage.getItem(cacheKey);
-            if (cachedData) {
-                console.log("Using cached data for:", selectedPokemon);
-                setData(JSON.parse(cachedData));
-            } else if (selectedPokemon.length > 3) {
-                try {
+            try {
+                const cachedData = await localForage.getItem(cacheKey);
+                if (cachedData) {
+                    console.log("Using cached data for:", selectedPokemon);
+                    setData(cachedData);
+                } else if (selectedPokemon.length > 3) {
                     const response = await fetch(genericURL);
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
+                    if (!response.ok) throw new Error('Network response was not ok');
                     const freshData = await response.json();
-                    localStorage.setItem(cacheKey, JSON.stringify(freshData));
+                    await localForage.setItem(cacheKey, freshData);
                     setData(freshData);
-                } catch (error) {
-                    console.error("Failed to fetch data:", error);
                 }
+            } catch (error) {
+                console.error("Failed to fetch or cache data:", error);
             }
         };
         fetchData();
@@ -82,15 +82,14 @@ export default function DataDisplay() {
                 const abilitiesPromises = data.abilities.map(async ability => {
 
                     const abilityCacheKey = `ability-${ability.ability.name}`;
-                    let abilityData = localStorage.getItem(abilityCacheKey);
+                    let abilityData = await localForage.getItem(abilityCacheKey);
 
                     if (!abilityData) {
                         const abilityResponse = await fetch(ability.ability.url);
                         abilityData = await abilityResponse.json();
-                        localStorage.setItem(abilityCacheKey, JSON.stringify(abilityData));
+                        await localForage.setItem(abilityCacheKey, abilityData);
                     } else {
                         console.log('using cached ability data for', abilityCacheKey)
-                        abilityData = JSON.parse(abilityData);
                     }
 
                     const abilityEffectEntries = abilityData.effect_entries;
