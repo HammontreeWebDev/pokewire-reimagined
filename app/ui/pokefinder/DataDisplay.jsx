@@ -316,7 +316,6 @@ export default function DataDisplay() {
                         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                             <dt className="text-sm font-medium leading-6 text-white">{`Legacy Cry`}</dt>
                             <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
-                                {/* // TODO: need to make it so that only the current pokemons legacy cry shows - at the moment it is displaying prev pokemons legacy cry if there was not one found for current pokemon selected */}
                                 {
                                     legacyCry ?
                                         <AudioPlayer
@@ -383,8 +382,10 @@ export default function DataDisplay() {
                             <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
                                 {
                                     moves.map((move, index) => (
-                                        <div key={index}>
-                                            {move.name}
+                                        <div key={index} className="bg-poke-black p-3 rounded-2xl my-1">
+                                            <h2 className="text-poke-yellow capitalize my-3 text-center border-b text-2xl font-extrabold">
+                                                {move.name}
+                                            </h2>
                                         </div>
                                     ))
                                 }
