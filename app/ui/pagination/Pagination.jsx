@@ -8,15 +8,15 @@ function Pagination({ currentPage, totalCount, pageSize, onPageChange }) {
   const pages = Array.from({ length: (endPage - startPage + 1) }, (_, i) => startPage + i);
 
   return (
-    <nav className="flex items-center justify-between border-b border-gray-200 px-4 py-3 mb-3 sm:px-0">
+    <nav className="flex items-center justify-between border-b border-[var(--dark-yellow)] px-4 py-3 mb-3 sm:px-0 antialiased">
       {/* Show previous button only if current page is not the first page */}
       {currentPage > 1 && (
         <a
           href="#"
           onClick={(e) => { e.preventDefault(); onPageChange(currentPage - 1); }}
-          className="inline-flex items-center border-t-2 border-transparent pr-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+          className="inline-flex items-center border-b-2 border-transparent pr-1 pt-4 text-sm font-medium text-poke-white hover:border-[var(--poke-blue)] hover:text-[var(--poke-yellow)]"
         >
-          <ArrowLongLeftIcon className="mr-3 h-5 w-5 text-gray-400" aria-hidden="true" />
+          <ArrowLongLeftIcon className="mr-3 h-5 w-5 text-poke-white" aria-hidden="true" />
           Previous
         </a>
       )}
@@ -27,7 +27,7 @@ function Pagination({ currentPage, totalCount, pageSize, onPageChange }) {
           key={page}
           href="#"
           onClick={(e) => { e.preventDefault(); onPageChange(page); }}
-          className={`inline-flex items-center border-t-2 border-transparent px-4 pt-4 text-sm font-medium ${currentPage === page ? 'text-indigo-600 border-indigo-500' : 'text-gray-500 hover:border-gray-300 hover:text-gray-700'}`}
+          className={`inline-flex items-center border-b-2 border-transparent px-4 pt-4 text-sm font-medium ${currentPage === page ? 'text-poke-red border-[var(--poke-red)]' : 'text-poke-white hover:border-[var(--poke-blue)] hover:text-[var(--poke-yellow)]'}`}
         >
           {page}
         </a>
@@ -38,7 +38,7 @@ function Pagination({ currentPage, totalCount, pageSize, onPageChange }) {
         <a
           href="#"
           onClick={(e) => { e.preventDefault(); onPageChange(currentPage + 1); }}
-          className="inline-flex items-center border-t-2 border-transparent pl-1 pt-4 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+          className="inline-flex items-center border-b-2 border-transparent pl-1 pt-4 text-sm font-medium text-poke-white hover:border-[var(--poke-blue)] hover:text-[var(--poke-yellow)]"
         >
           Next
           <ArrowLongRightIcon className="ml-3 h-5 w-5 text-gray-400" aria-hidden="true" />
