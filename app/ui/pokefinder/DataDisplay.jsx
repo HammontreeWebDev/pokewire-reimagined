@@ -4,9 +4,12 @@ import { useEffect, useState } from "react";
 import localForage from "localforage";
 import AudioPlayer from "@/app/ui/audio/AudioPlayer";
 import Image from "next/image";
+import Pagination from "@/app/ui/pagination/Pagination";
 
 
 export default function DataDisplay() {
+
+    const MOVES_PER_PAGE = 5;
 
     const [selectedPokemon] = usePokemon();
     const [data, setData] = useState(null);
@@ -21,15 +24,22 @@ export default function DataDisplay() {
     const [mainPokemonPicture, setMainPokemonPicture] = useState('');
     const [legacyPokemonPicture, setLegacyPokemonPicture] = useState('');
     const [latestPokemonPicture, setLatestPokemonPicture] = useState('');
+
+    // ! State Management for pagination in moves section
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filteredMoves, setFilteredMoves] = useState([]);
+
+    // ! declare but leave empty for now
     let genericURL;
 
     useEffect(() => {
-        
-        selectedPokemon 
-        ?
-        genericURL = `https://pokeapi.co/api/v2/pokemon/${selectedPokemon.toLowerCase()}`
-        :
-        null;
+
+        selectedPokemon
+            ?
+            genericURL = `https://pokeapi.co/api/v2/pokemon/${selectedPokemon.toLowerCase()}`
+            :
+            null;
 
         const fetchData = async () => {
             const cacheKey = `data-${selectedPokemon}`;
@@ -157,245 +167,270 @@ export default function DataDisplay() {
         }
     }, [data]);  // This useEffect depends on data
 
+    // ! UseEffect for filtering logic
+    useEffect(() => {
+        const lowercasedFilter = searchTerm.toLowerCase();
+        const filteredData = moves.filter((move) => move.name.toLowerCase().includes(lowercasedFilter));
+
+        setFilteredMoves(filteredData);
+        setCurrentPage(1);
+    }, [searchTerm, moves]);
+
+    // ! Pagination logic
+    const indexOfLastMove = currentPage * MOVES_PER_PAGE;
+    const indexOfFirstMove = indexOfLastMove - MOVES_PER_PAGE;
+    const currentMoves = filteredMoves.slice(indexOfFirstMove, indexOfLastMove);
 
     return (
         <>
             {
                 selectedPokemon
-                ?
-                <div className='bg-dark-blue p-10 mt-3 rounded antialiased w-3/4'>
-                <div className="px-4 sm:px-0">
-                    <h3 className="text-base font-semibold leading-7 text-white">PokéFinder</h3>
-                    <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-400">Discover your favorite pokémon</p>
-                </div>
-                <div className="mt-6 border-t border-white/10">
-                    <dl className="divide-y divide-white/10">
-
-                        {/* //! Pokémon Name */}
-                        <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 text-white">Pokémon</dt>
-                            <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
-                                <div className="bg-poke-black p-3 rounded-2xl my-1 max-w-fit flex justify-center items-center">
-                                    <div className="flex flex-col items-center">
-                                        <h2 className="text-poke-yellow capitalize my-3 text-center text-2xl font-extrabold">{selectedPokemon}</h2>
-                                        <Image
-                                            src={mainPokemonPicture}
-                                            alt={selectedPokemon}
-                                            width={300}
-                                            height={300}
-                                        />
-                                    </div>
-                                </div>
-                            </dd>
+                    ?
+                    <div className='bg-dark-blue p-10 mt-3 rounded antialiased w-3/4'>
+                        <div className="px-4 sm:px-0">
+                            <h3 className="text-base font-semibold leading-7 text-white">PokéFinder</h3>
+                            <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-400">Discover your favorite pokémon</p>
                         </div>
+                        <div className="mt-6 border-t border-white/10">
+                            <dl className="divide-y divide-white/10">
 
-                        {/* //! Pokémon Height */}
-                        <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 text-white"> Type(s)</dt>
-                            <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
-                                <div className="bg-poke-black p-3 rounded-2xl my-1">
-                                    {
-                                        types.map((types, index) => (
-                                            <div key={index}>
-                                                <h2 className="text-poke-yellow capitalize my-3 text-center border-b text-2xl font-extrabold">
-                                                    {types.name}
-                                                </h2>
-
-                                                {/* //* double damage to */}
-                                                <div className="flex">
-                                                    <h3 className="mr-1 text-poke-yellow font-bold">Double Damage To:</h3>
-                                                    <p className="capitalize text-poke-white font-bold">
-                                                        {
-                                                            types.damageRelations.doubleDamageTo.length > 0
-                                                                ?
-                                                                types.damageRelations.doubleDamageTo.join(", ")
-                                                                :
-                                                                <span className="text-poke-red">None</span>
-                                                        }
-                                                    </p>
-                                                </div>
-
-                                                {/* //* double damage from */}
-                                                <div className="flex">
-                                                    <h3 className="mr-1 text-poke-yellow font-bold">Double Damage From:</h3>
-                                                    <p className="capitalize text-poke-white font-bold">
-                                                        {
-                                                            types.damageRelations.doubleDamageFrom.length > 0
-                                                                ?
-                                                                types.damageRelations.doubleDamageFrom.join(", ")
-                                                                :
-                                                                <span className="text-poke-red">None</span>
-                                                        }
-                                                    </p>
-                                                </div>
-
-                                                {/* //* half damage to */}
-                                                <div className="flex">
-                                                    <h3 className="mr-1 text-poke-yellow font-bold">Half Damage To:</h3>
-                                                    <p className="capitalize text-poke-white font-bold">
-                                                        {
-                                                            types.damageRelations.halfDamageTo.length > 0
-                                                                ?
-                                                                types.damageRelations.halfDamageTo.join(", ")
-                                                                :
-                                                                <span className="text-poke-red">None</span>
-                                                        }
-                                                    </p>
-                                                </div>
-
-                                                {/* //* half damage from */}
-                                                <div className="flex">
-                                                    <h3 className="mr-1 text-poke-yellow font-bold">Half Damage From:</h3>
-                                                    <p className="capitalize text-poke-white font-bold">
-                                                        {
-                                                            types.damageRelations.halfDamageFrom.length > 0
-                                                                ?
-                                                                types.damageRelations.halfDamageFrom.join(", ")
-                                                                :
-                                                                <span className="text-poke-red">None</span>
-                                                        }
-                                                    </p>
-                                                </div>
-
-                                                {/* //* no damage to */}
-                                                <div className="flex">
-                                                    <h3 className="mr-1 text-poke-yellow font-bold">No Damage To:</h3>
-                                                    <p className="capitalize text-poke-white font-bold">
-                                                        {
-                                                            types.damageRelations.noDamageTo.length > 0
-                                                                ?
-                                                                types.damageRelations.noDamageTo.join(", ")
-                                                                :
-                                                                <span className="text-poke-red">None</span>
-                                                        }
-                                                    </p>
-                                                </div>
-
-                                                {/* //* no damage from */}
-                                                <div className="flex">
-                                                    <h3 className="mr-1 text-poke-yellow font-bold">No Damage From:</h3>
-                                                    <p className="capitalize text-poke-white font-bold">
-                                                        {
-                                                            types.damageRelations.noDamageFrom.length > 0
-                                                                ?
-                                                                types.damageRelations.noDamageFrom.join(", ")
-                                                                :
-                                                                <span className="text-poke-red">None</span>
-                                                        }
-                                                    </p>
-                                                </div>
+                                {/* //! Pokémon Name */}
+                                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <dt className="text-sm font-medium leading-6 text-white">Pokémon</dt>
+                                    <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
+                                        <div className="bg-poke-black p-3 rounded-2xl my-1 max-w-fit flex justify-center items-center">
+                                            <div className="flex flex-col items-center">
+                                                <h2 className="text-poke-yellow capitalize my-3 text-center text-2xl font-extrabold">{selectedPokemon}</h2>
+                                                <Image
+                                                    src={mainPokemonPicture}
+                                                    alt={selectedPokemon}
+                                                    width={300}
+                                                    height={300}
+                                                />
                                             </div>
-                                        ))
-                                    }
+                                        </div>
+                                    </dd>
                                 </div>
-                            </dd>
-                        </div>
 
-                        {/* //! Pokémon Latest cry */}
-                        <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 text-white">{`Latest Cry`}</dt>
-                            <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
+                                {/* //! Pokémon Height */}
+                                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <dt className="text-sm font-medium leading-6 text-white"> Type(s)</dt>
+                                    <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
+                                        <div className="bg-poke-black p-3 rounded-2xl my-1">
+                                            {
+                                                types.map((types, index) => (
+                                                    <div key={index}>
+                                                        <h2 className="text-poke-yellow capitalize my-3 text-center border-b text-2xl font-extrabold">
+                                                            {types.name}
+                                                        </h2>
 
-                                {
-                                    latestCry ?
-                                        <AudioPlayer
-                                            imageURL={latestPokemonPicture}
-                                            imageAlt={selectedPokemon}
-                                            audioSrc={latestCry}
-                                        />
+                                                        {/* //* double damage to */}
+                                                        <div className="flex">
+                                                            <h3 className="mr-1 text-poke-yellow font-bold">Double Damage To:</h3>
+                                                            <p className="capitalize text-poke-white font-bold">
+                                                                {
+                                                                    types.damageRelations.doubleDamageTo.length > 0
+                                                                        ?
+                                                                        types.damageRelations.doubleDamageTo.join(", ")
+                                                                        :
+                                                                        <span className="text-poke-red">None</span>
+                                                                }
+                                                            </p>
+                                                        </div>
 
-                                        :
+                                                        {/* //* double damage from */}
+                                                        <div className="flex">
+                                                            <h3 className="mr-1 text-poke-yellow font-bold">Double Damage From:</h3>
+                                                            <p className="capitalize text-poke-white font-bold">
+                                                                {
+                                                                    types.damageRelations.doubleDamageFrom.length > 0
+                                                                        ?
+                                                                        types.damageRelations.doubleDamageFrom.join(", ")
+                                                                        :
+                                                                        <span className="text-poke-red">None</span>
+                                                                }
+                                                            </p>
+                                                        </div>
 
-                                        <p className="text-poke-red bg-poke-black p-3 rounded-2xl">There is no latest cry available for {selectedPokemon}!</p>
+                                                        {/* //* half damage to */}
+                                                        <div className="flex">
+                                                            <h3 className="mr-1 text-poke-yellow font-bold">Half Damage To:</h3>
+                                                            <p className="capitalize text-poke-white font-bold">
+                                                                {
+                                                                    types.damageRelations.halfDamageTo.length > 0
+                                                                        ?
+                                                                        types.damageRelations.halfDamageTo.join(", ")
+                                                                        :
+                                                                        <span className="text-poke-red">None</span>
+                                                                }
+                                                            </p>
+                                                        </div>
 
-                                }
-                            </dd>
-                        </div>
+                                                        {/* //* half damage from */}
+                                                        <div className="flex">
+                                                            <h3 className="mr-1 text-poke-yellow font-bold">Half Damage From:</h3>
+                                                            <p className="capitalize text-poke-white font-bold">
+                                                                {
+                                                                    types.damageRelations.halfDamageFrom.length > 0
+                                                                        ?
+                                                                        types.damageRelations.halfDamageFrom.join(", ")
+                                                                        :
+                                                                        <span className="text-poke-red">None</span>
+                                                                }
+                                                            </p>
+                                                        </div>
 
-                        {/* //! Pokémon Legacy cry */}
-                        <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 text-white">{`Legacy Cry`}</dt>
-                            <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
-                                {
-                                    legacyCry ?
-                                        <AudioPlayer
-                                            imageURL={legacyPokemonPicture}
-                                            imageAlt={selectedPokemon}
-                                            audioSrc={legacyCry}
-                                        />
-                                        :
-                                        <p className="text-poke-red bg-poke-black p-3 rounded-2xl">There is no legacy cry available for {selectedPokemon}!</p>
-                                }
-                            </dd>
-                        </div>
+                                                        {/* //* no damage to */}
+                                                        <div className="flex">
+                                                            <h3 className="mr-1 text-poke-yellow font-bold">No Damage To:</h3>
+                                                            <p className="capitalize text-poke-white font-bold">
+                                                                {
+                                                                    types.damageRelations.noDamageTo.length > 0
+                                                                        ?
+                                                                        types.damageRelations.noDamageTo.join(", ")
+                                                                        :
+                                                                        <span className="text-poke-red">None</span>
+                                                                }
+                                                            </p>
+                                                        </div>
 
-                        {/* //! Pokémon Base Experience */}
-                        <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 text-white">Base Experience</dt>
-                            <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
-                                <div className="bg-poke-black p-3 rounded-2xl my-1">
-                                    <p className="text-poke-yellow">{baseExperience}</p>
+                                                        {/* //* no damage from */}
+                                                        <div className="flex">
+                                                            <h3 className="mr-1 text-poke-yellow font-bold">No Damage From:</h3>
+                                                            <p className="capitalize text-poke-white font-bold">
+                                                                {
+                                                                    types.damageRelations.noDamageFrom.length > 0
+                                                                        ?
+                                                                        types.damageRelations.noDamageFrom.join(", ")
+                                                                        :
+                                                                        <span className="text-poke-red">None</span>
+                                                                }
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                ))
+                                            }
+                                        </div>
+                                    </dd>
                                 </div>
-                            </dd>
-                        </div>
 
-                        {/* //! Pokémon Height */}
-                        <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 text-white"> Average Height</dt>
-                            <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
-                                <div className="bg-poke-black p-3 rounded-2xl my-1">
-                                    <p className="text-poke-yellow">
-                                        {height}
-                                    </p>
+                                {/* //! Pokémon Latest cry */}
+                                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <dt className="text-sm font-medium leading-6 text-white">{`Latest Cry`}</dt>
+                                    <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
+
+                                        {
+                                            latestCry ?
+                                                <AudioPlayer
+                                                    imageURL={latestPokemonPicture}
+                                                    imageAlt={selectedPokemon}
+                                                    audioSrc={latestCry}
+                                                />
+
+                                                :
+
+                                                <p className="text-poke-red bg-poke-black p-3 rounded-2xl">There is no latest cry available for {selectedPokemon}!</p>
+
+                                        }
+                                    </dd>
                                 </div>
-                            </dd>
-                        </div>
 
-                        {/* //! Pokémon Weight */}
-                        <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 text-white">Weight</dt>
-                            <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">{weight}</dd>
-                        </div>
+                                {/* //! Pokémon Legacy cry */}
+                                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <dt className="text-sm font-medium leading-6 text-white">{`Legacy Cry`}</dt>
+                                    <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
+                                        {
+                                            legacyCry ?
+                                                <AudioPlayer
+                                                    imageURL={legacyPokemonPicture}
+                                                    imageAlt={selectedPokemon}
+                                                    audioSrc={legacyCry}
+                                                />
+                                                :
+                                                <p className="text-poke-red bg-poke-black p-3 rounded-2xl">There is no legacy cry available for {selectedPokemon}!</p>
+                                        }
+                                    </dd>
+                                </div>
 
-                        {/* //! Pokémon Abilities */}
-                        <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 text-white">Abilities</dt>
-                            <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
-                                {
-                                    abilities.map((ability, index) => (
-                                        <div className="bg-poke-black p-3 rounded-2xl my-1" key={index}>
-                                            <h2 className="text-poke-yellow capitalize my-3 text-center border-b text-2xl font-extrabold">
-                                                {ability.name}
-                                            </h2>
-                                            <p className="text-poke-white">
-                                                {ability.effect}
+                                {/* //! Pokémon Base Experience */}
+                                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <dt className="text-sm font-medium leading-6 text-white">Base Experience</dt>
+                                    <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
+                                        <div className="bg-poke-black p-3 rounded-2xl my-1">
+                                            <p className="text-poke-yellow">{baseExperience}</p>
+                                        </div>
+                                    </dd>
+                                </div>
+
+                                {/* //! Pokémon Height */}
+                                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <dt className="text-sm font-medium leading-6 text-white"> Average Height</dt>
+                                    <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
+                                        <div className="bg-poke-black p-3 rounded-2xl my-1">
+                                            <p className="text-poke-yellow">
+                                                {height}
                                             </p>
                                         </div>
-                                    ))
-                                }
-                            </dd>
-                        </div>
+                                    </dd>
+                                </div>
 
-                        {/* //! Pokémon Moves */}
-                        <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                            <dt className="text-sm font-medium leading-6 text-white">Moves</dt>
-                            <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
-                                {
-                                    moves.map((move, index) => (
-                                        <div key={index} className="bg-poke-black p-3 rounded-2xl my-1">
-                                            <h2 className="text-poke-yellow capitalize my-3 text-center border-b text-2xl font-extrabold">
-                                                {move.name}
-                                            </h2>
-                                        </div>
-                                    ))
-                                }
-                            </dd>
+                                {/* //! Pokémon Weight */}
+                                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <dt className="text-sm font-medium leading-6 text-white">Weight</dt>
+                                    <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">{weight}</dd>
+                                </div>
+
+                                {/* //! Pokémon Abilities */}
+                                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <dt className="text-sm font-medium leading-6 text-white">Abilities</dt>
+                                    <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
+                                        {
+                                            abilities.map((ability, index) => (
+                                                <div className="bg-poke-black p-3 rounded-2xl my-1" key={index}>
+                                                    <h2 className="text-poke-yellow capitalize my-3 text-center border-b text-2xl font-extrabold">
+                                                        {ability.name}
+                                                    </h2>
+                                                    <p className="text-poke-white">
+                                                        {ability.effect}
+                                                    </p>
+                                                </div>
+                                            ))
+                                        }
+                                    </dd>
+                                </div>
+
+                                {/* //! Pokémon Moves */}
+                                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                    <dt className="text-sm font-medium leading-6 text-white">Moves</dt>
+                                    <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0 min-h-screen">
+                                        <input
+                                            type="text"
+                                            placeholder="Search moves. . ."
+                                            value={searchTerm}
+                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                        />
+                                        <Pagination
+                                            currentPage={currentPage}
+                                            totalCount={filteredMoves.length}
+                                            pageSize={MOVES_PER_PAGE}
+                                            onPageChange={page => setCurrentPage(page)}
+                                        />
+                                        {
+                                            currentMoves.map((move, index) => (
+                                                <div key={index} className="bg-poke-black p-3 rounded-2xl my-1">
+                                                    <h2 className="text-poke-yellow capitalize my-3 text-center border-b text-2xl font-extrabold">
+                                                        {move.name}
+                                                    </h2>
+                                                </div>
+                                            ))
+                                        }
+                                    </dd>
+                                </div>
+                            </dl>
                         </div>
-                    </dl>
-                </div>
-            </div>
-            :
-            null
+                    </div>
+                    :
+                    null
             }
         </>
     )
