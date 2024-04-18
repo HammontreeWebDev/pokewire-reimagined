@@ -10,6 +10,7 @@ export default function DataDisplay() {
 
     const [selectedPokemon] = usePokemon();
     const [data, setData] = useState(null);
+    const [types, setTypes] = useState([]);
     const [baseExperience, setBaseExperience] = useState('');
     const [height, setHeight] = useState('');
     const [weight, setWeight] = useState('');
@@ -76,6 +77,13 @@ export default function DataDisplay() {
                 ??
                 data.sprites.front_default
             );
+            // Process types if present
+            setTypes(data.types ? data.types.map(types => ({
+                name: types.type.name,
+                url: types.type.url
+            })) : []);
+
+            console.log('types: ', types);
 
             // Process abilities if present
             if (data.abilities) {
@@ -143,6 +151,22 @@ export default function DataDisplay() {
                                             height={300}
                                         />
                                     </div>
+                                </div>
+                            </dd>
+                        </div>
+
+                        {/* //! Pokémon Height */}
+                        <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                            <dt className="text-sm font-medium leading-6 text-white"> Type(s)</dt>
+                            <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
+                                <div className="bg-poke-black p-3 rounded-2xl my-1">
+                                        {
+                                           types.map((types, index) => (
+                                            <div key={index} className="text-poke-yellow capitalize">
+                                                {types.name}
+                                            </div>
+                                        ))
+                                        }
                                 </div>
                             </dd>
                         </div>
