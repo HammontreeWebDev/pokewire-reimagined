@@ -249,102 +249,102 @@ export default function DataDisplay() {
                                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                     <dt className="text-sm font-medium leading-6 text-white"> Type(s)</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
-                                        <div className="bg-poke-black p-3 rounded-2xl my-1">
-                                            {
-                                                types.map((types, index) => (
-                                                    <div key={index}>
-                                                        <h2 className="text-poke-yellow capitalize my-3 text-center border-b text-2xl font-extrabold">
-                                                            {types.name}
-                                                        </h2>
 
-                                                        {/* //* double damage to */}
-                                                        <div className="flex">
-                                                            <h3 className="mr-1 text-poke-yellow font-bold">Double Damage To:</h3>
-                                                            <p className="capitalize text-poke-white font-bold">
-                                                                {
-                                                                    types.damageRelations.doubleDamageTo.length > 0
-                                                                        ?
-                                                                        types.damageRelations.doubleDamageTo.join(", ")
-                                                                        :
-                                                                        <span className="text-poke-red">None</span>
-                                                                }
-                                                            </p>
-                                                        </div>
+                                        {
+                                            types.map((types, index) => (
+                                                <div className="bg-poke-black p-3 rounded-2xl my-1" key={index}>
+                                                    <h2 className="text-poke-yellow capitalize my-3 text-center border-b text-2xl font-extrabold">
+                                                        {types.name}
+                                                    </h2>
 
-                                                        {/* //* double damage from */}
-                                                        <div className="flex">
-                                                            <h3 className="mr-1 text-poke-yellow font-bold">Double Damage From:</h3>
-                                                            <p className="capitalize text-poke-white font-bold">
-                                                                {
-                                                                    types.damageRelations.doubleDamageFrom.length > 0
-                                                                        ?
-                                                                        types.damageRelations.doubleDamageFrom.join(", ")
-                                                                        :
-                                                                        <span className="text-poke-red">None</span>
-                                                                }
-                                                            </p>
-                                                        </div>
-
-                                                        {/* //* half damage to */}
-                                                        <div className="flex">
-                                                            <h3 className="mr-1 text-poke-yellow font-bold">Half Damage To:</h3>
-                                                            <p className="capitalize text-poke-white font-bold">
-                                                                {
-                                                                    types.damageRelations.halfDamageTo.length > 0
-                                                                        ?
-                                                                        types.damageRelations.halfDamageTo.join(", ")
-                                                                        :
-                                                                        <span className="text-poke-red">None</span>
-                                                                }
-                                                            </p>
-                                                        </div>
-
-                                                        {/* //* half damage from */}
-                                                        <div className="flex">
-                                                            <h3 className="mr-1 text-poke-yellow font-bold">Half Damage From:</h3>
-                                                            <p className="capitalize text-poke-white font-bold">
-                                                                {
-                                                                    types.damageRelations.halfDamageFrom.length > 0
-                                                                        ?
-                                                                        types.damageRelations.halfDamageFrom.join(", ")
-                                                                        :
-                                                                        <span className="text-poke-red">None</span>
-                                                                }
-                                                            </p>
-                                                        </div>
-
-                                                        {/* //* no damage to */}
-                                                        <div className="flex">
-                                                            <h3 className="mr-1 text-poke-yellow font-bold">No Damage To:</h3>
-                                                            <p className="capitalize text-poke-white font-bold">
-                                                                {
-                                                                    types.damageRelations.noDamageTo.length > 0
-                                                                        ?
-                                                                        types.damageRelations.noDamageTo.join(", ")
-                                                                        :
-                                                                        <span className="text-poke-red">None</span>
-                                                                }
-                                                            </p>
-                                                        </div>
-
-                                                        {/* //* no damage from */}
-                                                        <div className="flex">
-                                                            <h3 className="mr-1 text-poke-yellow font-bold">No Damage From:</h3>
-                                                            <p className="capitalize text-poke-white font-bold">
-                                                                {
-                                                                    types.damageRelations.noDamageFrom.length > 0
-                                                                        ?
-                                                                        types.damageRelations.noDamageFrom.join(", ")
-                                                                        :
-                                                                        <span className="text-poke-red">None</span>
-                                                                }
-                                                            </p>
-                                                        </div>
+                                                    {/* //* double damage to */}
+                                                    <div className="flex">
+                                                        <h3 className="mr-1 text-poke-yellow font-bold">Double Damage To:</h3>
+                                                        <p className="capitalize text-poke-white font-bold">
+                                                            {
+                                                                types.damageRelations.doubleDamageTo.length > 0
+                                                                    ?
+                                                                    types.damageRelations.doubleDamageTo.join(", ")
+                                                                    :
+                                                                    <span className="text-poke-red">None</span>
+                                                            }
+                                                        </p>
                                                     </div>
-                                                ))
-                                            }
-                                        </div>
-                                    </dd>
+
+                                                    {/* //* double damage from */}
+                                                    <div className="flex">
+                                                        <h3 className="mr-1 text-poke-yellow font-bold">Double Damage From:</h3>
+                                                        <p className="capitalize text-poke-white font-bold">
+                                                            {
+                                                                types.damageRelations.doubleDamageFrom.length > 0
+                                                                    ?
+                                                                    types.damageRelations.doubleDamageFrom.join(", ")
+                                                                    :
+                                                                    <span className="text-poke-red">None</span>
+                                                            }
+                                                        </p>
+                                                    </div>
+
+                                                    {/* //* half damage to */}
+                                                    <div className="flex">
+                                                        <h3 className="mr-1 text-poke-yellow font-bold">Half Damage To:</h3>
+                                                        <p className="capitalize text-poke-white font-bold">
+                                                            {
+                                                                types.damageRelations.halfDamageTo.length > 0
+                                                                    ?
+                                                                    types.damageRelations.halfDamageTo.join(", ")
+                                                                    :
+                                                                    <span className="text-poke-red">None</span>
+                                                            }
+                                                        </p>
+                                                    </div>
+
+                                                    {/* //* half damage from */}
+                                                    <div className="flex">
+                                                        <h3 className="mr-1 text-poke-yellow font-bold">Half Damage From:</h3>
+                                                        <p className="capitalize text-poke-white font-bold">
+                                                            {
+                                                                types.damageRelations.halfDamageFrom.length > 0
+                                                                    ?
+                                                                    types.damageRelations.halfDamageFrom.join(", ")
+                                                                    :
+                                                                    <span className="text-poke-red">None</span>
+                                                            }
+                                                        </p>
+                                                    </div>
+
+                                                    {/* //* no damage to */}
+                                                    <div className="flex">
+                                                        <h3 className="mr-1 text-poke-yellow font-bold">No Damage To:</h3>
+                                                        <p className="capitalize text-poke-white font-bold">
+                                                            {
+                                                                types.damageRelations.noDamageTo.length > 0
+                                                                    ?
+                                                                    types.damageRelations.noDamageTo.join(", ")
+                                                                    :
+                                                                    <span className="text-poke-red">None</span>
+                                                            }
+                                                        </p>
+                                                    </div>
+
+                                                    {/* //* no damage from */}
+                                                    <div className="flex">
+                                                        <h3 className="mr-1 text-poke-yellow font-bold">No Damage From:</h3>
+                                                        <p className="capitalize text-poke-white font-bold">
+                                                            {
+                                                                types.damageRelations.noDamageFrom.length > 0
+                                                                    ?
+                                                                    types.damageRelations.noDamageFrom.join(", ")
+                                                                    :
+                                                                    <span className="text-poke-red">None</span>
+                                                            }
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            ))
+                                        }
+
+                                    </dd> 
                                 </div>
 
                                 {/* //! Pokémon Latest cry */}
@@ -517,7 +517,7 @@ export default function DataDisplay() {
                                                     <p className="text-center font-bold text-poke-yellow">
                                                         Type:&nbsp;
                                                         <span className="capitalize text-poke-white">
-                                                        {move.contest_type}
+                                                            {move.contest_type}
                                                         </span>
                                                     </p>
 
@@ -533,7 +533,7 @@ export default function DataDisplay() {
                                                         </p>
                                                         <p className="text-poke-blue font-bold">Use After:&nbsp;
                                                             <span className="text-poke-white font-bold capitalize">
-                                                            {move.contest_normal_use_after}
+                                                                {move.contest_normal_use_after}
                                                             </span>
                                                         </p>
                                                     </div>
@@ -545,12 +545,12 @@ export default function DataDisplay() {
                                                         </h4>
                                                         <p className="text-poke-blue font-bold">Use Before:&nbsp;
                                                             <span className="text-poke-white font-bold capitalize">
-                                                            {move.contest_super_use_before}
+                                                                {move.contest_super_use_before}
                                                             </span>
                                                         </p>
                                                         <p className="text-poke-blue font-bold">Use After:&nbsp;
                                                             <span className="text-poke-white font-bold capitalize">
-                                                            {move.contest_super_use_after}
+                                                                {move.contest_super_use_after}
                                                             </span>
                                                         </p>
                                                     </div>
