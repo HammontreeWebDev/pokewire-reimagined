@@ -46,7 +46,7 @@ export default function DataDisplay() {
             try {
                 const cachedData = await localForage.getItem(cacheKey);
                 if (cachedData) {
-                    console.log("Using cached data for:", selectedPokemon);
+                    // console.log("Using cached data for:", selectedPokemon);
                     setData(cachedData);
                 } else if (selectedPokemon.length > 3) {
                     const response = await fetch(genericURL);
@@ -64,7 +64,7 @@ export default function DataDisplay() {
 
     useEffect(() => {
         if (data) {
-            console.log(data); // This now correctly logs the data
+            console.log(data);
 
             // Process and update all the relevant states based on the new data
             const totalFeet = data.height / 3.048;
@@ -93,7 +93,8 @@ export default function DataDisplay() {
                 ??
                 data.sprites.front_default
             );
-            // Process types if present
+
+            // ! Process types if present
             const typeDetailsPromises = data.types ? data.types.map(async typeInfo => {
                 const typeCacheKey = `type-${typeInfo.type.name}`;
                 let typeData = await localForage.getItem(typeCacheKey);
@@ -103,9 +104,10 @@ export default function DataDisplay() {
                     if (!response.ok) throw new Error(`Failed to fetch type data for ${typeInfo.type.name}`);
                     typeData = await response.json();
                     await localForage.setItem(typeCacheKey, typeData);
-                } else {
-                    console.log('using cached type data for', typeInfo.type.name);
                 }
+                // else {
+                //     console.log('using cached type data for', typeInfo.type.name);
+                // }
 
                 return {
                     name: typeInfo.type.name,
@@ -126,7 +128,7 @@ export default function DataDisplay() {
                 }]);
             });
 
-            // Process abilities if present
+            // ! Process abilities if present
             if (data.abilities) {
                 const abilitiesPromises = data.abilities.map(async ability => {
 
@@ -137,9 +139,10 @@ export default function DataDisplay() {
                         const abilityResponse = await fetch(ability.ability.url);
                         abilityData = await abilityResponse.json();
                         await localForage.setItem(abilityCacheKey, abilityData);
-                    } else {
-                        console.log('using cached ability data for', abilityCacheKey)
                     }
+                    // else {
+                    //     console.log('using cached ability data for', abilityCacheKey)
+                    // }
 
                     const abilityEffectEntries = abilityData.effect_entries;
                     const englishEffectEntry = abilityEffectEntries.find(entry => entry.language.name === "en");
@@ -159,11 +162,41 @@ export default function DataDisplay() {
                 setAbilities([]);
             }
 
-            // Process moves if present
-            setMoves(data.moves ? data.moves.map(move => ({
-                name: move.move.name,
-                url: move.url
-            })) : []);
+            // ! Process moves if available
+            const moveDetailsPromises = data.moves ? data.moves.map(async moveInfo => {
+                const moveCacheKey = `move-${moveInfo.move.name}`;
+                let moveData = await localForage.getItem(moveCacheKey);
+
+                if (!moveData) {
+                    const response = await fetch(moveInfo.move.url);
+                    if (!response.ok) {
+                        console.error(`Failed to fetch data for move ${moveInfo.move.name}`);
+                        return { name: moveInfo.move.name, error: "Failed to fetch data" };
+                    }
+                    moveData = await response.json();
+                    await localForage.setItem(moveCacheKey, moveData);
+                }
+
+                return {
+                    name: moveInfo.move.name || 'No Data Available',
+                    accuracy: moveData.accuracy || 'No Data Available',
+                    contest_normal_use_after: moveData.contest_combos && moveData.contest_combos.normal && moveData.contest_combos.normal.use_after ? moveData.contest_combos.normal.use_after.map(d => d.name).join(", ") : 'N/A',
+                    contest_normal_use_before: moveData.contest_combos && moveData.contest_combos.normal && moveData.contest_combos.normal.use_before ? moveData.contest_combos.normal.use_before.map(d => d.name).join(", ") : 'N/A',
+                    contest_super_use_after: moveData.contest_combos && moveData.contest_combos.super && moveData.contest_combos.super.use_after ? moveData.contest_combos.super.use_after.map(d => d.name).join(", ") : 'N/A',
+                    contest_super_use_before: moveData.contest_combos && moveData.contest_combos.super && moveData.contest_combos.super.use_before ? moveData.contest_combos.super.use_before.map(d => d.name).join(", ") : 'N/A',
+                    contest_type: moveData.contest_type && moveData.contest_type.name ? moveData.contest_type.name : 'N/A',
+                    damage_class: moveData.damage_class && moveData.damage_class.name ? moveData.damage_class.name : 'N/A',
+                    effect_chance: moveData.effect_chance || 'N/A',
+                    effect_description: moveData.effect_entries.length > 0 && moveData.effect_entries[0].effect ? moveData.effect_entries[0].effect : 'No description available',
+                    power: moveData.power || 'N/A',
+                    pp: moveData.pp || 'N/A'
+                };
+            }) : Promise.resolve([]);
+
+            Promise.all(moveDetailsPromises).then(fetchedMoves => {
+                setMoves(fetchedMoves.length ? fetchedMoves : [{ name: "No move data available" }]);
+            });
+
         }
     }, [data]);  // This useEffect depends on data
 
@@ -422,9 +455,60 @@ export default function DataDisplay() {
                                                     <h2 className="text-poke-yellow capitalize my-3 text-center border-b text-2xl font-extrabold">
                                                         {move.name.replace('-', ' ')}
                                                     </h2>
+
+                                                    {/* // ! Accuracy */}
+                                                    <div className="text-poke-yellow font-bold">
+                                                        Accuracy:&nbsp;
+                                                        <span className="text-poke-white">{
+                                                        Number.isInteger(move.accuracy) ?
+                                                        `${move.accuracy}%`
+                                                        :
+                                                        move.accuracy
+                                                        }</span>
+                                                    </div>
+
+                                                    {/* // ! Power */}
+                                                    <div className="text-poke-yellow font-bold">
+                                                        Power:&nbsp;
+                                                        <span className="text-poke-white">{
+                                                        move.power
+                                                        }</span>
+                                                    </div>
+
+                                                    {/* // ! PP */}
+                                                    <div className="text-poke-yellow font-bold">
+                                                        PP:&nbsp;
+                                                        <span className="text-poke-white">{
+                                                        move.pp
+                                                        }</span>
+                                                    </div>
+
+                                                    {/* // ! Description */}
+                                                    <div className="text-poke-yellow font-bold">
+                                                        Description:&nbsp;
+                                                        <span className="text-poke-white">{
+                                                        move.effect_description
+                                                        }</span>
+                                                    </div>
+
+                                                    {/* // ! Effect Chance */}
+                                                    <div className="text-poke-yellow font-bold">
+                                                        Effect Chance:&nbsp;
+                                                        <span className="text-poke-white">{
+                                                        move.effect_chance
+                                                        }</span>
+                                                    </div>
+
+
+
+
+
+
+
                                                 </div>
                                             ))
                                         }
+                                        {/* name, contest_normal_use_after,contest_normal_use_before, contest_super_use_after, contest_super_use_before, contest_type, damage_class, */}
                                     </dd>
                                 </div>
                             </dl>
