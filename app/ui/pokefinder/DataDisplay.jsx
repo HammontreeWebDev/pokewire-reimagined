@@ -67,17 +67,28 @@ export default function DataDisplay() {
             console.log(data);
 
             // Process and update all the relevant states based on the new data
-            const totalFeet = data.height / 3.048;
+            // ! Height Calculations
+            const totalFeet = data.height / 3.048; // originally in decimeters
             const feet = Math.floor(totalFeet);
             let inches = Math.ceil((totalFeet - feet) * 12);
 
             let updatedFeet = feet;
             let displayHeight = inches === 12 ? `${updatedFeet + 1} ft.` : `${updatedFeet} ft. ${inches} in.`;
+
+            // ! Weight Calculations
+            const totalPounds = data.weight / 4.536; // originally in hectograms
+            const pounds = Math.floor(totalPounds);
+            let ounces = Math.ceil((totalPounds - pounds) * 16);
+
+            let updatedPounds = pounds;
+            let displayWeight = ounces === 16 ? `${updatedPounds + 1} lbs.` : `${updatedPounds} lbs. ${ounces} oz.`;
+
+            // ! Set States
             setLatestCry(data.cries.latest ?? '');
             setLegacyCry(data.cries.legacy ?? '');
             setBaseExperience(data.base_experience ?? 'This stat cannot be found!');
             setHeight(displayHeight ?? 'This stat cannot be found!');
-            setWeight(data.weight ?? 'This stat cannot be found');
+            setWeight(displayWeight ?? 'This stat cannot be found');
             setMainPokemonPicture(
                 data.sprites.other['official-artwork'].front_default
                 ??
@@ -390,7 +401,7 @@ export default function DataDisplay() {
                                     <dt className="text-sm font-medium leading-6 text-white">Base Experience</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
                                         <div className="bg-poke-black p-3 rounded-2xl my-1">
-                                            <p className="text-poke-yellow font-bold">{baseExperience}</p>
+                                            <p className="text-poke-yellow font-bold">{baseExperience} EXP</p>
                                         </div>
                                     </dd>
                                 </div>
@@ -409,8 +420,14 @@ export default function DataDisplay() {
 
                                 {/* //! Pokémon Weight */}
                                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                    <dt className="text-sm font-medium leading-6 text-white">Weight</dt>
-                                    <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">{weight}</dd>
+                                    <dt className="text-sm font-medium leading-6 text-white">Average Weight</dt>
+                                    <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
+                                    <div className="bg-poke-black p-3 rounded-2xl my-1">
+                                            <p className="text-poke-yellow font-bold">
+                                                {weight}
+                                            </p>
+                                        </div>
+                                    </dd>
                                 </div>
 
                                 {/* //! Pokémon Abilities */}
