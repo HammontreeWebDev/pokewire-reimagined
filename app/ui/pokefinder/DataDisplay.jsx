@@ -180,10 +180,10 @@ export default function DataDisplay() {
                 return {
                     name: moveInfo.move.name || 'No Data Available',
                     accuracy: moveData.accuracy || 'No Data Available',
-                    contest_normal_use_after: moveData.contest_combos && moveData.contest_combos.normal && moveData.contest_combos.normal.use_after ? moveData.contest_combos.normal.use_after.map(d => d.name).join(", ") : 'N/A',
-                    contest_normal_use_before: moveData.contest_combos && moveData.contest_combos.normal && moveData.contest_combos.normal.use_before ? moveData.contest_combos.normal.use_before.map(d => d.name).join(", ") : 'N/A',
-                    contest_super_use_after: moveData.contest_combos && moveData.contest_combos.super && moveData.contest_combos.super.use_after ? moveData.contest_combos.super.use_after.map(d => d.name).join(", ") : 'N/A',
-                    contest_super_use_before: moveData.contest_combos && moveData.contest_combos.super && moveData.contest_combos.super.use_before ? moveData.contest_combos.super.use_before.map(d => d.name).join(", ") : 'N/A',
+                    contest_normal_use_after: moveData.contest_combos && moveData.contest_combos.normal && moveData.contest_combos.normal.use_after ? moveData.contest_combos.normal.use_after.map(d => d.name).join(", ").replaceAll('-', ' ') : 'N/A',
+                    contest_normal_use_before: moveData.contest_combos && moveData.contest_combos.normal && moveData.contest_combos.normal.use_before ? moveData.contest_combos.normal.use_before.map(d => d.name).join(", ").replaceAll('-', ' ') : 'N/A',
+                    contest_super_use_after: moveData.contest_combos && moveData.contest_combos.super && moveData.contest_combos.super.use_after ? moveData.contest_combos.super.use_after.map(d => d.name).join(", ").replaceAll('-', ' ') : 'N/A',
+                    contest_super_use_before: moveData.contest_combos && moveData.contest_combos.super && moveData.contest_combos.super.use_before ? moveData.contest_combos.super.use_before.map(d => d.name).join(", ").replaceAll('-', ' ') : 'N/A',
                     contest_type: moveData.contest_type && moveData.contest_type.name ? moveData.contest_type.name : 'N/A',
                     damage_class: moveData.damage_class && moveData.damage_class.name ? moveData.damage_class.name : 'N/A',
                     effect_chance: moveData.effect_chance || 'N/A',
@@ -434,7 +434,7 @@ export default function DataDisplay() {
 
                                 {/* //! Pokémon Moves */}
                                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                                    <dt className="text-sm font-medium leading-6 text-white">Moves</dt>
+                                    <dt className="text-sm font-medium leading-6 text-white">{`${selectedPokemon}'s Moves`}</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0 min-h-screen">
                                         <input
                                             type="text"
@@ -452,18 +452,26 @@ export default function DataDisplay() {
                                         {
                                             currentMoves.map((move, index) => (
                                                 <div key={index} className="bg-poke-black p-3 rounded-2xl my-1">
-                                                    <h2 className="text-poke-yellow capitalize my-3 text-center border-b text-2xl font-extrabold">
+                                                    <h2 className="text-poke-yellow capitalize my-3 py-3 text-center border-b text-2xl font-extrabold">
                                                         {move.name.replace('-', ' ')}
                                                     </h2>
+
+                                                    {/* // ! Damage Class */}
+                                                    <div className="text-poke-yellow font-bold">
+                                                        Damage Class:&nbsp;
+                                                        <span className="text-poke-white capitalize">{
+                                                            move.damage_class
+                                                        }</span>
+                                                    </div>
 
                                                     {/* // ! Accuracy */}
                                                     <div className="text-poke-yellow font-bold">
                                                         Accuracy:&nbsp;
                                                         <span className="text-poke-white">{
-                                                        Number.isInteger(move.accuracy) ?
-                                                        `${move.accuracy}%`
-                                                        :
-                                                        move.accuracy
+                                                            Number.isInteger(move.accuracy) ?
+                                                                `${move.accuracy}%`
+                                                                :
+                                                                move.accuracy
                                                         }</span>
                                                     </div>
 
@@ -471,7 +479,7 @@ export default function DataDisplay() {
                                                     <div className="text-poke-yellow font-bold">
                                                         Power:&nbsp;
                                                         <span className="text-poke-white">{
-                                                        move.power
+                                                            move.power
                                                         }</span>
                                                     </div>
 
@@ -479,15 +487,7 @@ export default function DataDisplay() {
                                                     <div className="text-poke-yellow font-bold">
                                                         PP:&nbsp;
                                                         <span className="text-poke-white">{
-                                                        move.pp
-                                                        }</span>
-                                                    </div>
-
-                                                    {/* // ! Description */}
-                                                    <div className="text-poke-yellow font-bold">
-                                                        Description:&nbsp;
-                                                        <span className="text-poke-white">{
-                                                        move.effect_description
+                                                            move.pp
                                                         }</span>
                                                     </div>
 
@@ -495,11 +495,65 @@ export default function DataDisplay() {
                                                     <div className="text-poke-yellow font-bold">
                                                         Effect Chance:&nbsp;
                                                         <span className="text-poke-white">{
-                                                        move.effect_chance
+                                                            move.effect_chance
                                                         }</span>
                                                     </div>
 
+                                                    {/* // ! Description */}
+                                                    <div className="text-poke-yellow font-bold">
+                                                        Description:&nbsp;
+                                                        <span className="text-poke-white">{
+                                                            move.effect_description
+                                                        }</span>
+                                                    </div>
 
+                                                    {/* //! Contest Details */}
+                                                    <h3 className="text-poke-blue capitalize my-3 py-3 text-center border-t text-2xl font-extrabold">
+                                                        Contest Details
+                                                    </h3>
+
+                                                    {/* type */}
+
+                                                    <p className="text-center font-bold text-poke-yellow">
+                                                        Type:&nbsp;
+                                                        <span className="capitalize text-poke-white">
+                                                        {move.contest_type}
+                                                        </span>
+                                                    </p>
+
+                                                    {/* Normal section */}
+                                                    <div>
+                                                        <h4 className="text-poke-yellow font-bold py-3 text-lg">
+                                                            Normal Combos
+                                                        </h4>
+                                                        <p className="text-poke-blue font-bold">Use Before:&nbsp;
+                                                            <span className="text-poke-white font-bold capitalize">
+                                                                {move.contest_normal_use_before}
+                                                            </span>
+                                                        </p>
+                                                        <p className="text-poke-blue font-bold">Use After:&nbsp;
+                                                            <span className="text-poke-white font-bold capitalize">
+                                                            {move.contest_normal_use_after}
+                                                            </span>
+                                                        </p>
+                                                    </div>
+
+                                                    {/* Super section */}
+                                                    <div>
+                                                        <h4 className="text-poke-yellow font-bold py-3 text-lg">
+                                                            Super Combos
+                                                        </h4>
+                                                        <p className="text-poke-blue font-bold">Use Before:&nbsp;
+                                                            <span className="text-poke-white font-bold capitalize">
+                                                            {move.contest_super_use_before}
+                                                            </span>
+                                                        </p>
+                                                        <p className="text-poke-blue font-bold">Use After:&nbsp;
+                                                            <span className="text-poke-white font-bold capitalize">
+                                                            {move.contest_super_use_after}
+                                                            </span>
+                                                        </p>
+                                                    </div>
 
 
 
@@ -508,7 +562,6 @@ export default function DataDisplay() {
                                                 </div>
                                             ))
                                         }
-                                        {/* name, contest_normal_use_after,contest_normal_use_before, contest_super_use_after, contest_super_use_before, contest_type, damage_class, */}
                                     </dd>
                                 </div>
                             </dl>
