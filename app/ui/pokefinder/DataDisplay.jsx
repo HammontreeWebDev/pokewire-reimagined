@@ -245,7 +245,7 @@ export default function DataDisplay() {
                                     </dd>
                                 </div>
 
-                                {/* //! Pokémon Height */}
+                                {/* //! Pokémon Types */}
                                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                     <dt className="text-sm font-medium leading-6 text-white"> Type(s)</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
@@ -390,7 +390,7 @@ export default function DataDisplay() {
                                     <dt className="text-sm font-medium leading-6 text-white">Base Experience</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
                                         <div className="bg-poke-black p-3 rounded-2xl my-1">
-                                            <p className="text-poke-yellow">{baseExperience}</p>
+                                            <p className="text-poke-yellow font-bold">{baseExperience}</p>
                                         </div>
                                     </dd>
                                 </div>
@@ -400,7 +400,7 @@ export default function DataDisplay() {
                                     <dt className="text-sm font-medium leading-6 text-white"> Average Height</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
                                         <div className="bg-poke-black p-3 rounded-2xl my-1">
-                                            <p className="text-poke-yellow">
+                                            <p className="text-poke-yellow font-bold">
                                                 {height}
                                             </p>
                                         </div>
