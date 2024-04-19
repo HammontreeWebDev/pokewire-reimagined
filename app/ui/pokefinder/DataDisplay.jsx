@@ -5,10 +5,23 @@ import localForage from "localforage";
 import AudioPlayer from "@/app/ui/audio/AudioPlayer";
 import Image from "next/image";
 import Pagination from "@/app/ui/pagination/Pagination";
+import { useSession } from "next-auth/react";
+import { FolderPlusIcon } from "@heroicons/react/24/outline";
 
 
 export default function DataDisplay() {
 
+    // * Get user session information
+    const { data: session, status } = useSession();
+    const [userName, setUserName] = useState('');
+
+    useEffect(() => {
+        if (session) {
+            setUserName(session.user.name)
+        }
+    }, [session]);
+
+    // * name variables
     const MOVES_PER_PAGE = 5;
 
     const [selectedPokemon] = usePokemon();
@@ -225,6 +238,11 @@ export default function DataDisplay() {
     const indexOfFirstMove = indexOfLastMove - MOVES_PER_PAGE;
     const currentMoves = filteredMoves.slice(indexOfFirstMove, indexOfLastMove);
 
+    // !Save Pokemon Logic
+    const handlePokemonSave = () => {
+        console.log('This button is working to save pokemon');
+    }
+
     return (
         <>
             {
@@ -236,6 +254,32 @@ export default function DataDisplay() {
                             <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-400">Discover your favorite pokémon</p>
                         </div>
                         <div className="mt-6 border-t border-white/10">
+
+                            {/* // ! Save Pokémon // */}
+                            <div className="flex flex-col items-center justify-center">
+                                <h3 className=" text-center font-semibold text-white">
+                                    Save 
+                                    <span className="text-poke-yellow">
+                                    &nbsp;{selectedPokemon}&nbsp;
+                                    </span>
+                                     To {
+                                        status === 'loading' ?
+                                            <p> Loading . . . </p>
+                                            :
+                                            <span className="text-poke-yellow">
+                                    &nbsp;{userName}
+                                    </span>
+                                    }'s Wiré<span className="text-poke-red">Dex</span>!
+                                </h3>
+                                <button 
+                                className="text-poke-red bg-poke-white p-1 rounded-2xl my-3 border-2 border-black hover:border-white hover:bg-black hover:text-white hover:animate-spin"
+                                type="button"
+                                onClick={handlePokemonSave}
+                                >
+                                    <FolderPlusIcon className="h-5 w-5"/>
+                                </button>
+                            </div>
+
                             <dl className="divide-y divide-white/10">
 
                                 {/* //! Pokémon Name */}
@@ -355,7 +399,7 @@ export default function DataDisplay() {
                                             ))
                                         }
 
-                                    </dd> 
+                                    </dd>
                                 </div>
 
                                 {/* //! Pokémon Latest cry */}
@@ -422,7 +466,7 @@ export default function DataDisplay() {
                                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                     <dt className="text-sm font-medium leading-6 text-white">Average Weight</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
-                                    <div className="bg-poke-black p-3 rounded-2xl my-1">
+                                        <div className="bg-poke-black p-3 rounded-2xl my-1">
                                             <p className="text-poke-yellow font-bold">
                                                 {weight}
                                             </p>

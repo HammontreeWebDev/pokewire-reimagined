@@ -15,6 +15,8 @@ datasource db {
 
 // * Models //
 
+//  ! User Model
+
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
@@ -22,4 +24,76 @@ model User {
   password  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Pokemon {
+  id             Int       @id @default(autoincrement())
+  name           String    @unique
+  height         Int // Height in decimeters
+  weight         Int // Weight in hectograms
+  baseExperience Int       @map("base_experience")
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  types          Type[]
+  abilities      Ability[]
+  moves          Move[]
+  cries          Cry[]
+  sprites        Sprite[]
+}
+
+model Type {
+  id               Int      @id @default(autoincrement())
+  name             String
+  pokemon          Pokemon  @relation(fields: [pokemonId], references: [id])
+  pokemonId        Int
+  doubleDamageTo   String[]
+  doubleDamageFrom String[]
+  halfDamageTo     String[]
+  halfDamageFrom   String[]
+  noDamageTo       String[]
+  noDamageFrom     String[]
+}
+
+model Ability {
+  id        Int     @id @default(autoincrement())
+  name      String
+  isHidden  Boolean @map("is_hidden")
+  slot      Int
+  effect    String
+  pokemon   Pokemon @relation(fields: [pokemonId], references: [id])
+  pokemonId Int
+}
+
+model Move {
+  id                     Int     @id @default(autoincrement())
+  name                   String
+  accuracy               Int?
+  power                  Int?
+  pp                     Int
+  effectChance           Int?    @map("effect_chance")
+  effectDescription      String  @map("effect_description")
+  damageClass            String  @map("damage_class")
+  contestType            String  @map("contest_type")
+  contestNormalUseBefore String  @map("contest_normal_use_before")
+  contestNormalUseAfter  String  @map("contest_normal_use_after")
+  contestSuperUseBefore  String  @map("contest_super_use_before")
+  contestSuperUseAfter   String  @map("contest_super_use_after")
+  pokemon                Pokemon @relation(fields: [pokemonId], references: [id])
+  pokemonId              Int
+}
+
+model Cry {
+  id        Int     @id @default(autoincrement())
+  type      String
+  url       String
+  pokemon   Pokemon @relation(fields: [pokemonId], references: [id])
+  pokemonId Int
+}
+
+model Sprite {
+  id        Int     @id @default(autoincrement())
+  type      String
+  url       String
+  pokemon   Pokemon @relation(fields: [pokemonId], references: [id])
+  pokemonId Int
 }
