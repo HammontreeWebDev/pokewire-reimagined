@@ -388,7 +388,7 @@ export default function DataDisplay() {
                                             abilities.map((ability, index) => (
                                                 <div className="bg-poke-black p-3 rounded-2xl my-1" key={index}>
                                                     <h2 className="text-poke-yellow capitalize my-3 text-center border-b text-2xl font-extrabold">
-                                                        {ability.name}
+                                                        {ability.name.replace('-', ' ')}
                                                     </h2>
                                                     <p className="text-poke-white">
                                                         {ability.effect}
@@ -408,6 +408,7 @@ export default function DataDisplay() {
                                             placeholder="Search moves. . ."
                                             value={searchTerm}
                                             onChange={(e) => setSearchTerm(e.target.value)}
+                                            className="rounded-lg text-poke-red"
                                         />
                                         <Pagination
                                             currentPage={currentPage}
@@ -419,7 +420,7 @@ export default function DataDisplay() {
                                             currentMoves.map((move, index) => (
                                                 <div key={index} className="bg-poke-black p-3 rounded-2xl my-1">
                                                     <h2 className="text-poke-yellow capitalize my-3 text-center border-b text-2xl font-extrabold">
-                                                        {move.name}
+                                                        {move.name.replace('-', ' ')}
                                                     </h2>
                                                 </div>
                                             ))
