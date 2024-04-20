@@ -285,7 +285,7 @@ export default function DataDisplay() {
             const response = await fetch('/api/savePokemon', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
                 },
                 credentials: 'include',
                 body: JSON.stringify({pokemonData}),

@@ -5,7 +5,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-const authOptions = {
+export const authOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -19,6 +19,7 @@ const authOptions = {
         });
 
         if (user && await bcrypt.compare(credentials?.password, user.password)) {
+          console.log('Authorization Check:', user);
           return { id: user.id, name: user.name, email: user.email };
         }
         return null;
@@ -31,26 +32,40 @@ const authOptions = {
     maxAge: 30 * 24 * 60 * 60, // 30 days
   },
   callbacks: {
-    async session({ session, token }) {
-      session.user.id = token.uid;
-      return session;
-    },
     async jwt({ token, user }) {
       if (user) {
         token.uid = user.id;
+        token.email = user.email;
+        token.name = user.name;
+        token.image = user.image || 'default/image/url'; //TODO: set actual path
       }
+      console.log('JWT token generation:', token);
       return token;
+    },
+    async session({ session, token }) {
+      session.user = {
+        id: token.uid,
+        email: token.email,
+        name: token.name,
+        image: token.image || 'default/image/url' // TODO: set an actual default path
+      }
+      console.log('session check:', session)
+      return session;
+    },
+    cookies: {
+      sessionToken: {
+        name: `__Secure-next-auth.session-token`,
+        options: {
+          httpOnly: true,
+          sameSite: 'Lax',
+          path:'/',
+          secure: true
+        }
+      }
     }
   }
 };
 
-export const authHandler = NextAuth(authOptions);
-
+const authHandler = NextAuth(authOptions);
 // Handling GET and POST requests
-export const GET = async (req, res) => {
-  return authHandler(req, res);
-};
-
-export const POST = async (req, res) => {
-  return authHandler(req, res);
-};
+export {authHandler as GET, authHandler as POST};
