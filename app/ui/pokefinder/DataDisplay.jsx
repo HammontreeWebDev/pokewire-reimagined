@@ -296,9 +296,11 @@ export default function DataDisplay() {
             if (response.ok) {
                 // TODO: custom alert
                 console.log('Pokemon saved succesfully', result);
+                alert(`${selectedPokemon} was saved successfully!`);
             } else {
                 // TODO: custom alert
-                console.error('Failed to save pokemon:', result.error, 'Here is the data after its sent: ', result, 'Here is the data before its sent: ', pokemonData);
+                console.error('Failed to save pokemon:', result.error);
+                alert(`${selectedPokemon} failed to save: ${result.error}`);
             }
         } catch (error) {
             console.error('Error saving pokemon:', error);

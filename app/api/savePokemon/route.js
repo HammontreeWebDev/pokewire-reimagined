@@ -23,11 +23,22 @@ export async function POST(request) {
         // console.log('userId:', session.user.id);
 
         const user = await prisma.user.findUnique({
-            where: {id: session.user.id}
+            where: { id: session.user.id }
         });
 
         if (!user) {
-            return new Response(JSON.stringify({error: 'User Not Found'}), {status: 404});
+            return new Response(JSON.stringify({ error: 'User Not Found' }), { status: 404 });
+        }
+
+        const existingPokemon = await prisma.pokemon.findFirst({
+            where: {
+                name: pokemonData.name,
+                userId: session.user.id
+            }
+        });
+
+        if (existingPokemon) {
+            return new Response(JSON.stringify({ error: 'You have already saved this pokemon' }), { status: 409 });
         }
 
         const newPokemon = await prisma.pokemon.create({
