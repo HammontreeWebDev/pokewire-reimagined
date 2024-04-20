@@ -7,8 +7,8 @@ const prisma = new PrismaClient();
 export async function POST(request) {
     try {
         const session = await getServerSession(authOptions);
-        // TODO: for some reason returning image instead of id - also for newPokemon will have to explicitly pass every field in unfortunately i think.
-        console.log('SESSION DETAILS:', session)
+
+        // console.log('SESSION DETAILS:', session)
 
         if (!session) {
             return new Response(JSON.stringify({ error: "You must be signed in to save Pokémon." }), { status: 401 });
