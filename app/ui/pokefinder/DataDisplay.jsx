@@ -278,7 +278,7 @@ export default function DataDisplay() {
                 main: mainPokemonPicture,
                 latest: latestPokemonPicture,
                 legacy: legacyPokemonPicture
-            }]
+            }],
         };
 
         try {
