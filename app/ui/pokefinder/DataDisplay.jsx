@@ -19,6 +19,7 @@ export default function DataDisplay() {
         if (session) {
             setUserName(session.user.name)
         }
+        console.log('Client side Session:', session)
     }, [session]);
 
     // * name variables
@@ -175,10 +176,7 @@ export default function DataDisplay() {
                     return {
                         ...ability,
                         name: ability.ability.name,
-                        details: abilityData,
                         effect: englishEffect,
-                        isHidden: ability.is_hidden,
-                        slot: ability.slot
                     };
                 });
                 Promise.all(abilitiesPromises).then(setAbilities);
@@ -239,8 +237,72 @@ export default function DataDisplay() {
     const currentMoves = filteredMoves.slice(indexOfFirstMove, indexOfLastMove);
 
     // !Save Pokemon Logic
-    const handlePokemonSave = () => {
-        console.log('This button is working to save pokemon');
+    const handlePokemonSave = async () => {
+        const pokemonData = {
+            name: selectedPokemon,
+            height: height,
+            weight: weight,
+            baseExperience: baseExperience.toString(),
+            types: types.map(type => ({
+                name: type.name,
+                doubleDamageTo: type.damageRelations.doubleDamageTo,
+                doubleDamageFrom: type.damageRelations.doubleDamageFrom,
+                halfDamageTo: type.damageRelations.halfDamageTo,
+                halfDamageFrom: type.damageRelations.halfDamageFrom,
+                noDamageTo: type.damageRelations.noDamageTo,
+                noDamageFrom: type.damageRelations.noDamageFrom,
+            })),
+            abilities: abilities.map(ability => ({
+                name: ability.name,
+                effect: ability.effect,
+            })),
+            moves: moves.map(move => ({
+                name: move.name,
+                accuracy: move.accuracy.toString(),
+                power: move.power.toString(),
+                pp: move.pp.toString(),
+                effectChance: move.effect_chance.toString(),
+                effectDescription: move.effect_description,
+                damageClass: move.damage_class,
+                contestType: move.contest_type,
+                contestNormalUseBefore: move.contest_normal_use_before,
+                contestNormalUseAfter: move.contest_normal_use_after,
+                contestSuperUseBefore: move.contest_super_use_before,
+                contestSuperUseAfter: move.contest_super_use_after,
+            })),
+            cries: [{
+                latest: latestCry,
+                legacy: legacyCry
+            }],
+            sprites: [{
+                main: mainPokemonPicture,
+                latest: latestPokemonPicture,
+                legacy: legacyPokemonPicture
+            }]
+        };
+
+        try {
+            const response = await fetch('/api/savePokemon', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                credentials: 'include',
+                body: JSON.stringify({pokemonData}),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+                // TODO: custom alert
+                console.log('Pokemon saved succesfully', result);
+            } else {
+                // TODO: custom alert
+                console.error('Failed to save pokemon:', result.error, 'Here is the data after its sent: ', result, 'Here is the data before its sent: ', pokemonData);
+            }
+        } catch (error) {
+            console.error('Error saving pokemon:', error);
+        }
     }
 
     return (
@@ -258,25 +320,25 @@ export default function DataDisplay() {
                             {/* // ! Save Pokémon // */}
                             <div className="flex flex-col items-center justify-center">
                                 <h3 className=" text-center font-semibold text-white">
-                                    Save 
+                                    Save
                                     <span className="text-poke-yellow">
-                                    &nbsp;{selectedPokemon}&nbsp;
+                                        &nbsp;{selectedPokemon}&nbsp;
                                     </span>
-                                     To {
+                                    To {
                                         status === 'loading' ?
                                             <p> Loading . . . </p>
                                             :
                                             <span className="text-poke-yellow">
-                                    &nbsp;{userName}
-                                    </span>
+                                                &nbsp;{userName}
+                                            </span>
                                     }'s Wiré<span className="text-poke-red">Dex</span>!
                                 </h3>
-                                <button 
-                                className="text-poke-red bg-poke-white p-1 rounded-2xl my-3 border-2 border-black hover:border-white hover:bg-black hover:text-white hover:animate-spin"
-                                type="button"
-                                onClick={handlePokemonSave}
+                                <button
+                                    className="text-poke-red bg-poke-white p-1 rounded-2xl my-3 border-2 border-black hover:border-white hover:bg-black hover:text-white hover:animate-spin"
+                                    type="button"
+                                    onClick={handlePokemonSave}
                                 >
-                                    <FolderPlusIcon className="h-5 w-5"/>
+                                    <FolderPlusIcon className="h-5 w-5" />
                                 </button>
                             </div>
 

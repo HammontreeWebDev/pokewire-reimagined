@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,25 +7,24 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// * Models //
-
-//  ! User Model
-
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
   name      String?
   password  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  pokemons  Pokemon[]
 }
 
 model Pokemon {
   id             Int       @id @default(autoincrement())
+  userId         Int
+  user           User      @relation(fields: [userId], references: [id])
   name           String    @unique
-  height         Int // Height in decimeters
-  weight         Int // Weight in hectograms
-  baseExperience Int       @map("base_experience")
+  height         String
+  weight         String
+  baseExperience String?
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
   types          Type[]
@@ -44,8 +37,9 @@ model Pokemon {
 model Type {
   id               Int      @id @default(autoincrement())
   name             String
-  pokemon          Pokemon  @relation(fields: [pokemonId], references: [id])
   pokemonId        Int
+  pokemon          Pokemon  @relation(fields: [pokemonId], references: [id])
+  // Flat relation attributes
   doubleDamageTo   String[]
   doubleDamageFrom String[]
   halfDamageTo     String[]
@@ -57,43 +51,42 @@ model Type {
 model Ability {
   id        Int     @id @default(autoincrement())
   name      String
-  isHidden  Boolean @map("is_hidden")
-  slot      Int
   effect    String
-  pokemon   Pokemon @relation(fields: [pokemonId], references: [id])
   pokemonId Int
+  pokemon   Pokemon @relation(fields: [pokemonId], references: [id])
 }
 
 model Move {
   id                     Int     @id @default(autoincrement())
   name                   String
-  accuracy               Int?
-  power                  Int?
-  pp                     Int
-  effectChance           Int?    @map("effect_chance")
-  effectDescription      String  @map("effect_description")
-  damageClass            String  @map("damage_class")
-  contestType            String  @map("contest_type")
-  contestNormalUseBefore String  @map("contest_normal_use_before")
-  contestNormalUseAfter  String  @map("contest_normal_use_after")
-  contestSuperUseBefore  String  @map("contest_super_use_before")
-  contestSuperUseAfter   String  @map("contest_super_use_after")
-  pokemon                Pokemon @relation(fields: [pokemonId], references: [id])
+  accuracy               String?
+  power                  String?
+  pp                     String?
+  effectChance           String?
+  effectDescription      String
+  damageClass            String
+  contestType            String
+  contestNormalUseBefore String
+  contestNormalUseAfter  String
+  contestSuperUseBefore  String
+  contestSuperUseAfter   String
   pokemonId              Int
+  pokemon                Pokemon @relation(fields: [pokemonId], references: [id])
 }
 
 model Cry {
   id        Int     @id @default(autoincrement())
-  type      String
-  url       String
-  pokemon   Pokemon @relation(fields: [pokemonId], references: [id])
+  latest    String
+  legacy    String
   pokemonId Int
+  pokemon   Pokemon @relation(fields: [pokemonId], references: [id])
 }
 
 model Sprite {
   id        Int     @id @default(autoincrement())
-  type      String
-  url       String
-  pokemon   Pokemon @relation(fields: [pokemonId], references: [id])
+  main      String
+  latest    String
+  legacy    String
   pokemonId Int
+  pokemon   Pokemon @relation(fields: [pokemonId], references: [id])
 }
