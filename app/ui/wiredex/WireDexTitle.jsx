@@ -1,7 +1,6 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useSave } from "@/app/context/SaveContext";
-// TODO: trigger changes based on save state
 
 export default function WireDexTitle() {
     const { data: session, status } = useSession();
@@ -40,19 +39,31 @@ export default function WireDexTitle() {
     }, [pokemons]);
 
     return (
-        <div className="my-3 flex antialiased">
-            <div className="flex flex-col justify-center mx-3">
-                <p className="text-poke-white">Pokémon Count:
-                    <span className="ml-1 bg-poke-yellow px-1 rounded text-poke-blue font-bold">
-                        {
-                            status === 'loading'
-                                ?
-                                '. . . Loading'
-                                :
-                                numberOfPokemon
-                        }
-                    </span>
-                </p>
+        <div className="w-full flex justify-center border-b mb-3">
+            <div className="my-3 py-3 flex justify-center antialiased rounded w-1/2 bg-gradient-to-br from-transparent to-[var(--poke-yellow)]">
+                {/* // ! Pokémon Count */}
+                <div className="flex flex-col justify-center mx-3">
+                    <p className="text-poke-white">Pokémon Count:
+                        <span className="ml-1 bg-poke-yellow px-1 rounded text-poke-blue font-bold">
+                            {
+                                status === 'loading'
+                                    ?
+                                    '. . . Loading'
+                                    :
+                                    numberOfPokemon
+                            }
+                        </span>
+                    </p>
+                </div>
+
+                {/* //! Favorite Pokémon */}
+                <div className="flex flex-col justify-center mx-3">
+                    <p className="text-poke-white">Favorite Pokémon:
+                        <span className="ml-1 bg-poke-yellow px-1 rounded text-poke-blue font-bold">
+                            Placeholder Pikachu
+                        </span>
+                    </p>
+                </div>
             </div>
         </div>
     )
