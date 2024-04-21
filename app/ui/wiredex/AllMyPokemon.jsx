@@ -83,7 +83,7 @@ export default function AllMyPokemon() {
                                                 <div className="flex items-end p-6">
                                                     <div>
                                                         <h3 className="font-semibold text-white">
-                                                            <Link href={`/wiredex/my-pokemon/details/${name}`}>
+                                                            <Link href={`/wiredex/my-pokemon/${name}`}>
                                                                 <span className="absolute inset-0" />
                                                                 {name}
                                                             </Link>
