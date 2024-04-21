@@ -1,19 +1,15 @@
-
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { useSave } from "@/app/context/SaveContext";
+// TODO: trigger changes based on save state
 
 export default function WireDexTitle() {
     const { data: session, status } = useSession();
-    const [userName, setUserName] = useState('');
     const [pokemons, setPokemons] = useState([]);
+    const [numberOfPokemon, setNumberOfPokemon] = useState(0);
+    const { saveState } = useSave();
 
-    useEffect(() => {
-        if (status === 'loading') {
-            setUserName('. . . Loading');
-        } else {
-            setUserName(session.user.name);
-        }
-    }, [status])
+    // TODO: Style wiredex title - make pokemon count dynamically update - may be able to pull local storage selectedPokemon, store it in state and update it that way?
 
     useEffect(() => {
         const fetchPokemons = async () => {
@@ -37,25 +33,15 @@ export default function WireDexTitle() {
         };
 
         fetchPokemons();
-    }, [session])
+    }, [session, saveState]);
+
+    useEffect(() => {
+        setNumberOfPokemon(pokemons.length);
+    }, [pokemons]);
 
     return (
         <div className="my-3 flex antialiased">
-            <span className="inline-block h-14 w-14 overflow-hidden rounded-full bg-gray-100">
-                <svg className="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                </svg>
-            </span>
             <div className="flex flex-col justify-center mx-3">
-                <h3 className="text-poke-white">
-                    {
-                        status === 'loading'
-                            ?
-                            '. . . Loading'
-                            :
-                            userName
-                    }
-                </h3>
                 <p className="text-poke-white">Pokémon Count:
                     <span className="ml-1 bg-poke-yellow px-1 rounded text-poke-blue font-bold">
                         {
@@ -63,7 +49,7 @@ export default function WireDexTitle() {
                                 ?
                                 '. . . Loading'
                                 :
-                                pokemons.length
+                                numberOfPokemon
                         }
                     </span>
                 </p>

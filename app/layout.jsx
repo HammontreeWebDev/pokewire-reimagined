@@ -3,6 +3,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
+import { SaveProvider } from "@/app/context/SaveContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +17,9 @@ export default function RootLayout({ children }) {
     <html lang="en" className="h-full">
       <body className={`${inter.className} h-full`}>
         <SessionProvider>
-          {children}
+          <SaveProvider>
+            {children}
+          </SaveProvider>
         </SessionProvider>
       </body>
     </html>

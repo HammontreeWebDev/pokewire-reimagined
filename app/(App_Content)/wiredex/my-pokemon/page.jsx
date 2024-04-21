@@ -1,14 +1,13 @@
 'use client'
 import userAuthentication from "@/app/utils/userAuthentication";
-import PokemonDisplay from "@/app/ui/wiredex/PokemonDisplay";
 
-export default function WireDex() {
+export default function MyPokemon() {
 
     userAuthentication();
 
     return (
         <>
-        <PokemonDisplay />
+            <p>My Pokemon page</p>
         </>
 
     )

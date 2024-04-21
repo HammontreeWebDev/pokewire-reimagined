@@ -1,4 +1,6 @@
+'use client'
 import LoggedInNav from "@/app/ui/navbars/LoggedInNav";
+import WireDexTitle from "@/app/ui/wiredex/WireDexTitle";
 
 
 export default function Layout({ children }) {
@@ -8,6 +10,7 @@ export default function Layout({ children }) {
                 <LoggedInNav />
             </header>
             <main className="flex min-h-screen flex-col items-center justify-between p-24">
+                    <WireDexTitle />
                 {children}
             </main>
         </>

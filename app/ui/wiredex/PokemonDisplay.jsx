@@ -54,10 +54,15 @@ export default function PokemonDisplay() {
                         <span className="text-poke-red">
                             Dex
                         </span></h2>
-                    <a href="#" className="hidden text-sm font-semibold text-poke-blue hover:text-[var(--poke-yellow)] sm:block">
-                        Browse all pokémon
-                        <span aria-hidden="true"> &rarr;</span>
-                    </a>
+                    {
+                        firstPokemonName !== null
+                            ?
+                            <a href="/my-pokemon" className="hidden text-sm font-semibold text-poke-blue hover:text-[var(--poke-yellow)] sm:block">
+                                Browse all pokémon
+                                <span aria-hidden="true"> &rarr;</span>
+                            </a>
+                            : null
+                    }
                 </div>
 
                 <div className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:grid-rows-2 sm:gap-x-6 lg:gap-8">

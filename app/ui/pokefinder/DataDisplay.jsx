@@ -1,5 +1,6 @@
 'use client'
 import { usePokemon } from "@/app/context/PokemonContext";
+import { useSave } from "@/app/context/SaveContext";
 import { useEffect, useState } from "react";
 import localForage from "localforage";
 import AudioPlayer from "@/app/ui/audio/AudioPlayer";
@@ -26,6 +27,7 @@ export default function DataDisplay() {
     const MOVES_PER_PAGE = 5;
 
     const [selectedPokemon] = usePokemon();
+    const {saveState, setSaveState} = useSave();
     const [data, setData] = useState(null);
     const [types, setTypes] = useState([]);
     const [baseExperience, setBaseExperience] = useState('');
@@ -297,6 +299,7 @@ export default function DataDisplay() {
                 // TODO: custom alert
                 console.log('Pokemon saved succesfully', result);
                 alert(`${selectedPokemon} was saved successfully!`);
+                setSaveState(currentSaveState => !currentSaveState);
             } else {
                 // TODO: custom alert
                 console.error('Failed to save pokemon:', result.error);
