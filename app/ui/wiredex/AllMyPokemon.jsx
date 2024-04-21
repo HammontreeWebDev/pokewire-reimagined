@@ -1,5 +1,6 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import Link from 'next/link';
 
 export default function AllMyPokemon() {
     const { data: session, status } = useSession();
@@ -82,10 +83,10 @@ export default function AllMyPokemon() {
                                                 <div className="flex items-end p-6">
                                                     <div>
                                                         <h3 className="font-semibold text-white">
-                                                            <a href="#">
+                                                            <Link href={`/wiredex/my-pokemon/details?pokemon=${name}`}>
                                                                 <span className="absolute inset-0" />
                                                                 {name}
-                                                            </a>
+                                                            </Link>
                                                         </h3>
                                                         <p aria-hidden="true" className="mt-1 text-sm text-white">
                                                             View Stats
