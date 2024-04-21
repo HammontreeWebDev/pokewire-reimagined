@@ -57,7 +57,7 @@ export default function PokemonDisplay() {
                     {
                         firstPokemonName !== null
                             ?
-                            <a href="/my-pokemon" className="hidden text-sm font-semibold text-poke-blue hover:text-[var(--poke-yellow)] sm:block">
+                            <a href="/wiredex/my-pokemon" className="hidden text-sm font-semibold text-poke-blue hover:text-[var(--poke-yellow)] sm:block">
                                 Browse all pokémon
                                 <span aria-hidden="true"> &rarr;</span>
                             </a>

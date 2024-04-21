@@ -1,5 +1,6 @@
 'use client'
 import userAuthentication from "@/app/utils/userAuthentication";
+import AllMyPokemon from "@/app/ui/wiredex/AllMyPokemon";
 
 export default function MyPokemon() {
 
@@ -7,7 +8,7 @@ export default function MyPokemon() {
 
     return (
         <>
-            <p>My Pokemon page</p>
+            <AllMyPokemon />
         </>
 
     )
