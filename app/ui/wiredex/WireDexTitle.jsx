@@ -22,7 +22,8 @@ export default function WireDexTitle() {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
-                    }
+                    },
+                    credentials: 'include'
                 });
                 if (!response.ok) {
                     throw new Error('failed to fetch pokemons');
