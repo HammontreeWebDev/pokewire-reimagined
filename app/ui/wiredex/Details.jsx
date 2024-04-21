@@ -1,12 +1,25 @@
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Details() {
     const { data: session, status } = useSession();
-
     const { pokemon } = useParams();
-    
-    console.log(pokemon)
+
+    useEffect(() => {
+        async function fetchPokemon(pokemonName) {
+
+            const response = await fetch(`/api/getOnePokemon/${pokemon}`);
+            if (!response.ok) {
+                throw new Error('Failed to fetch Pokemon');
+            }
+            const data = await response.json();
+            console.log(data);
+            return data;
+        }
+
+        fetchPokemon(pokemon.toLowerCase());
+    }, [status, pokemon])
 
     return (
         <div className="bg-poke-black w-full">
@@ -45,14 +58,9 @@ export default function Details() {
                                     <div className="flex items-end p-6">
                                         <div>
                                             <h3 className="font-semibold text-white">
-
                                                 <span className="absolute inset-0" />
-                                                { }
-
+                                                {pokemon}
                                             </h3>
-                                            <p aria-hidden="true" className="mt-1 text-sm text-white">
-                                                View Stats
-                                            </p>
                                         </div>
                                     </div>
                                 </div>
