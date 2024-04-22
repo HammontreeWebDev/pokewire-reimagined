@@ -1,5 +1,6 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import Image from 'next/image';
 
 export default function PokemonDisplay() {
     const { data: session, status } = useSession();
@@ -49,11 +50,20 @@ export default function PokemonDisplay() {
         <div className="bg-poke-black w-full">
             <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
                 <div className="sm:flex sm:items-baseline sm:justify-between">
-                    <h2 className="text-2xl font-bold tracking-tight text-poke-white">
-                        Wiré
-                        <span className="text-poke-red">
-                            Dex
-                        </span></h2>
+                    <div className="flex flex-col items-center">
+                        <Image
+                            src={'/img/profile_settings/GettingStartedIcon.png'}
+                            alt="premier ball"
+                            width={50}
+                            height={50}
+                        />
+                        <h2 className="text-2xl font-bold tracking-tight text-poke-white mt-3">
+                            Wiré
+                            <span className="text-poke-red">
+                                Dex
+                            </span></h2>
+                    </div>
+
                     {
                         firstPokemonName !== null
                             ?
