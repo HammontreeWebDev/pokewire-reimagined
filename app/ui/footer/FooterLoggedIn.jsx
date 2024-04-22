@@ -1,4 +1,5 @@
 import Image from 'next/image';
+// TODO: Finish footer development by adding pokeAPI link and any other links as necessary - double check hrefs for links to point to appropriate page
 
 const navigation = {
     pokefinder: [
