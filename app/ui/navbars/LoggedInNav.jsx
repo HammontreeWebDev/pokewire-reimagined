@@ -50,7 +50,7 @@ export default function LoggedInNav() {
   }, [session])
 
   return (
-    <Disclosure as="nav" className="bg-dark-blue antialiased">
+    <Disclosure as="nav" className="bg-poke-black antialiased">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -85,7 +85,7 @@ export default function LoggedInNav() {
                         href={item.href}
                         className={classNames(
                           item.current ? 'bg-poke-blue text-poke-yellow' : 'text-poke-white hover:bg-[var(--dark-yellow)] hover:text-[var(--poke-red)]',
-                          'rounded-md px-3 py-2 text-sm font-medium'
+                          'rounded-md px-3 py-2 text-sm font-bold'
                         )}
                         aria-current={item.current ? 'page' : undefined}
                       >
