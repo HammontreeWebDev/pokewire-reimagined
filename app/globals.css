@@ -64,6 +64,13 @@ html, body {
   color: var(--poke-white);
 }
 
+/* Box Shadows: */
+
+.box-shadow-rb {
+  box-shadow: rgba(255, 255, 255, 0.5) 3px 3px 5px;
+
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

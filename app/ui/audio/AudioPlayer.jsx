@@ -27,7 +27,7 @@ const AudioPlayer = ({ imageURL, imageAlt, audioSrc }) => {
 
     return (
         <>
-                <div className="bg-poke-black flex h-fit max-w-fit flex-col rounded-2xl p-6 text-center shadow">
+                <div className="bg-poke-black flex h-fit max-w-fit flex-col rounded-2xl p-6 text-center shadow box-shadow-rb my-3">
                     <div className="flex flex-col space-y-0 items-center">
                         <Image
                             width={200}

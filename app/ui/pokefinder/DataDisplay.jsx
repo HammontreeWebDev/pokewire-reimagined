@@ -353,7 +353,7 @@ export default function DataDisplay() {
                                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                     <dt className="text-sm font-bold leading-6 text-white">Pokémon</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
-                                        <div className="bg-poke-black p-3 rounded-2xl my-1 max-w-fit flex justify-center items-center">
+                                        <div className="bg-poke-black p-3 rounded-2xl my-1 max-w-fit flex justify-center items-center box-shadow-rb">
                                             <div className="flex flex-col items-center">
                                                 <h2 className="text-poke-yellow capitalize my-3 text-center text-2xl font-extrabold">{selectedPokemon}</h2>
                                                 <Image
@@ -374,7 +374,7 @@ export default function DataDisplay() {
 
                                         {
                                             types.map((types, index) => (
-                                                <div className="bg-poke-black p-3 rounded-2xl my-1" key={index}>
+                                                <div className="bg-poke-black p-3 rounded-2xl my-1 box-shadow-rb" key={index}>
                                                     <h2 className="text-poke-yellow capitalize my-3 text-center border-b text-2xl font-extrabold">
                                                         {types.name}
                                                     </h2>
@@ -484,7 +484,7 @@ export default function DataDisplay() {
 
                                                 :
 
-                                                <p className="text-poke-red bg-poke-black p-3 rounded-2xl">There is no latest cry available for {selectedPokemon}!</p>
+                                                <p className="text-poke-red bg-poke-black p-3 rounded-2xl ">There is no latest cry available for {selectedPokemon}!</p>
 
                                         }
                                     </dd>
@@ -511,7 +511,7 @@ export default function DataDisplay() {
                                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                     <dt className="text-sm font-bold leading-6 text-white">Base Experience</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
-                                        <div className="bg-poke-black p-3 rounded-2xl my-1">
+                                        <div className="bg-poke-black p-3 rounded-2xl my-1 box-shadow-rb">
                                             <p className="text-poke-yellow font-bold">{baseExperience} EXP</p>
                                         </div>
                                     </dd>
@@ -521,7 +521,7 @@ export default function DataDisplay() {
                                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                     <dt className="text-sm font-bold leading-6 text-white"> Average Height</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
-                                        <div className="bg-poke-black p-3 rounded-2xl my-1">
+                                        <div className="bg-poke-black p-3 rounded-2xl my-1 box-shadow-rb">
                                             <p className="text-poke-yellow font-bold">
                                                 {height}
                                             </p>
@@ -533,7 +533,7 @@ export default function DataDisplay() {
                                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                                     <dt className="text-sm font-bold leading-6 text-white">Average Weight</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
-                                        <div className="bg-poke-black p-3 rounded-2xl my-1">
+                                        <div className="bg-poke-black p-3 rounded-2xl my-1 box-shadow-rb">
                                             <p className="text-poke-yellow font-bold">
                                                 {weight}
                                             </p>
@@ -547,7 +547,7 @@ export default function DataDisplay() {
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
                                         {
                                             abilities.map((ability, index) => (
-                                                <div className="bg-poke-black p-3 rounded-2xl my-1" key={index}>
+                                                <div className="bg-poke-black p-3 rounded-2xl my-12 box-shadow-rb" key={index}>
                                                     <h2 className="text-poke-yellow capitalize my-3 text-center border-b text-2xl font-extrabold">
                                                         {ability.name.replace('-', ' ')}
                                                     </h2>
@@ -579,7 +579,7 @@ export default function DataDisplay() {
                                         />
                                         {
                                             currentMoves.map((move, index) => (
-                                                <div key={index} className="bg-poke-black p-3 rounded-2xl my-1">
+                                                <div key={index} className="bg-poke-black p-3 rounded-2xl my-12 box-shadow-rb">
                                                     <h2 className="text-poke-yellow capitalize my-3 py-3 text-center border-b text-2xl font-extrabold">
                                                         {move.name.replace('-', ' ')}
                                                     </h2>
