@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import Image from 'next/image';
 
 // TODO: Add functionality to either show all moves or user's 4 favorite moves for specific pokemon
 
@@ -69,11 +70,19 @@ export default function Details() {
         <div className="bg-poke-black w-full antialiased">
             <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
                 <div className="sm:flex sm:items-baseline sm:justify-between">
-                    <h2 className="text-2xl font-bold tracking-tight text-poke-white">
-                        Wiré
-                        <span className="text-poke-red">
-                            Dex
-                        </span></h2>
+                    <div className="flex flex-col items-center">
+                        <Image
+                            src={'/img/profile_settings/GettingStartedIcon.png'}
+                            alt="premier ball"
+                            width={50}
+                            height={50}
+                        />
+                        <h2 className="text-2xl font-bold tracking-tight text-poke-white mt-3">
+                            Wiré
+                            <span className="text-poke-red">
+                                Dex
+                            </span></h2>
+                    </div>
 
                     <a href="/wiredex/my-pokemon" className="hidden text-sm font-semibold text-poke-blue hover:text-[var(--poke-yellow)] sm:block">
                         <span aria-hidden="true"> &larr;</span>
@@ -174,41 +183,41 @@ export default function Details() {
                                                                 <li>
                                                                     Double Damage To:&nbsp;
                                                                     <span className="text-poke-red capitalize">
-                                                                    {types.doubleDamageTo}
+                                                                        {types.doubleDamageTo}
                                                                     </span>
                                                                 </li>
 
                                                                 <li>
                                                                     Double Damage From:&nbsp;
                                                                     <span className="text-poke-red capitalize">
-                                                                    {types.doubleDamageFrom}
+                                                                        {types.doubleDamageFrom}
                                                                     </span>
                                                                 </li>
 
                                                                 <li>
                                                                     Half Damage To:&nbsp;
                                                                     <span className="text-poke-red capitalize">
-                                                                    {types.halfDamageTo}
+                                                                        {types.halfDamageTo}
                                                                     </span>
                                                                 </li>
                                                                 <li>
                                                                     Half Damage From:&nbsp;
                                                                     <span className="text-poke-red capitalize">
-                                                                    {types.halfDamageFrom}
+                                                                        {types.halfDamageFrom}
                                                                     </span>
                                                                 </li>
 
                                                                 <li>
                                                                     No Damage To:&nbsp;
                                                                     <span className="text-poke-red capitalize">
-                                                                    {types.noDamageTo}
+                                                                        {types.noDamageTo}
                                                                     </span>
                                                                 </li>
 
                                                                 <li>
                                                                     No Damage From:&nbsp;
                                                                     <span className="text-poke-red capitalize">
-                                                                    {types.noDamageFrom}
+                                                                        {types.noDamageFrom}
                                                                     </span>
                                                                 </li>
 
