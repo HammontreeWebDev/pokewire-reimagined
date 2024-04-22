@@ -33,7 +33,7 @@ export default function UserStats() {
     
             fetchPokemons();
         }
-    }, [status]);
+    }, [status, saveState]);
 
     useEffect(() => {
         setNumberOfPokemon(pokemons.length);

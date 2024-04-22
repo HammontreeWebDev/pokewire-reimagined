@@ -10,6 +10,7 @@ import { useSession } from "next-auth/react";
 import { FolderPlusIcon } from "@heroicons/react/24/outline";
 import SearchField from "@/app/ui/pokefinder/SearchField";
 
+// TODO: pokemon saved by another user are unable to be saved at all - check db
 
 export default function DataDisplay() {
 
