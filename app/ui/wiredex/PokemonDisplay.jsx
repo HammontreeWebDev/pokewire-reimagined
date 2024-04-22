@@ -13,38 +13,40 @@ export default function PokemonDisplay() {
 
 
     useEffect(() => {
-        const fetchPokemons = async () => {
-            try {
-                const response = await fetch('/api/getAllPokemon', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    credentials: 'include'
-                });
-                if (!response.ok) {
-                    throw new Error('failed to fetch pokemons');
+        if (status === 'authenticated') {
+            const fetchPokemons = async () => {
+                try {
+                    const response = await fetch('/api/getAllPokemon', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        credentials: 'include'
+                    });
+                    if (!response.ok) {
+                        throw new Error('failed to fetch pokemons');
+                    }
+                    const data = await response.json();
+
+                    if (data.length > 0) {
+
+                        // * Set first pokemon:
+                        setFirstPokemonName(data[0].name);
+                        setFirstPokemonPicture(data[0].sprites[0].main);
+
+                        // * Set all pokemon and exclude the first:
+                        const remainingPokemon = data.slice(1);
+                        setAllPokemonNames(remainingPokemon.map((name) => name.name))
+                        setAllPokemonPictures(remainingPokemon.map((picture) => picture.sprites[0].main));
+                    }
+
+                } catch (error) {
+                    console.error('Error fetching pokemons:', error);
                 }
-                const data = await response.json();
+            };
 
-                if (data.length > 0) {
-
-                    // * Set first pokemon:
-                    setFirstPokemonName(data[0].name);
-                    setFirstPokemonPicture(data[0].sprites[0].main);
-
-                    // * Set all pokemon and exclude the first:
-                    const remainingPokemon = data.slice(1);
-                    setAllPokemonNames(remainingPokemon.map((name) => name.name))
-                    setAllPokemonPictures(remainingPokemon.map((picture) => picture.sprites[0].main));
-                }
-
-            } catch (error) {
-                console.error('Error fetching pokemons:', error);
-            }
-        };
-
-        fetchPokemons();
+            fetchPokemons();
+        }
     }, [status]);
 
     return (
@@ -84,38 +86,47 @@ export default function PokemonDisplay() {
                             :
                             <>
                                 {/* // ! large picture */}
-                                <div className="group aspect-h-1 aspect-w-2 overflow-hidden rounded-lg sm:aspect-h-1 sm:aspect-w-1 sm:row-span-2">
-                                    {
-                                        firstPokemonPicture !== null
-                                            ?
+                                {
+                                    firstPokemonName !== null
+                                        ?
+                                        <div className="group aspect-h-1 aspect-w-2 overflow-hidden rounded-lg sm:aspect-h-1 sm:aspect-w-1 sm:row-span-2">
+
                                             <img
                                                 src={firstPokemonPicture}
                                                 alt={firstPokemonName}
                                                 className="object-cover object-center group-hover:opacity-75"
                                             />
-                                            :
-                                            null
-                                    }
-                                    <div aria-hidden="true" className="bg-gradient-to-b from-transparent to-black opacity-50" />
-                                    <div className="flex items-end p-6">
-                                        <div>
-                                            <h3 className="font-semibold text-white">
-                                                <Link href={`/wiredex/my-pokemon/${firstPokemonName}`}>
-                                                    <span className="absolute inset-0" />
-                                                    {
-                                                        firstPokemonName !== null ?
-                                                            firstPokemonName
-                                                            :
-                                                            'Add your pokémon in the pokéfinder!'
-                                                    }
-                                                </Link>
-                                            </h3>
-                                            <p aria-hidden="true" className="mt-1 text-sm text-white">
-                                                View Stats
-                                            </p>
+
+                                            <div aria-hidden="true" className="bg-gradient-to-b from-transparent to-black opacity-50" />
+                                            <div className="flex items-end p-6">
+                                                <div>
+                                                    <h3 className="font-semibold text-white">
+                                                        <Link href={`/wiredex/my-pokemon/${firstPokemonName}`}>
+                                                            <span className="absolute inset-0" />
+                                                            {
+                                                                firstPokemonName
+                                                            }
+                                                        </Link>
+                                                    </h3>
+                                                    <p aria-hidden="true" className="mt-1 text-sm text-white">
+                                                        View Stats
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
+                                        :
+                                        <Link
+                                            href={'/pokefinder'}
+                                        >
+                                            <span className="text-poke-white animate-pulse hover:border-b">
+                                                Add Pokemon to your
+                                                <span className="font-bold">&nbsp;Wire
+                                                    <span className="text-poke-red">
+                                                        Dex
+                                                    </span></span>!
+                                            </span>
+                                        </Link>
+                                }
 
                                 {/* // ! small picture */}
                                 {
@@ -159,10 +170,16 @@ export default function PokemonDisplay() {
                 </div>
 
                 <div className="mt-6 sm:hidden">
-                    <Link href="/wiredex/my-pokemon" className="block text-sm font-semibold text-poke-blue hover:text-[var(--poke-yellow)]">
-                        Browse all pokémon
-                        <span aria-hidden="true"> &rarr;</span>
-                    </Link>
+                    {
+                        firstPokemonName !== null
+                            ?
+                            <Link href="/wiredex/my-pokemon" className="block text-sm font-semibold text-poke-blue hover:text-[var(--poke-yellow)]">
+                                Browse all pokémon
+                                <span aria-hidden="true"> &rarr;</span>
+                            </Link>
+                            :
+                            null
+                    }
                 </div>
             </div>
         </div>
