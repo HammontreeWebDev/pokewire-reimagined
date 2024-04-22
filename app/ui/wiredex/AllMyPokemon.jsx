@@ -71,7 +71,10 @@ export default function AllMyPokemon() {
                                         ?
 
                                         allPokemonNames.map((name, index) => (
-                                            <div className="group aspect-h-1 aspect-w-2 overflow-hidden rounded-lg sm:aspect-h-1 sm:aspect-w-1 sm:row-span-2">
+                                            <div 
+                                            className="group aspect-h-1 aspect-w-2 overflow-hidden rounded-lg sm:aspect-h-1 sm:aspect-w-1 sm:row-span-2"
+                                            key={`${name}-${index}`}
+                                            >
 
                                                 <img
                                                     src={allPokemonPictures[index]}

@@ -1,28 +1,72 @@
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+
+// TODO: Add functionality to either show all moves or user's 4 favorite moves for specific pokemon
 
 export default function Details() {
     const { data: session, status } = useSession();
     const { pokemon } = useParams();
+    const [pokemonData, setPokemonData] = useState();
+
+    // ! define states for individual pokemon data
+    const [mainPicture, setMainPicture] = useState(null);
+    const [height, setHeight] = useState(null);
+    const [weight, setWeight] = useState(null);
+    const [types, setTypes] = useState([]);
+    const [baseExperience, setBaseExperience] = useState(null);
 
     useEffect(() => {
-        async function fetchPokemon(pokemonName) {
+        async function fetchPokemon() {
 
             const response = await fetch(`/api/getOnePokemon/${pokemon}`);
             if (!response.ok) {
                 throw new Error('Failed to fetch Pokemon');
             }
             const data = await response.json();
-            console.log(data);
-            return data;
+            // console.log(data);
+
+            if (pokemonData === undefined) {
+                setPokemonData(data);
+                return;
+            }
         }
 
-        fetchPokemon(pokemon.toLowerCase());
-    }, [status, pokemon])
+        fetchPokemon();
+    }, [])
+
+    useEffect(() => {
+
+        if (pokemonData !== undefined) {
+            console.log(pokemonData);
+
+            // ! set individual pokemon data:
+            setMainPicture(pokemonData.sprites[0].main);
+            setHeight(pokemonData.height);
+            setWeight(pokemonData.weight);
+            setTypes(pokemonData.types.map(type => ({
+                name: type.name,
+
+                doubleDamageTo: type.doubleDamageTo.length > 0 ? type.doubleDamageTo.join(', ') : 'N/A',
+
+                doubleDamageFrom: type.doubleDamageFrom.length > 0 ? type.doubleDamageFrom.join(', ') : 'N/A',
+
+                halfDamageTo: type.halfDamageTo.length > 0 ? type.halfDamageTo.join(', ') : 'N/A',
+
+                halfDamageFrom: type.halfDamageFrom.length > 0 ? type.halfDamageFrom.join(', ') : 'N/A',
+
+                noDamageTo: type.noDamageTo.length > 0 ? type.noDamageTo.join(', ') : 'N/A',
+
+                noDamageFrom: type.noDamageFrom.length > 0 ? type.noDamageFrom.join(', ') : 'N/A',
+
+            })));
+            setBaseExperience(`${pokemonData.baseExperience} EXP`);
+        }
+
+    }, [pokemonData !== undefined]);
 
     return (
-        <div className="bg-poke-black w-full">
+        <div className="bg-poke-black w-full antialiased">
             <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
                 <div className="sm:flex sm:items-baseline sm:justify-between">
                     <h2 className="text-2xl font-bold tracking-tight text-poke-white">
@@ -38,31 +82,163 @@ export default function Details() {
 
                 </div>
 
-                <div className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-4 sm:grid-rows-2 sm:gap-x-6 lg:gap-8">
+                <div className="mt-6 grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:grid-rows-2 sm:gap-x-6 lg:gap-8">
                     {
                         status === "loading"
                             ?
-                            <p className="text-poke-white anitmate-pulse"> . . . Loading</p>
+                            <p className="text-poke-white anitmate-pulse min-h-screen"> . . . Loading</p>
                             :
                             <>
                                 {/* // ! Display Pokemon that is being queried */}
                                 <div className="group aspect-h-1 aspect-w-2 overflow-hidden rounded-lg sm:aspect-h-1 sm:aspect-w-1 sm:row-span-2">
-                                    {/* 
-                                                <img
-                                                    src={}
-                                                    alt={}
-                                                    className="object-cover object-center group-hover:opacity-75"
-                                                /> */}
+                                    {
+                                        mainPicture === null
+                                            ?
+                                            <p className="text-poke-white animate-pulse">
+                                                Loading. . .
+                                            </p>
+                                            :
+                                            <img
+                                                src={mainPicture}
+                                                alt={pokemon}
+                                                className="object-cover object-center"
+                                            />
+                                    }
 
                                     <div aria-hidden="true" className="bg-gradient-to-b from-transparent to-black opacity-50" />
-                                    <div className="flex items-end p-6">
-                                        <div>
-                                            <h3 className="font-semibold text-white">
-                                                <span className="absolute inset-0" />
-                                                {pokemon}
-                                            </h3>
-                                        </div>
+                                </div>
+                                <div className="flex flex-col justify-center items-start">
+                                    <div className="border-b-4 w-full mb-3">
+                                        <h2 className="text-poke-white bg-gradient-to-b from-[var(--poke-red)] to-transparent p-3 rounded text-xl mb-3 md:text-2xl">
+                                            {pokemon}
+                                        </h2>
                                     </div>
+                                    {/* // ! height // */}
+                                    <div className="border-b w-full mb-3">
+                                        <p className="text-poke-white font-bold mb-3">
+                                            Average Height:&nbsp;
+                                            {
+                                                height === null
+                                                    ?
+                                                    <span className="text-poke-red font-bold animate-ping">
+                                                        ... Loading
+                                                    </span>
+                                                    :
+                                                    <span className="text-poke-red font-bold">
+                                                        {height}
+                                                    </span>
+                                            }
+                                        </p>
+                                    </div>
+                                    {/* // ! weight // */}
+                                    <div className="border-b w-full mb-3">
+                                        <p className="text-poke-white font-bold mb-3">
+                                            Average Weight:&nbsp;
+                                            {
+                                                weight === null
+                                                    ?
+                                                    <span className="text-poke-red font-bold animate-ping">
+                                                        ... Loading
+                                                    </span>
+                                                    :
+                                                    <span className="text-poke-red font-bold">
+                                                        {weight}
+                                                    </span>
+                                            }
+                                        </p>
+                                    </div>
+
+                                    {/* // ! types // */}
+
+                                    <div className="border-b w-full mb-3">
+                                        {
+                                            types.length > 0
+                                                ?
+                                                <>
+                                                    <p
+                                                        className="text-poke-white font-bold mb-3"
+                                                    >
+                                                        Type(s):&nbsp;
+                                                    </p>
+                                                    {types.map((types, index) => (
+                                                        <div
+                                                            key={index}
+                                                        >
+                                                            <p
+                                                                className="text-poke-red font-bold capitalize mb-3"
+                                                            >
+                                                                {types.name}
+                                                            </p>
+                                                            <ul className="text-poke-blue font-bold mb-3">
+
+                                                                <li>
+                                                                    Double Damage To:&nbsp;
+                                                                    <span className="text-poke-red capitalize">
+                                                                    {types.doubleDamageTo}
+                                                                    </span>
+                                                                </li>
+
+                                                                <li>
+                                                                    Double Damage From:&nbsp;
+                                                                    <span className="text-poke-red capitalize">
+                                                                    {types.doubleDamageFrom}
+                                                                    </span>
+                                                                </li>
+
+                                                                <li>
+                                                                    Half Damage To:&nbsp;
+                                                                    <span className="text-poke-red capitalize">
+                                                                    {types.halfDamageTo}
+                                                                    </span>
+                                                                </li>
+                                                                <li>
+                                                                    Half Damage From:&nbsp;
+                                                                    <span className="text-poke-red capitalize">
+                                                                    {types.halfDamageFrom}
+                                                                    </span>
+                                                                </li>
+
+                                                                <li>
+                                                                    No Damage To:&nbsp;
+                                                                    <span className="text-poke-red capitalize">
+                                                                    {types.noDamageTo}
+                                                                    </span>
+                                                                </li>
+
+                                                                <li>
+                                                                    No Damage From:&nbsp;
+                                                                    <span className="text-poke-red capitalize">
+                                                                    {types.noDamageFrom}
+                                                                    </span>
+                                                                </li>
+
+                                                            </ul>
+                                                        </div>
+                                                    ))}
+                                                </>
+                                                :
+                                                null
+                                        }
+                                    </div>
+
+                                    {/* // ! base experience // */}
+                                    <div className="border-b w-full mb-3">
+                                        <p className="text-poke-white font-bold mb-3">
+                                            Base Experience:&nbsp;
+                                            {
+                                                baseExperience === null
+                                                    ?
+                                                    <span className="text-poke-red font-bold animate-ping">
+                                                        ... Loading
+                                                    </span>
+                                                    :
+                                                    <span className="text-poke-red font-bold">
+                                                        {baseExperience}
+                                                    </span>
+                                            }
+                                        </p>
+                                    </div>
+
                                 </div>
                             </>
                     }
