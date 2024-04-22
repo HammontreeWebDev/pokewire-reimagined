@@ -89,7 +89,7 @@ export default function PokemonDisplay() {
                                     <div className="flex items-end p-6">
                                         <div>
                                             <h3 className="font-semibold text-white">
-                                                <a href="#">
+                                                <a href={`/wiredex/my-pokemon/${firstPokemonName}`}>
                                                     <span className="absolute inset-0" />
                                                     {
                                                         firstPokemonName !== null ?
@@ -128,7 +128,7 @@ export default function PokemonDisplay() {
                                                 <div className="flex items-end p-6 sm:absolute sm:inset-0">
                                                     <div>
                                                         <h3 className="font-semibold text-white">
-                                                            <a href="#">
+                                                            <a href={`/wiredex/my-pokemon/${name}`}>
                                                                 <span className="absolute inset-0" />
                                                                 {name}
                                                             </a>
