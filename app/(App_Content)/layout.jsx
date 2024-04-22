@@ -1,6 +1,7 @@
 'use client'
 import LoggedInNav from "@/app/ui/navbars/LoggedInNav";
 import WireDexTitle from "@/app/ui/wiredex/WireDexTitle";
+import FooterLoggedIn from "../ui/footer/FooterLoggedIn";
 
 
 export default function Layout({ children }) {
@@ -13,6 +14,7 @@ export default function Layout({ children }) {
                     <WireDexTitle />
                 {children}
             </main>
+            <FooterLoggedIn />
         </>
     );
 }
