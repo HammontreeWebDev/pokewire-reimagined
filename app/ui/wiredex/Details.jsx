@@ -2,6 +2,7 @@ import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from 'next/image';
+import Link from 'next/link';
 
 // TODO: Add functionality to either show all moves or user's 4 favorite moves for specific pokemon
 
@@ -67,7 +68,7 @@ export default function Details() {
     }, [pokemonData !== undefined]);
 
     return (
-        <div className="bg-poke-black w-full antialiased">
+        <div className="bg-poke-black w-full antialiased min-h-screen">
             <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
                 <div className="sm:flex sm:items-baseline sm:justify-between">
                     <div className="flex flex-col items-center">
@@ -84,10 +85,10 @@ export default function Details() {
                             </span></h2>
                     </div>
 
-                    <a href="/wiredex/my-pokemon" className="hidden text-sm font-semibold text-poke-blue hover:text-[var(--poke-yellow)] sm:block">
+                    <Link href="/wiredex/my-pokemon" className="hidden text-sm font-semibold text-poke-blue hover:text-[var(--poke-yellow)] sm:block">
                         <span aria-hidden="true"> &larr;</span>
                         &nbsp;Back
-                    </a>
+                    </Link>
 
                 </div>
 
@@ -95,7 +96,7 @@ export default function Details() {
                     {
                         status === "loading"
                             ?
-                            <p className="text-poke-white anitmate-pulse min-h-screen"> . . . Loading</p>
+                            <p className="text-poke-white anitmate-pulse"> . . . Loading</p>
                             :
                             <>
                                 {/* // ! Display Pokemon that is being queried */}
@@ -254,9 +255,9 @@ export default function Details() {
                 </div>
 
                 <div className="mt-6 sm:hidden">
-                    <a href="#" className="block text-sm font-semibold text-indigo-600 hover:text-indigo-500">
-                        Browse all categories
-                        <span aria-hidden="true"> &rarr;</span>
+                    <a href="#" className="block text-sm font-semibold text-poke-blue hover:text-[var(--poke-yellow)]">
+                        <span aria-hidden="true"> &larr;</span>
+                        &nbsp;Back
                     </a>
                 </div>
             </div>

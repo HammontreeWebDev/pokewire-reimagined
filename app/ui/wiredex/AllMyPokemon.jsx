@@ -40,7 +40,7 @@ export default function AllMyPokemon() {
     }, [status]);
 
     return (
-        <div className="bg-poke-black w-full">
+        <div className="bg-poke-black w-full min-h-screen">
             <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
                 <div className="sm:flex sm:items-baseline sm:justify-between">
                     <div className="flex flex-col items-center">
@@ -59,10 +59,10 @@ export default function AllMyPokemon() {
                     {
                         allPokemonNames.length > 0
                             ?
-                            <a href="/wiredex" className="hidden text-sm font-semibold text-poke-blue hover:text-[var(--poke-yellow)] sm:block">
+                            <Link href="/wiredex" className="hidden text-sm font-semibold text-poke-blue hover:text-[var(--poke-yellow)] sm:block">
                                 <span aria-hidden="true"> &larr;</span>
                                 &nbsp;Back
-                            </a>
+                            </Link>
                             : null
                     }
                 </div>
@@ -116,10 +116,10 @@ export default function AllMyPokemon() {
                 </div>
 
                 <div className="mt-6 sm:hidden">
-                    <a href="#" className="block text-sm font-semibold text-indigo-600 hover:text-indigo-500">
-                        Browse all categories
-                        <span aria-hidden="true"> &rarr;</span>
-                    </a>
+                    <Link href="/wiredex" className="block text-sm font-semibold text-poke-blue hover:text-[var(--poke-yellow)]">
+                        <span aria-hidden="true"> &larr;</span>
+                                &nbsp;Back
+                    </Link>
                 </div>
             </div>
         </div>

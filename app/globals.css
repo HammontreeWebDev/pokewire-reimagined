@@ -37,6 +37,9 @@ html, body {
 .bg-poke-black{
   background-color: var(--poke-black);
 }
+.bg-trans-black{
+  background-color: rgba(0, 0, 0, 0.8);
+}
 .bg-poke-white{
   background-color: var(--poke-white);
 }

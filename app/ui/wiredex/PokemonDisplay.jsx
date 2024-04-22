@@ -1,6 +1,7 @@
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function PokemonDisplay() {
     const { data: session, status } = useSession();
@@ -47,7 +48,7 @@ export default function PokemonDisplay() {
     }, [status]);
 
     return (
-        <div className="bg-poke-black w-full">
+        <div className="bg-poke-black w-full min-h-screen">
             <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
                 <div className="sm:flex sm:items-baseline sm:justify-between">
                     <div className="flex flex-col items-center">
@@ -67,10 +68,10 @@ export default function PokemonDisplay() {
                     {
                         firstPokemonName !== null
                             ?
-                            <a href="/wiredex/my-pokemon" className="hidden text-sm font-semibold text-poke-blue hover:text-[var(--poke-yellow)] sm:block">
+                            <Link href="/wiredex/my-pokemon" className="hidden text-sm font-semibold text-poke-blue hover:text-[var(--poke-yellow)] sm:block">
                                 Browse all pokémon
                                 <span aria-hidden="true"> &rarr;</span>
-                            </a>
+                            </Link>
                             : null
                     }
                 </div>
@@ -99,7 +100,7 @@ export default function PokemonDisplay() {
                                     <div className="flex items-end p-6">
                                         <div>
                                             <h3 className="font-semibold text-white">
-                                                <a href={`/wiredex/my-pokemon/${firstPokemonName}`}>
+                                                <Link href={`/wiredex/my-pokemon/${firstPokemonName}`}>
                                                     <span className="absolute inset-0" />
                                                     {
                                                         firstPokemonName !== null ?
@@ -107,7 +108,7 @@ export default function PokemonDisplay() {
                                                             :
                                                             'Add your pokémon in the pokéfinder!'
                                                     }
-                                                </a>
+                                                </Link>
                                             </h3>
                                             <p aria-hidden="true" className="mt-1 text-sm text-white">
                                                 View Stats
@@ -138,10 +139,10 @@ export default function PokemonDisplay() {
                                                 <div className="flex items-end p-6 sm:absolute sm:inset-0">
                                                     <div>
                                                         <h3 className="font-semibold text-white">
-                                                            <a href={`/wiredex/my-pokemon/${name}`}>
+                                                            <Link href={`/wiredex/my-pokemon/${name}`}>
                                                                 <span className="absolute inset-0" />
                                                                 {name}
-                                                            </a>
+                                                            </Link>
                                                         </h3>
                                                         <p aria-hidden="true" className="mt-1 text-sm text-white">
                                                             View Stats
@@ -158,10 +159,10 @@ export default function PokemonDisplay() {
                 </div>
 
                 <div className="mt-6 sm:hidden">
-                    <a href="#" className="block text-sm font-semibold text-indigo-600 hover:text-indigo-500">
-                        Browse all categories
+                    <Link href="/wiredex/my-pokemon" className="block text-sm font-semibold text-poke-blue hover:text-[var(--poke-yellow)]">
+                        Browse all pokémon
                         <span aria-hidden="true"> &rarr;</span>
-                    </a>
+                    </Link>
                 </div>
             </div>
         </div>
