@@ -20,7 +20,7 @@ export async function GET(request, context) {
         console.log('Pokemon Name:', pokemonName);
         console.log('session:', session.user.id);
 
-        const userPokemon = await prisma.pokemon.findUnique({
+        const userPokemon = await prisma.pokemon.findFirst({
             where: {
                 userId: session.user.id,
                 name: pokemonName,
