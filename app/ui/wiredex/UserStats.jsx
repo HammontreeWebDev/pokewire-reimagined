@@ -10,28 +10,30 @@ export default function UserStats() {
     const [userName, setUserName] = useState(null);
 
     useEffect(() => {
-        const fetchPokemons = async () => {
-            try {
-                const response = await fetch('/api/getAllPokemon', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    credentials: 'include'
-                });
-                if (!response.ok) {
-                    throw new Error('failed to fetch pokemons');
+        if (status === 'authenticated') {
+            const fetchPokemons = async () => {
+                try {
+                    const response = await fetch('/api/getAllPokemon', {
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        credentials: 'include'
+                    });
+                    if (!response.ok) {
+                        throw new Error('failed to fetch pokemons');
+                    }
+                    const data = await response.json();
+                    setPokemons(data);
+    
+                } catch (error) {
+                    console.error('Error fetching pokemons:', error);
                 }
-                const data = await response.json();
-                setPokemons(data);
-
-            } catch (error) {
-                console.error('Error fetching pokemons:', error);
-            }
-        };
-
-        fetchPokemons();
-    }, [session, saveState]);
+            };
+    
+            fetchPokemons();
+        }
+    }, [status === 'authenticated']);
 
     useEffect(() => {
         setNumberOfPokemon(pokemons.length);

@@ -707,7 +707,22 @@ export default function DataDisplay() {
                         </div>
                     </div>
                     :
-                    null
+                    <div className='bg-gradient-to-bl from-[var(--poke-blue)] to-[var(--poke-black)] p-10 antialiased w-full min-h-screen'> 
+                    <div className="flex flex-col items-center">
+                            <Image
+                                src={'/img/profile_settings/MyPokemonIcon.png'}
+                                alt="premier ball"
+                                width={50}
+                                height={50}
+                            />
+                            <h2 className="text-2xl font-bold tracking-tight text-poke-white mt-3">
+                                Poké
+                                <span className="text-poke-red">
+                                    Finder
+                                </span></h2>
+                        </div>
+                        <SearchField />
+                    </div>
             }
         </>
     )
