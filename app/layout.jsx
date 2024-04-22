@@ -1,11 +1,21 @@
 'use client'
 
 import { Inter } from "next/font/google";
+import { Playfair_Display } from "next/font/google";
+import { Chakra_Petch } from "next/font/google";
+
+
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { SaveProvider } from "@/app/context/SaveContext";
 
 const inter = Inter({ subsets: ["latin"] });
+const chakra = Chakra_Petch({
+  subsets: ["latin"],
+  weight: "400",
+  style: "normal"
+})
+
 
 // export const metadata = {
 //   title: "PokéWire Re-Imagined",
@@ -15,7 +25,7 @@ const inter = Inter({ subsets: ["latin"] });
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className="h-full">
-      <body className={`${inter.className} h-full`}>
+      <body className={`${chakra.className} antialiased h-full`}>
         <SessionProvider>
           <SaveProvider>
             {children}
