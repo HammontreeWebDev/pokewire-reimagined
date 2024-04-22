@@ -323,7 +323,7 @@ export default function DataDisplay() {
                         <div className="mt-6 border-t border-white/10">
 
                             {/* // ! Save Pokémon // */}
-                            <div className="flex flex-col items-center justify-center">
+                            <div className="flex flex-col items-center justify-center mt-3">
                                 <h3 className=" text-center font-bold text-white">
                                     Save
                                     <span className="text-poke-yellow">
