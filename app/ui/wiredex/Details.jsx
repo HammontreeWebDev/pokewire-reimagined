@@ -99,7 +99,7 @@ export default function Details() {
                             :
                             <>
                                 {/* // ! Display Pokemon that is being queried */}
-                                <div className="group aspect-h-1 aspect-w-2 overflow-hidden rounded-lg sm:aspect-h-1 sm:aspect-w-1 sm:row-span-2">
+                                <div className="group max-h-12 aspect-h-1 aspect-w-2 overflow-hidden rounded-lg sm:aspect-h-1 sm:aspect-w-1 sm:row-span-2">
                                     {
                                         mainPicture === null
                                             ?
