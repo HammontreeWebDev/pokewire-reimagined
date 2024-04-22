@@ -2,7 +2,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useSave } from "@/app/context/SaveContext";
 
-export default function WireDexTitle() {
+export default function UserStats() {
     const { data: session, status } = useSession();
     const [pokemons, setPokemons] = useState([]);
     const [numberOfPokemon, setNumberOfPokemon] = useState(0);
