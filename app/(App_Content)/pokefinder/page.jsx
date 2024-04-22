@@ -10,7 +10,6 @@ export default function Pokefinder() {
     return (
        
             <PokemonProvider>
-                <SearchField />
                 <DataDisplay />
             </PokemonProvider>
     )

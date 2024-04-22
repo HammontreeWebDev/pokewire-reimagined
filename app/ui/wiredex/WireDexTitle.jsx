@@ -7,8 +7,7 @@ export default function WireDexTitle() {
     const [pokemons, setPokemons] = useState([]);
     const [numberOfPokemon, setNumberOfPokemon] = useState(0);
     const { saveState } = useSave();
-
-    // TODO: Style wiredex title - make pokemon count dynamically update - may be able to pull local storage selectedPokemon, store it in state and update it that way?
+    const [userName, setUserName] = useState(null);
 
     useEffect(() => {
         const fetchPokemons = async () => {
@@ -38,13 +37,35 @@ export default function WireDexTitle() {
         setNumberOfPokemon(pokemons.length);
     }, [pokemons]);
 
+    useEffect(() => {
+        // setUserName(session.user.name);
+        if (status === 'authenticated') {
+            setUserName(session.user.name);
+        }
+    }, [status === 'authenticated']);
+
     return (
-        <div className="w-full flex justify-center border-b mb-3">
-            <div className="my-3 py-3 flex justify-center antialiased rounded w-1/2 bg-gradient-to-br from-transparent to-[var(--poke-yellow)]">
-                {/* // ! Pokémon Count */}
-                <div className="flex flex-col justify-center mx-3">
-                    <p className="text-poke-white">Pokémon Count:
-                        <span className="ml-1 bg-poke-yellow px-1 rounded text-poke-blue font-bold">
+        <div className="w-full flex justify-center border-b bg-gradient-to-br from-transparent to-[var(--poke-yellow)]">
+            <div className="my-3 py-3 flex justify-center antialiased rounded w-1/2">
+
+                <div className="flex flex-col justify-center mx-3 bg-trans-black p-3 rounded">
+                    {/* // ! Pokémon Count */}
+
+                    {
+                        status === 'loading'
+                            ?
+                            <div className="animate-pulse text-poke-red">. . . Loading</div>
+                            :
+                            <h1 className="text-poke-white text-center border-b font-extrabold uppercase">
+                                {userName}'s
+                                <span className="text-poke-red">
+                                    &nbsp;Stats
+                                </span>
+                            </h1>
+                    }
+
+                    <p className="text-poke-yellow font-bold">Pokémon Count:
+                        <span className="ml-1 px-1 rounded text-poke-white">
                             {
                                 status === 'loading'
                                     ?
@@ -54,12 +75,10 @@ export default function WireDexTitle() {
                             }
                         </span>
                     </p>
-                </div>
 
-                {/* //! Favorite Pokémon */}
-                <div className="flex flex-col justify-center mx-3">
-                    <p className="text-poke-white">Favorite Pokémon:
-                        <span className="ml-1 bg-poke-yellow px-1 rounded text-poke-blue font-bold">
+                    {/* //! Favorite Pokémon */}
+                    <p className="text-poke-yellow font-bold">Favorite Pokémon:
+                        <span className="ml-1 px-1 rounded text-poke-white">
                             Placeholder Pikachu
                         </span>
                     </p>

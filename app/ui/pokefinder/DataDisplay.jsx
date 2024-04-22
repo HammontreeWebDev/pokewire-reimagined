@@ -8,6 +8,7 @@ import Image from "next/image";
 import Pagination from "@/app/ui/pagination/Pagination";
 import { useSession } from "next-auth/react";
 import { FolderPlusIcon } from "@heroicons/react/24/outline";
+import SearchField from "@/app/ui/pokefinder/SearchField";
 
 
 export default function DataDisplay() {
@@ -27,7 +28,7 @@ export default function DataDisplay() {
     const MOVES_PER_PAGE = 5;
 
     const [selectedPokemon] = usePokemon();
-    const {saveState, setSaveState} = useSave();
+    const { saveState, setSaveState } = useSave();
     const [data, setData] = useState(null);
     const [types, setTypes] = useState([]);
     const [baseExperience, setBaseExperience] = useState('');
@@ -290,7 +291,7 @@ export default function DataDisplay() {
                     'Content-Type': 'application/json',
                 },
                 credentials: 'include',
-                body: JSON.stringify({pokemonData}),
+                body: JSON.stringify({ pokemonData }),
             });
 
             const result = await response.json();
@@ -315,11 +316,21 @@ export default function DataDisplay() {
             {
                 selectedPokemon
                     ?
-                    <div className='bg-gradient-to-tl from-[var(--poke-blue)] to-[var(--poke-black)] p-10 mt-3 rounded antialiased w-3/4'>
-                        <div className="px-4 sm:px-0">
-                            <h3 className="text-base font-bold leading-7 text-white">PokéFinder</h3>
-                            <p className="mt-1 max-w-2xl text-sm leading-6 text-gray-400">Discover your favorite pokémon</p>
+                    <div className='bg-gradient-to-bl from-[var(--poke-blue)] to-[var(--poke-black)] p-10 antialiased w-full'>
+                        <div className="flex flex-col items-center">
+                            <Image
+                                src={'/img/profile_settings/MyPokemonIcon.png'}
+                                alt="premier ball"
+                                width={50}
+                                height={50}
+                            />
+                            <h2 className="text-2xl font-bold tracking-tight text-poke-white mt-3">
+                                Poké
+                                <span className="text-poke-red">
+                                    Finder
+                                </span></h2>
                         </div>
+                        <SearchField />
                         <div className="mt-6 border-t border-white/10">
 
                             {/* // ! Save Pokémon // */}
