@@ -27,12 +27,12 @@ const AudioPlayer = ({ imageURL, imageAlt, audioSrc }) => {
 
     return (
         <>
-                <div className="bg-poke-black flex h-fit max-w-fit flex-col rounded-2xl p-6 text-center shadow box-shadow-rb my-3">
+                <div className="bg-poke-black flex h-fit w-full flex-col rounded-2xl p-6 text-center shadow box-shadow-rb my-3">
                     <div className="flex flex-col space-y-0 items-center">
                         <Image
                             width={200}
                             height={200}
-                            className="h-auto w-full flex-shrink-0 rounded-t-lg pb-2"
+                            className="h-auto w-1/5 flex-shrink-0 rounded-t-lg pb-2"
                             src={imageURL}
                             alt={imageAlt}
                             unoptimized
