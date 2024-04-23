@@ -69,43 +69,41 @@ export default function UserStats() {
                             </button>
                         </div>
                         <div className="w-full flex justify-center border-b bg-dark-blue">
-                            <div className="flex justify-center antialiased">
 
-                                <div className="flex flex-col justify-center p-3 w-screen">
-                                    {/* // ! Pokémon Count */}
+                            <div className="flex flex-col justify-center p-3 border mb-3 rounded bg-poke-black">
+                                {/* // ! Pokémon Count */}
 
-                                    {
-                                        status === 'loading'
-                                            ?
-                                            <div className="animate-pulse text-poke-red">. . . Loading</div>
-                                            :
-                                            <h1 className="text-poke-white text-center border-b font-extrabold uppercase">
-                                                {userName}'s
-                                                <span className="text-poke-red">
-                                                    &nbsp;Stats
-                                                </span>
-                                            </h1>
-                                    }
+                                {
+                                    status === 'loading'
+                                        ?
+                                        <div className="animate-pulse text-poke-red">. . . Loading</div>
+                                        :
+                                        <h1 className="text-poke-white text-center font-extrabold uppercase border-b mb-3">
+                                            {userName}'s
+                                            <span className="text-poke-red">
+                                                &nbsp;Stats
+                                            </span>
+                                        </h1>
+                                }
 
-                                    <p className="text-poke-yellow font-bold self-center">Pokémon Count:
-                                        <span className="ml-1 px-1 rounded text-poke-white">
-                                            {
-                                                status === 'loading'
-                                                    ?
-                                                    '. . . Loading'
-                                                    :
-                                                    numberOfPokemon
-                                            }
-                                        </span>
-                                    </p>
+                                <p className="text-poke-yellow font-bold self-start">Pokémon Count:
+                                    <span className="ml-1 px-1 rounded text-poke-white">
+                                        {
+                                            status === 'loading'
+                                                ?
+                                                '. . . Loading'
+                                                :
+                                                numberOfPokemon
+                                        }
+                                    </span>
+                                </p>
 
-                                    {/* //! Favorite Pokémon */}
-                                    <p className="text-poke-yellow font-bold self-center">Favorite Pokémon:
-                                        <span className="ml-1 px-1 rounded text-poke-white">
-                                            Placeholder Pikachu
-                                        </span>
-                                    </p>
-                                </div>
+                                {/* //! Favorite Pokémon */}
+                                <p className="text-poke-yellow font-bold self-start">Favorite Pokémon:
+                                    <span className="ml-1 px-1 rounded text-poke-white">
+                                        Placeholder Pikachu
+                                    </span>
+                                </p>
                             </div>
                         </div>
                     </>

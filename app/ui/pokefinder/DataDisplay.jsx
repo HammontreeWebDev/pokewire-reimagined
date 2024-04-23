@@ -378,7 +378,7 @@ export default function DataDisplay() {
                                 </div>
 
                                 {/* //! Pokémon Types */}
-                                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
                                     <dt className="text-sm font-bold leading-6 text-white"> Type(s)</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
 
@@ -480,7 +480,7 @@ export default function DataDisplay() {
                                 </div>
 
                                 {/* //! Pokémon Latest cry */}
-                                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
                                     <dt className="text-sm font-bold leading-6 text-white">{`Latest Cry`}</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
 
@@ -501,7 +501,7 @@ export default function DataDisplay() {
                                 </div>
 
                                 {/* //! Pokémon Legacy cry */}
-                                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
                                     <dt className="text-sm font-bold leading-6 text-white">{`Legacy Cry`}</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
                                         {
@@ -518,7 +518,7 @@ export default function DataDisplay() {
                                 </div>
 
                                 {/* //! Pokémon Base Experience */}
-                                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
                                     <dt className="text-sm font-bold leading-6 text-white">Base Experience</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
                                         <div className="bg-poke-black p-3 rounded-2xl my-1 box-shadow-rb">
@@ -528,7 +528,7 @@ export default function DataDisplay() {
                                 </div>
 
                                 {/* //! Pokémon Height */}
-                                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
                                     <dt className="text-sm font-bold leading-6 text-white"> Average Height</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
                                         <div className="bg-poke-black p-3 rounded-2xl my-1 box-shadow-rb">
@@ -540,7 +540,7 @@ export default function DataDisplay() {
                                 </div>
 
                                 {/* //! Pokémon Weight */}
-                                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
                                     <dt className="text-sm font-bold leading-6 text-white">Average Weight</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
                                         <div className="bg-poke-black p-3 rounded-2xl my-1 box-shadow-rb">
@@ -552,7 +552,7 @@ export default function DataDisplay() {
                                 </div>
 
                                 {/* //! Pokémon Abilities */}
-                                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
                                     <dt className="text-sm font-bold leading-6 text-white">Abilities</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
                                         {
@@ -571,7 +571,7 @@ export default function DataDisplay() {
                                 </div>
 
                                 {/* //! Pokémon Moves */}
-                                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
                                     <dt className="text-sm font-bold leading-6 text-white">{`${selectedPokemon}'s Moves`}</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0 min-h-screen">
                                         <input
