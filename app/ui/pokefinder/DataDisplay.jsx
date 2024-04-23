@@ -337,7 +337,7 @@ export default function DataDisplay() {
 
                                 {/* //! Pokémon Name */}
                                 <div className="px-4 py-6 sm:grid sm:grid-cols-1 sm:gap-4 sm:px-0">
-                                    <dt className="text-sm font-bold leading-6 text-white">Pokémon</dt>
+                                    <dt className="text-xl font-bold leading-6 text-white">Pokémon:</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
                                         <div className="bg-poke-black p-3 rounded-2xl my-1  flex justify-center items-center box-shadow-rb">
                                             <div className="flex flex-col items-center">
@@ -379,13 +379,13 @@ export default function DataDisplay() {
 
                                 {/* //! Pokémon Types */}
                                 <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
-                                    <dt className="text-sm font-bold leading-6 text-white"> Type(s)</dt>
+                                    <dt className="text-xl font-bold leading-6 text-white"> Type(s):</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
 
                                         {
                                             types.map((types, index) => (
                                                 <div className="bg-poke-black p-3 rounded-2xl my-1 box-shadow-rb" key={index}>
-                                                    <h2 className="text-poke-yellow capitalize my-3 text-center border-b text-2xl font-extrabold">
+                                                    <h2 className="text-poke-blue capitalize my-3 pb-3 text-left border-b text-xl font-extrabold">
                                                         {types.name}
                                                     </h2>
 
@@ -481,7 +481,7 @@ export default function DataDisplay() {
 
                                 {/* //! Pokémon Latest cry */}
                                 <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
-                                    <dt className="text-sm font-bold leading-6 text-white">{`Latest Cry`}</dt>
+                                    <dt className="text-xl font-bold leading-6 text-white">{`Latest Cry:`}</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
 
                                         {
@@ -502,7 +502,7 @@ export default function DataDisplay() {
 
                                 {/* //! Pokémon Legacy cry */}
                                 <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
-                                    <dt className="text-sm font-bold leading-6 text-white">{`Legacy Cry`}</dt>
+                                    <dt className="text-xl font-bold leading-6 text-white">{`Legacy Cry:`}</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
                                         {
                                             legacyCry ?
@@ -519,20 +519,20 @@ export default function DataDisplay() {
 
                                 {/* //! Pokémon Base Experience */}
                                 <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
-                                    <dt className="text-sm font-bold leading-6 text-white">Base Experience</dt>
+                                    <dt className="text-xl font-bold leading-6 text-white">Base Experience:</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
                                         <div className="bg-poke-black p-3 rounded-2xl my-1 box-shadow-rb">
-                                            <p className="text-poke-yellow font-bold">{baseExperience} EXP</p>
+                                            <p className="text-poke-white font-bold">{baseExperience} EXP</p>
                                         </div>
                                     </dd>
                                 </div>
 
                                 {/* //! Pokémon Height */}
                                 <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
-                                    <dt className="text-sm font-bold leading-6 text-white"> Average Height</dt>
+                                    <dt className="text-xl font-bold leading-6 text-white"> Average Height:</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
                                         <div className="bg-poke-black p-3 rounded-2xl my-1 box-shadow-rb">
-                                            <p className="text-poke-yellow font-bold">
+                                            <p className="text-poke-white font-bold">
                                                 {height}
                                             </p>
                                         </div>
@@ -541,10 +541,10 @@ export default function DataDisplay() {
 
                                 {/* //! Pokémon Weight */}
                                 <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
-                                    <dt className="text-sm font-bold leading-6 text-white">Average Weight</dt>
+                                    <dt className="text-xl font-bold leading-6 text-white">Average Weight:</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
                                         <div className="bg-poke-black p-3 rounded-2xl my-1 box-shadow-rb">
-                                            <p className="text-poke-yellow font-bold">
+                                            <p className="text-poke-white font-bold">
                                                 {weight}
                                             </p>
                                         </div>
@@ -553,12 +553,12 @@ export default function DataDisplay() {
 
                                 {/* //! Pokémon Abilities */}
                                 <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
-                                    <dt className="text-sm font-bold leading-6 text-white">Abilities</dt>
+                                    <dt className="text-xl font-bold leading-6 text-white">Abilities:</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
                                         {
                                             abilities.map((ability, index) => (
                                                 <div className="bg-poke-black p-3 rounded-2xl my-12 box-shadow-rb" key={index}>
-                                                    <h2 className="text-poke-yellow capitalize my-3 text-center border-b text-2xl font-extrabold">
+                                                    <h2 className="text-poke-blue capitalize my-3 text-left border-b text-xl font-extrabold">
                                                         {ability.name.replace('-', ' ')}
                                                     </h2>
                                                     <p className="text-poke-white">
@@ -572,7 +572,7 @@ export default function DataDisplay() {
 
                                 {/* //! Pokémon Moves */}
                                 <div className="px-4 py-6 sm:grid sm:grid-cols-2 sm:gap-4 sm:px-0">
-                                    <dt className="text-sm font-bold leading-6 text-white">{`${selectedPokemon}'s Moves`}</dt>
+                                    <dt className="text-xl font-bold leading-6 text-white">{`${selectedPokemon}'s Moves:`}</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0 min-h-screen">
                                         <input
                                             type="text"
@@ -590,7 +590,7 @@ export default function DataDisplay() {
                                         {
                                             currentMoves.map((move, index) => (
                                                 <div key={index} className="bg-poke-black p-3 rounded-2xl my-12 box-shadow-rb">
-                                                    <h2 className="text-poke-yellow capitalize my-3 py-3 text-center border-b text-2xl font-extrabold">
+                                                    <h2 className="text-poke-blue capitalize my-3 py-3 text-left border-b text-xl font-extrabold">
                                                         {move.name.replace('-', ' ')}
                                                     </h2>
 
@@ -646,13 +646,13 @@ export default function DataDisplay() {
                                                     </div>
 
                                                     {/* //! Contest Details */}
-                                                    <h3 className="text-poke-blue capitalize my-3 py-3 text-center border-t text-2xl font-extrabold">
-                                                        Contest Details
+                                                    <h3 className="text-poke-blue capitalize mt-3 py-3 text-left border-t text-xl font-extrabold">
+                                                       {move.name.replaceAll('-', ' ')} Contest Details:
                                                     </h3>
 
                                                     {/* type */}
 
-                                                    <p className="text-center font-bold text-poke-yellow">
+                                                    <p className="text-left font-bold text-poke-yellow">
                                                         Type:&nbsp;
                                                         <span className="capitalize text-poke-white">
                                                             {move.contest_type}
@@ -661,15 +661,15 @@ export default function DataDisplay() {
 
                                                     {/* Normal section */}
                                                     <div>
-                                                        <h4 className="text-poke-yellow font-bold py-3 text-lg">
-                                                            Normal Combos
+                                                        <h4 className="text-poke-white font-bold py-3 text-lg italic">
+                                                            Normal Combos:
                                                         </h4>
-                                                        <p className="text-poke-blue font-bold">Use Before:&nbsp;
+                                                        <p className="text-poke-yellow font-bold">Use Before:&nbsp;
                                                             <span className="text-poke-white font-bold capitalize">
                                                                 {move.contest_normal_use_before}
                                                             </span>
                                                         </p>
-                                                        <p className="text-poke-blue font-bold">Use After:&nbsp;
+                                                        <p className="text-poke-yellow font-bold">Use After:&nbsp;
                                                             <span className="text-poke-white font-bold capitalize">
                                                                 {move.contest_normal_use_after}
                                                             </span>
@@ -678,15 +678,15 @@ export default function DataDisplay() {
 
                                                     {/* Super section */}
                                                     <div>
-                                                        <h4 className="text-poke-yellow font-bold py-3 text-lg">
-                                                            Super Combos
+                                                        <h4 className="text-poke-white font-bold py-3 text-lg italic">
+                                                            Super Combos:
                                                         </h4>
-                                                        <p className="text-poke-blue font-bold">Use Before:&nbsp;
+                                                        <p className="text-poke-yellow font-bold">Use Before:&nbsp;
                                                             <span className="text-poke-white font-bold capitalize">
                                                                 {move.contest_super_use_before}
                                                             </span>
                                                         </p>
-                                                        <p className="text-poke-blue font-bold">Use After:&nbsp;
+                                                        <p className="text-poke-yellow font-bold">Use After:&nbsp;
                                                             <span className="text-poke-white font-bold capitalize">
                                                                 {move.contest_super_use_after}
                                                             </span>
