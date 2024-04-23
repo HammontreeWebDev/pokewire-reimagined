@@ -317,7 +317,7 @@ export default function DataDisplay() {
             {
                 selectedPokemon
                     ?
-                    <div className='bg-gradient-to-bl from-[var(--poke-blue)] to-[var(--poke-black)] p-10 antialiased w-full'>
+                    <div className='bg-poke-black p-10 antialiased w-full'>
                         <div className="flex flex-col items-center">
                             <Image
                                 src={'/img/profile_settings/MyPokemonIcon.png'}
@@ -332,40 +332,14 @@ export default function DataDisplay() {
                                 </span></h2>
                         </div>
                         <SearchField />
-                        <div className="mt-6 border-t border-white/10">
-
-                            {/* // ! Save Pokémon // */}
-                            <div className="flex flex-col items-center justify-center mt-3">
-                                <h3 className=" text-center font-bold text-white">
-                                    Save
-                                    <span className="text-poke-yellow">
-                                        &nbsp;{selectedPokemon}&nbsp;
-                                    </span>
-                                    To {
-                                        status === 'loading' ?
-                                            <p> Loading . . . </p>
-                                            :
-                                            <span className="text-poke-yellow">
-                                                &nbsp;{userName}
-                                            </span>
-                                    }'s Wiré<span className="text-poke-red">Dex</span>!
-                                </h3>
-                                <button
-                                    className="text-poke-red bg-poke-white p-1 rounded-2xl my-3 border-2 border-black hover:border-white hover:bg-black hover:text-white hover:animate-spin"
-                                    type="button"
-                                    onClick={handlePokemonSave}
-                                >
-                                    <FolderPlusIcon className="h-5 w-5" />
-                                </button>
-                            </div>
-
-                            <dl className="divide-y divide-white/10">
+                        <div className="mt-6">
+                            <dl className="divide-y divide-[var(--poke-yellow)]">
 
                                 {/* //! Pokémon Name */}
-                                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                                <div className="px-4 py-6 sm:grid sm:grid-cols-1 sm:gap-4 sm:px-0">
                                     <dt className="text-sm font-bold leading-6 text-white">Pokémon</dt>
                                     <dd className="mt-1 text-sm leading-6 text-gray-400 sm:col-span-2 sm:mt-0">
-                                        <div className="bg-poke-black p-3 rounded-2xl my-1 max-w-fit flex justify-center items-center box-shadow-rb">
+                                        <div className="bg-poke-black p-3 rounded-2xl my-1  flex justify-center items-center box-shadow-rb">
                                             <div className="flex flex-col items-center">
                                                 <h2 className="text-poke-yellow capitalize my-3 text-center text-2xl font-extrabold">{selectedPokemon}</h2>
                                                 <Image
@@ -374,6 +348,30 @@ export default function DataDisplay() {
                                                     width={300}
                                                     height={300}
                                                 />
+                                                {/* // ! Save Pokémon // */}
+                                        <div className="flex flex-col items-center justify-center mt-3">
+                                            <h3 className=" text-center font-bold text-white">
+                                                Save
+                                                <span className="text-poke-yellow">
+                                                    &nbsp;{selectedPokemon}&nbsp;
+                                                </span>
+                                                To {
+                                                    status === 'loading' ?
+                                                        <p> Loading . . . </p>
+                                                        :
+                                                        <span className="text-poke-yellow">
+                                                            &nbsp;{userName}
+                                                        </span>
+                                                }'s Wiré<span className="text-poke-red">Dex</span>!
+                                            </h3>
+                                            <button
+                                                className="text-poke-red bg-poke-white p-1 rounded-2xl my-3 border-2 border-black hover:border-white hover:bg-black hover:text-white hover:animate-spin"
+                                                type="button"
+                                                onClick={handlePokemonSave}
+                                            >
+                                                <FolderPlusIcon className="h-5 w-5" />
+                                            </button>
+                                        </div>
                                             </div>
                                         </div>
                                     </dd>
@@ -708,8 +706,8 @@ export default function DataDisplay() {
                         </div>
                     </div>
                     :
-                    <div className='bg-gradient-to-bl from-[var(--poke-blue)] to-[var(--poke-black)] p-10 antialiased w-full min-h-screen'> 
-                    <div className="flex flex-col items-center">
+                    <div className='bg-gradient-to-bl from-[var(--poke-blue)] to-[var(--poke-black)] p-10 antialiased w-full min-h-screen'>
+                        <div className="flex flex-col items-center">
                             <Image
                                 src={'/img/profile_settings/MyPokemonIcon.png'}
                                 alt="premier ball"

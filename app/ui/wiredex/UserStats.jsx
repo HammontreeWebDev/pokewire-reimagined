@@ -48,7 +48,7 @@ export default function UserStats() {
     }, [status === 'authenticated']);
 
 
-    function handleViewStats() {
+    function toggleViewStats() {
         setIsOpen(!isOpen);
     }
 
@@ -60,18 +60,18 @@ export default function UserStats() {
                 isOpen
                     ?
                     <>
-                        <div className="w-full flex justify-center items-center bg-poke-black font-bold">
+                        <div className="w-full flex justify-center items-center bg-dark-blue font-bold pb-3">
                             <button
                                 className="text-poke-white hover:animate-pulse"
-                                onClick={handleViewStats}
+                                onClick={toggleViewStats}
                             >
                                 Close
                             </button>
                         </div>
-                        <div className="w-full flex justify-center border-b bg-gradient-to-br from-transparent to-[var(--poke-yellow)]">
+                        <div className="w-full flex justify-center border-b bg-dark-blue">
                             <div className="flex justify-center antialiased">
 
-                                <div className="flex flex-col justify-center bg-trans-black p-3 w-screen">
+                                <div className="flex flex-col justify-center p-3 w-screen">
                                     {/* // ! Pokémon Count */}
 
                                     {
@@ -111,10 +111,10 @@ export default function UserStats() {
                     </>
                     :
 
-                    <div className="w-full flex justify-center items-center bg-poke-black font-bold">
+                    <div className="w-full flex justify-center items-center bg-dark-blue font-bold border-b pb-3">
                         <button
                             className="text-poke-white hover:animate-pulse"
-                            onClick={handleViewStats}
+                            onClick={toggleViewStats}
                         >
                             View My
                             <span className="text-poke-red">

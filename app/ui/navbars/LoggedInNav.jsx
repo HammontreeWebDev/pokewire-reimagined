@@ -50,7 +50,7 @@ export default function LoggedInNav() {
   }, [session])
 
   return (
-    <Disclosure as="nav" className="bg-poke-black antialiased">
+    <Disclosure as="nav" className="bg-dark-blue antialiased">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">

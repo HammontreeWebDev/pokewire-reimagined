@@ -23,7 +23,7 @@ const navigation = {
 
 export default function FooterLoggedIn() {
     return (
-        <footer className="bg-gradient-to-tr from-[var(--poke-blue)] to-transparent antialiased" aria-labelledby="footer-heading">
+        <footer className="bg-dark-blue antialiased" aria-labelledby="footer-heading">
             <h2 id="footer-heading" className="sr-only">
                 Footer
             </h2>
