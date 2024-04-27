@@ -4,6 +4,22 @@ import { useEffect, useState } from "react";
 import Image from 'next/image';
 import Link from 'next/link';
 
+const ArrowsPointingOut = () => {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+        </svg>
+    )
+}
+
+const XMarkIcon = () => {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
+        </svg>
+    )
+}
+
 // TODO: Add functionality to either show all moves or user's 4 favorite moves for specific pokemon
 
 export default function Details() {
@@ -17,6 +33,7 @@ export default function Details() {
     const [weight, setWeight] = useState(null);
     const [types, setTypes] = useState([]);
     const [baseExperience, setBaseExperience] = useState(null);
+    const [isOpen, setIsOpen] = useState({});
 
     useEffect(() => {
         async function fetchPokemon() {
@@ -66,6 +83,10 @@ export default function Details() {
         }
 
     }, [pokemonData !== undefined]);
+
+    const toggleIsOpen = (index) => {
+        setIsOpen(prev => ({...prev, [index]: !prev[index]}));
+    };
 
     return (
         <div className="bg-poke-black w-full antialiased min-h-screen">
@@ -171,59 +192,85 @@ export default function Details() {
                                                         Type(s):&nbsp;
                                                     </p>
                                                     {types.map((types, index) => (
-                                                        <div
-                                                            key={index}
-                                                        >
-                                                            <p
-                                                                className="text-poke-red font-bold capitalize mb-3"
+                                                        isOpen[index]
+                                                            ?
+                                                            <div
+                                                                key={index}
                                                             >
-                                                                {types.name}
-                                                            </p>
-                                                            <ul className="text-poke-blue font-bold mb-3">
+                                                                <div className="flex items-center">
+                                                                    <p
+                                                                        className="text-poke-red font-bold capitalize mb-3"
+                                                                    >
+                                                                        {types.name}
+                                                                    </p>
+                                                                    <button className="text-poke-blue mb-3 ml-3"
+                                                                        onClick={ () => toggleIsOpen(index)}
+                                                                    >
+                                                                        <XMarkIcon />
+                                                                    </button>
+                                                                </div>
+                                                                <ul className="text-poke-blue font-bold mb-3">
 
-                                                                <li>
-                                                                    Double Damage To:&nbsp;
-                                                                    <span className="text-poke-red capitalize">
-                                                                        {types.doubleDamageTo}
-                                                                    </span>
-                                                                </li>
+                                                                    <li>
+                                                                        Double Damage To:&nbsp;
+                                                                        <span className="text-poke-red capitalize">
+                                                                            {types.doubleDamageTo}
+                                                                        </span>
+                                                                    </li>
 
-                                                                <li>
-                                                                    Double Damage From:&nbsp;
-                                                                    <span className="text-poke-red capitalize">
-                                                                        {types.doubleDamageFrom}
-                                                                    </span>
-                                                                </li>
+                                                                    <li>
+                                                                        Double Damage From:&nbsp;
+                                                                        <span className="text-poke-red capitalize">
+                                                                            {types.doubleDamageFrom}
+                                                                        </span>
+                                                                    </li>
 
-                                                                <li>
-                                                                    Half Damage To:&nbsp;
-                                                                    <span className="text-poke-red capitalize">
-                                                                        {types.halfDamageTo}
-                                                                    </span>
-                                                                </li>
-                                                                <li>
-                                                                    Half Damage From:&nbsp;
-                                                                    <span className="text-poke-red capitalize">
-                                                                        {types.halfDamageFrom}
-                                                                    </span>
-                                                                </li>
+                                                                    <li>
+                                                                        Half Damage To:&nbsp;
+                                                                        <span className="text-poke-red capitalize">
+                                                                            {types.halfDamageTo}
+                                                                        </span>
+                                                                    </li>
+                                                                    <li>
+                                                                        Half Damage From:&nbsp;
+                                                                        <span className="text-poke-red capitalize">
+                                                                            {types.halfDamageFrom}
+                                                                        </span>
+                                                                    </li>
 
-                                                                <li>
-                                                                    No Damage To:&nbsp;
-                                                                    <span className="text-poke-red capitalize">
-                                                                        {types.noDamageTo}
-                                                                    </span>
-                                                                </li>
+                                                                    <li>
+                                                                        No Damage To:&nbsp;
+                                                                        <span className="text-poke-red capitalize">
+                                                                            {types.noDamageTo}
+                                                                        </span>
+                                                                    </li>
 
-                                                                <li>
-                                                                    No Damage From:&nbsp;
-                                                                    <span className="text-poke-red capitalize">
-                                                                        {types.noDamageFrom}
-                                                                    </span>
-                                                                </li>
+                                                                    <li>
+                                                                        No Damage From:&nbsp;
+                                                                        <span className="text-poke-red capitalize">
+                                                                            {types.noDamageFrom}
+                                                                        </span>
+                                                                    </li>
 
-                                                            </ul>
-                                                        </div>
+                                                                </ul>
+                                                            </div>
+                                                            :
+                                                            <div
+                                                                className="flex items-center"
+                                                                key={index}
+                                                            >
+                                                                <p
+                                                                    className="text-poke-red font-bold capitalize mb-3"
+                                                                >
+                                                                    {types.name}
+                                                                </p>
+                                                                <button
+                                                                    className="text-poke-blue flex mb-3 ml-3"
+                                                                    onClick={() => toggleIsOpen(index)}
+                                                                >
+                                                                    <ArrowsPointingOut />
+                                                                </button>
+                                                            </div>
                                                     ))}
                                                 </>
                                                 :
