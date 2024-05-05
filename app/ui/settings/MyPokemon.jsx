@@ -1,21 +1,9 @@
-import { EnvelopeIcon, PhoneIcon } from '@heroicons/react/20/solid';
+import { HeartIcon, PencilSquareIcon } from '@heroicons/react/20/solid';
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import moment from 'moment';
 import typeColorSelector from '@/app/utils/typeColorSelector';
-
-const people = [
-    {
-        name: 'Jane Cooper',
-        title: 'Regional Paradigm Technician',
-        role: 'Admin',
-        email: 'janecooper@example.com',
-        telephone: '+1-202-555-0170',
-        imageUrl:
-            'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=4&w=256&h=256&q=60',
-    },
-    // More people...
-]
+import Link from 'next/link';
 
 export default function MyPokemon() {
 
@@ -78,22 +66,21 @@ export default function MyPokemon() {
                     <div>
                         <div className="-mt-px flex divide-x divide-gray-200">
                             <div className="flex w-0 flex-1">
-                                <a
-                                    href={`mailto:${pokemon.email}`}
+                                <button
                                     className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
                                 >
-                                    <EnvelopeIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                    Email
-                                </a>
+                                    <HeartIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                    Make My Favorite
+                                </button>
                             </div>
                             <div className="-ml-px flex w-0 flex-1">
-                                <a
-                                    href={`tel:${pokemon.telephone}`}
+                                <Link
+                                    href={`/settings`}
                                     className="relative inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-br-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
                                 >
-                                    <PhoneIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                    Call
-                                </a>
+                                    <PencilSquareIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                    Edit
+                                </Link>
                             </div>
                         </div>
                     </div>
