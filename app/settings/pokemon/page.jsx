@@ -1,10 +1,11 @@
 'use client'
 import userAuthentication from "@/app/utils/userAuthentication";
+import MyPokemon from "@/app/ui/settings/MyPokemon";
 
 export default function Pokemon() {
     userAuthentication();
 
     return (
-                <p>This is the pokemon page</p>
+                <MyPokemon />
     )
 }
