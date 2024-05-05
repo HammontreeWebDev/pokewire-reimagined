@@ -9,6 +9,7 @@ import Pagination from "@/app/ui/pagination/Pagination";
 import { useSession } from "next-auth/react";
 import { FolderPlusIcon } from "@heroicons/react/24/outline";
 import SearchField from "@/app/ui/pokefinder/SearchField";
+import typeColorSelector from "@/app/utils/typeColorSelector";
 
 // TODO: pokemon saved by another user are unable to be saved at all - check db
 
@@ -349,29 +350,29 @@ export default function DataDisplay() {
                                                     height={300}
                                                 />
                                                 {/* // ! Save Pokémon // */}
-                                        <div className="flex flex-col items-center justify-center mt-3">
-                                            <h3 className=" text-center font-bold text-white">
-                                                Save
-                                                <span className="text-poke-yellow">
-                                                    &nbsp;{selectedPokemon}&nbsp;
-                                                </span>
-                                                To {
-                                                    status === 'loading' ?
-                                                        <p> Loading . . . </p>
-                                                        :
+                                                <div className="flex flex-col items-center justify-center mt-3">
+                                                    <h3 className=" text-center font-bold text-white">
+                                                        Save
                                                         <span className="text-poke-yellow">
-                                                            &nbsp;{userName}
+                                                            &nbsp;{selectedPokemon}&nbsp;
                                                         </span>
-                                                }'s Wiré<span className="text-poke-red">Dex</span>!
-                                            </h3>
-                                            <button
-                                                className="text-poke-red bg-poke-white p-1 rounded-2xl my-3 border-2 border-black hover:border-white hover:bg-black hover:text-white hover:animate-spin"
-                                                type="button"
-                                                onClick={handlePokemonSave}
-                                            >
-                                                <FolderPlusIcon className="h-5 w-5" />
-                                            </button>
-                                        </div>
+                                                        To {
+                                                            status === 'loading' ?
+                                                                <p> Loading . . . </p>
+                                                                :
+                                                                <span className="text-poke-yellow">
+                                                                    &nbsp;{userName}
+                                                                </span>
+                                                        }'s Wiré<span className="text-poke-red">Dex</span>!
+                                                    </h3>
+                                                    <button
+                                                        className="text-poke-red bg-poke-white p-1 rounded-2xl my-3 border-2 border-black hover:border-white hover:bg-black hover:text-white hover:animate-spin"
+                                                        type="button"
+                                                        onClick={handlePokemonSave}
+                                                    >
+                                                        <FolderPlusIcon className="h-5 w-5" />
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </dd>
@@ -385,92 +386,148 @@ export default function DataDisplay() {
                                         {
                                             types.map((types, index) => (
                                                 <div className="bg-poke-black p-3 rounded-2xl my-1 box-shadow-rb" key={index}>
-                                                    <h2 className="text-poke-blue capitalize my-3 pb-3 text-left border-b text-xl font-extrabold">
+
+                                                    <h2 className={`capitalize inline-flex flex-shrink-0 items-center rounded-full px-3 py-1 my-3 text-xl font-extrabold text-white ring-1 ring-inset ${typeColorSelector(types.name)}`}>
                                                         {types.name}
                                                     </h2>
 
                                                     {/* //* double damage to */}
-                                                    <div className="flex">
+                                                    <div className="flex my-1">
                                                         <h3 className="mr-1 text-poke-yellow font-bold">Double Damage To:</h3>
-                                                        <p className="capitalize text-poke-white font-bold">
+                                                        <div className="flex">
                                                             {
                                                                 types.damageRelations.doubleDamageTo.length > 0
                                                                     ?
-                                                                    types.damageRelations.doubleDamageTo.join(", ")
+
+                                                                    types.damageRelations.doubleDamageTo.map((type, index) => (
+                                                                        <p
+                                                                            key={index}
+                                                                            className={`capitalize inline-flex flex-shrink-0 items-center rounded-full px-1.5 py-1 mx-1 text-xs font-bold text-white ring-1 ring-inset ${typeColorSelector(type)}`}
+                                                                        >
+                                                                            {type}
+                                                                        </p>
+                                                                    ))
+
                                                                     :
                                                                     <span className="text-poke-red">None</span>
                                                             }
-                                                        </p>
+                                                        </div>
+
                                                     </div>
 
                                                     {/* //* double damage from */}
-                                                    <div className="flex">
+                                                    <div className="flex my-1">
                                                         <h3 className="mr-1 text-poke-yellow font-bold">Double Damage From:</h3>
-                                                        <p className="capitalize text-poke-white font-bold">
+                                                        <div className="flex">
                                                             {
                                                                 types.damageRelations.doubleDamageFrom.length > 0
                                                                     ?
-                                                                    types.damageRelations.doubleDamageFrom.join(", ")
+
+                                                                    types.damageRelations.doubleDamageFrom.map((type, index) => (
+                                                                        <p
+                                                                            key={index}
+                                                                            className={`capitalize inline-flex flex-shrink-0 items-center rounded-full px-1.5 py-1 mx-1 text-xs font-bold text-white ring-1 ring-inset ${typeColorSelector(type)}`}
+                                                                        >
+                                                                            {type}
+                                                                        </p>
+                                                                    ))
+
                                                                     :
                                                                     <span className="text-poke-red">None</span>
                                                             }
-                                                        </p>
+                                                        </div>
                                                     </div>
 
                                                     {/* //* half damage to */}
-                                                    <div className="flex">
+                                                    <div className="flex my-1">
                                                         <h3 className="mr-1 text-poke-yellow font-bold">Half Damage To:</h3>
-                                                        <p className="capitalize text-poke-white font-bold">
+                                                        <div className="flex">
                                                             {
                                                                 types.damageRelations.halfDamageTo.length > 0
                                                                     ?
-                                                                    types.damageRelations.halfDamageTo.join(", ")
+
+                                                                    types.damageRelations.halfDamageTo.map((type, index) => (
+                                                                        <p
+                                                                            key={index}
+                                                                            className={`capitalize inline-flex flex-shrink-0 items-center rounded-full px-1.5 py-1 mx-1 text-xs font-bold text-white ring-1 ring-inset ${typeColorSelector(type)}`}
+                                                                        >
+                                                                            {type}
+                                                                        </p>
+                                                                    ))
+
                                                                     :
                                                                     <span className="text-poke-red">None</span>
                                                             }
-                                                        </p>
+                                                        </div>
                                                     </div>
 
                                                     {/* //* half damage from */}
-                                                    <div className="flex">
+                                                    <div className="flex my-1">
                                                         <h3 className="mr-1 text-poke-yellow font-bold">Half Damage From:</h3>
-                                                        <p className="capitalize text-poke-white font-bold">
+                                                        <div className="flex">
                                                             {
                                                                 types.damageRelations.halfDamageFrom.length > 0
                                                                     ?
-                                                                    types.damageRelations.halfDamageFrom.join(", ")
+
+                                                                    types.damageRelations.halfDamageFrom.map((type, index) => (
+                                                                        <p
+                                                                            key={index}
+                                                                            className={`capitalize inline-flex flex-shrink-0 items-center rounded-full px-1.5 py-1 mx-1 text-xs font-bold text-white ring-1 ring-inset ${typeColorSelector(type)}`}
+                                                                        >
+                                                                            {type}
+                                                                        </p>
+                                                                    ))
+
                                                                     :
                                                                     <span className="text-poke-red">None</span>
                                                             }
-                                                        </p>
+                                                        </div>
                                                     </div>
 
                                                     {/* //* no damage to */}
-                                                    <div className="flex">
+                                                    <div className="flex my-1">
                                                         <h3 className="mr-1 text-poke-yellow font-bold">No Damage To:</h3>
-                                                        <p className="capitalize text-poke-white font-bold">
+                                                        <div className="flex">
                                                             {
                                                                 types.damageRelations.noDamageTo.length > 0
                                                                     ?
-                                                                    types.damageRelations.noDamageTo.join(", ")
+
+                                                                    types.damageRelations.noDamageTo.map((type, index) => (
+                                                                        <p
+                                                                            key={index}
+                                                                            className={`capitalize inline-flex flex-shrink-0 items-center rounded-full px-1.5 py-1 mx-1 text-xs font-bold text-white ring-1 ring-inset ${typeColorSelector(type)}`}
+                                                                        >
+                                                                            {type}
+                                                                        </p>
+                                                                    ))
+
                                                                     :
                                                                     <span className="text-poke-red">None</span>
                                                             }
-                                                        </p>
+                                                        </div>
                                                     </div>
 
                                                     {/* //* no damage from */}
-                                                    <div className="flex">
+                                                    <div className="flex my-1">
                                                         <h3 className="mr-1 text-poke-yellow font-bold">No Damage From:</h3>
-                                                        <p className="capitalize text-poke-white font-bold">
+                                                        <div className="flex">
                                                             {
                                                                 types.damageRelations.noDamageFrom.length > 0
                                                                     ?
-                                                                    types.damageRelations.noDamageFrom.join(", ")
+
+                                                                    types.damageRelations.noDamageFrom.map((type, index) => (
+                                                                        <p
+                                                                            key={index}
+                                                                            className={`capitalize inline-flex flex-shrink-0 items-center rounded-full px-1.5 py-1 mx-1 text-xs font-bold text-white ring-1 ring-inset ${typeColorSelector(type)}`}
+                                                                        >
+                                                                            {type}
+                                                                        </p>
+                                                                    ))
+
                                                                     :
                                                                     <span className="text-poke-red">None</span>
                                                             }
-                                                        </p>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             ))
@@ -647,7 +704,7 @@ export default function DataDisplay() {
 
                                                     {/* //! Contest Details */}
                                                     <h3 className="text-poke-blue capitalize mt-3 py-3 text-left border-t text-xl font-extrabold">
-                                                       {move.name.replaceAll('-', ' ')} Contest Details:
+                                                        {move.name.replaceAll('-', ' ')} Contest Details:
                                                     </h3>
 
                                                     {/* type */}

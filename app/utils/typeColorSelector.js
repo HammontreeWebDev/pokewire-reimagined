@@ -1,5 +1,5 @@
-export default function typeColorSelector(name) {
-    switch (name.name) {
+export default function typeColorSelector(typeName) {
+    switch (typeName) {
         case 'bug':
             return 'bg-[var(--type-bug)] ring-[var(--type-bug)]-600/20';
             break;

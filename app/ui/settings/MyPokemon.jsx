@@ -52,7 +52,7 @@ export default function MyPokemon() {
                                 <h3 className="truncate text-sm font-bold text-poke-black">{pokemon.name}</h3>
                                 {pokemon.types.map((name) => (
                                     <span
-                                        className={`capitalize inline-flex flex-shrink-0 items-center rounded-full px-1.5 py-1 text-xs font-bold text-white ring-1 ring-inset ${typeColorSelector(name)}`}
+                                        className={`capitalize inline-flex flex-shrink-0 items-center rounded-full px-1.5 py-1 text-xs font-bold text-white ring-1 ring-inset ${typeColorSelector(name.name)}`}
                                         key={name.name}
                                     >
                                         {name.name}
