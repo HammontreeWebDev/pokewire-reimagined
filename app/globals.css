@@ -3,6 +3,8 @@
 @tailwind utilities;
 
 :root {
+
+  /* Theme Colors */
   --poke-yellow: #FFCB05;
   --poke-blue: #2A75BB;
   --dark-yellow: #C7A008;
@@ -10,6 +12,27 @@
   --poke-red: #FB1B1B;
   --poke-black: #000000;
   --poke-white: #FFFFFF;
+
+  /* type colors */
+  --type-bug: #94BC4A;
+  --type-dark: #736C75;
+  --type-dragon: #6A7BAF;
+  --type-electric: #E5C531; 
+  --type-fairy: #E397D1;
+  --type-fighting: #CB5F48;
+  --type-fire: #EA7A3C;
+  --type-flying: #7DA6DE;
+  --type-ghost: #846AB6;
+  --type-grass: #71C558;
+  --type-ground: #CC9F4F;
+  --type-ice: #70CBD4;
+  --type-normal: #AAB09F;
+  --type-poison: #B468B7;
+  --type-psychic: #E5709B;
+  --type-rock: #B2A061;
+  --type-steel: #89A1B0;
+  --type-water: #539AE2;
+
 }
 
 html, body {
