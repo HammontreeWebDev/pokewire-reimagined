@@ -26,9 +26,7 @@ export default function MyPokemon() {
                 const data = await response.json();
 
                 if (data.length > 0) {
-
-                    // ! Debug
-                    console.log(data);
+                    
                     // * Set all pokemon data:
                     setPokemonData(data);
 
@@ -38,6 +36,8 @@ export default function MyPokemon() {
                 console.error('Error fetching pokemons:', error);
             }
         };
+
+        console.log("Session Data", session);
 
         fetchPokemons();
     }, [status]);

@@ -20,7 +20,7 @@ export const authOptions = {
 
         if (user && await bcrypt.compare(credentials?.password, user.password)) {
           // console.log('Authorization Check:', user);
-          return { id: user.id, name: user.name, email: user.email };
+          return { id: user.id, name: user.name, email: user.email, image: user.image, favoritePokemon: user.favoritePokemon };
         }
         return null;
       }
@@ -37,7 +37,8 @@ export const authOptions = {
         token.uid = user.id;
         token.email = user.email;
         token.name = user.name;
-        token.image = user.image || 'default/image/url'; //TODO: set actual path
+        token.image = user.image;
+        token.favoritePokemon = user.favoritePokemon;
       }
       // console.log('JWT token generation:', token);
       return token;
@@ -47,7 +48,8 @@ export const authOptions = {
         id: token.uid,
         email: token.email,
         name: token.name,
-        image: token.image || 'default/image/url' // TODO: set an actual default path
+        image: token.image,
+        favoritePokemon: token.favoritePokemon,
       }
       // console.log('session check:', session)
       return session;

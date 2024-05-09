@@ -8,21 +8,22 @@ datasource db {
 }
 
 model User {
-  id        Int       @id @default(autoincrement())
-  email     String    @unique
-  name      String?
-  image     String
-  password  String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  pokemons  Pokemon[]
+  id              Int       @id @default(autoincrement())
+  email           String    @unique
+  name            String?
+  image           String    @default("/img/logos/poke-logo.png")
+  password        String
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  pokemons        Pokemon[]
+  favoritePokemon String[]  @default([])
 }
 
 model Pokemon {
   id             Int       @id @default(autoincrement())
   userId         Int
   user           User      @relation(fields: [userId], references: [id])
-  name           String    
+  name           String
   height         String
   weight         String
   baseExperience String?
