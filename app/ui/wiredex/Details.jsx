@@ -200,7 +200,7 @@ export default function Details() {
                                                             >
                                                                 <div className="flex items-center">
                                                                     <p
-                                                                        className="text-poke-red font-bold capitalize mb-3"
+                                                                        className={`capitalize inline-flex flex-shrink-0 items-center rounded-full px-3 py-1 mb-3 text-sm font-bold text-white ring-1 ring-inset ${typeColorSelector(types.name)}`}
                                                                     >
                                                                         {types.name}
                                                                     </p>
@@ -261,7 +261,7 @@ export default function Details() {
                                                                 key={index}
                                                             >
                                                                 <p
-                                                                    className="text-poke-red font-bold capitalize mb-3"
+                                                                    className={`capitalize inline-flex flex-shrink-0 items-center rounded-full px-3 py-1 mb-3 text-sm font-bold text-white ring-1 ring-inset ${typeColorSelector(types.name)}`}
                                                                 >
                                                                     {types.name}
                                                                 </p>
