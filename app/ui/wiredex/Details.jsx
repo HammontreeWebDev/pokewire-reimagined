@@ -67,17 +67,17 @@ export default function Details() {
             setTypes(pokemonData.types.map(type => ({
                 name: type.name,
 
-                doubleDamageTo: type.doubleDamageTo.length > 0 ? type.doubleDamageTo.join(', ') : 'N/A',
+                doubleDamageTo: type.doubleDamageTo,
 
-                doubleDamageFrom: type.doubleDamageFrom.length > 0 ? type.doubleDamageFrom.join(', ') : 'N/A',
+                doubleDamageFrom: type.doubleDamageFrom,
 
-                halfDamageTo: type.halfDamageTo.length > 0 ? type.halfDamageTo.join(', ') : 'N/A',
+                halfDamageTo: type.halfDamageTo,
 
-                halfDamageFrom: type.halfDamageFrom.length > 0 ? type.halfDamageFrom.join(', ') : 'N/A',
+                halfDamageFrom: type.halfDamageFrom,
 
-                noDamageTo: type.noDamageTo.length > 0 ? type.noDamageTo.join(', ') : 'N/A',
+                noDamageTo: type.noDamageTo,
 
-                noDamageFrom: type.noDamageFrom.length > 0 ? type.noDamageFrom.join(', ') : 'N/A',
+                noDamageFrom: type.noDamageFrom,
 
             })));
             setBaseExperience(`${pokemonData.baseExperience} EXP`);
@@ -86,7 +86,7 @@ export default function Details() {
     }, [pokemonData !== undefined]);
 
     const toggleIsOpen = (index) => {
-        setIsOpen(prev => ({...prev, [index]: !prev[index]}));
+        setIsOpen(prev => ({ ...prev, [index]: !prev[index] }));
     };
 
     return (
@@ -205,7 +205,7 @@ export default function Details() {
                                                                         {types.name}
                                                                     </p>
                                                                     <button className="text-poke-blue mb-3 ml-3"
-                                                                        onClick={ () => toggleIsOpen(index)}
+                                                                        onClick={() => toggleIsOpen(index)}
                                                                     >
                                                                         <XMarkIcon />
                                                                     </button>
@@ -214,43 +214,127 @@ export default function Details() {
 
                                                                     <li>
                                                                         Double Damage To:&nbsp;
-                                                                        <span className="text-poke-red capitalize">
-                                                                            {types.doubleDamageTo}
-                                                                        </span>
+                                                                        {
+                                                                            types.doubleDamageTo.length > 0
+                                                                                ?
+
+
+                                                                                types.doubleDamageTo.map((type, index) => (
+                                                                                    <span
+                                                                                        key={index}
+                                                                                        className={`capitalize inline-flex flex-shrink-0 items-center rounded-full px-3 py-1 my-3 mx-1 text-sm font-bold text-white ring-1 ring-inset ${typeColorSelector(type)}`}>
+                                                                                        {type}
+                                                                                    </span>
+                                                                                ))
+
+
+                                                                                :
+                                                                                <span className="capitalize inline-flex flex-shrink-0 items-center rounded-full px-3 py-1 my-3 mx-1 text-sm font-bold text-poke-red ring-1 ring-inset">None</span>
+                                                                        }
                                                                     </li>
 
                                                                     <li>
                                                                         Double Damage From:&nbsp;
-                                                                        <span className="text-poke-red capitalize">
-                                                                            {types.doubleDamageFrom}
-                                                                        </span>
+                                                                        {
+                                                                            types.doubleDamageFrom.length > 0
+                                                                                ?
+
+
+                                                                                types.doubleDamageFrom.map((type, index) => (
+                                                                                    <span
+                                                                                        key={index}
+                                                                                        className={`capitalize inline-flex flex-shrink-0 items-center rounded-full px-3 py-1 my-3 mx-1 text-sm font-bold text-white ring-1 ring-inset ${typeColorSelector(type)}`}>
+                                                                                        {type}
+                                                                                    </span>
+                                                                                ))
+
+
+                                                                                :
+                                                                                <span className="capitalize inline-flex flex-shrink-0 items-center rounded-full px-3 py-1 my-3 mx-1 text-sm font-bold text-poke-red ring-1 ring-inset">None</span>
+                                                                        }
                                                                     </li>
 
                                                                     <li>
                                                                         Half Damage To:&nbsp;
-                                                                        <span className="text-poke-red capitalize">
-                                                                            {types.halfDamageTo}
-                                                                        </span>
+                                                                        {
+                                                                            types.halfDamageTo.length > 0
+                                                                                ?
+
+
+                                                                                types.halfDamageTo.map((type, index) => (
+                                                                                    <span
+                                                                                        key={index}
+                                                                                        className={`capitalize inline-flex flex-shrink-0 items-center rounded-full px-3 py-1 my-3 mx-1 text-sm font-bold text-white ring-1 ring-inset ${typeColorSelector(type)}`}>
+                                                                                        {type}
+                                                                                    </span>
+                                                                                ))
+
+
+                                                                                :
+                                                                                <span className="capitalize inline-flex flex-shrink-0 items-center rounded-full px-3 py-1 my-3 mx-1 text-sm font-bold text-poke-red ring-1 ring-inset">None</span>
+                                                                        }
                                                                     </li>
                                                                     <li>
                                                                         Half Damage From:&nbsp;
-                                                                        <span className="text-poke-red capitalize">
-                                                                            {types.halfDamageFrom}
-                                                                        </span>
+                                                                        {
+                                                                            types.halfDamageFrom.length > 0
+                                                                                ?
+
+
+                                                                                types.halfDamageFrom.map((type, index) => (
+                                                                                    <span
+                                                                                        key={index}
+                                                                                        className={`capitalize inline-flex flex-shrink-0 items-center rounded-full px-3 py-1 my-3 mx-1 text-sm font-bold text-white ring-1 ring-inset ${typeColorSelector(type)}`}>
+                                                                                        {type}
+                                                                                    </span>
+                                                                                ))
+
+
+                                                                                :
+                                                                                <span className="capitalize inline-flex flex-shrink-0 items-center rounded-full px-3 py-1 my-3 mx-1 text-sm font-bold text-poke-red ring-1 ring-inset">None</span>
+                                                                        }
                                                                     </li>
 
                                                                     <li>
                                                                         No Damage To:&nbsp;
-                                                                        <span className="text-poke-red capitalize">
-                                                                            {types.noDamageTo}
-                                                                        </span>
+                                                                        {
+                                                                            types.noDamageTo.length > 0
+                                                                                ?
+
+
+                                                                                types.noDamageTo.map((type, index) => (
+                                                                                    <span
+                                                                                        key={index}
+                                                                                        className={`capitalize inline-flex flex-shrink-0 items-center rounded-full px-3 py-1 my-3 mx-1 text-sm font-bold text-white ring-1 ring-inset ${typeColorSelector(type)}`}>
+                                                                                        {type}
+                                                                                    </span>
+                                                                                ))
+
+
+                                                                                :
+                                                                                <span className="capitalize inline-flex flex-shrink-0 items-center rounded-full px-3 py-1 my-3 mx-1 text-sm font-bold text-poke-red ring-1 ring-inset">None</span>
+                                                                        }
                                                                     </li>
 
                                                                     <li>
                                                                         No Damage From:&nbsp;
-                                                                        <span className="text-poke-red capitalize">
-                                                                            {types.noDamageFrom}
-                                                                        </span>
+                                                                        {
+                                                                            types.noDamageFrom.length > 0
+                                                                                ?
+
+
+                                                                                types.noDamageFrom.map((type, index) => (
+                                                                                    <span
+                                                                                        key={index}
+                                                                                        className={`capitalize inline-flex flex-shrink-0 items-center rounded-full px-3 py-1 my-3 mx-1 text-sm font-bold text-white ring-1 ring-inset ${typeColorSelector(type)}`}>
+                                                                                        {type}
+                                                                                    </span>
+                                                                                ))
+
+
+                                                                                :
+                                                                                <span className="capitalize inline-flex flex-shrink-0 items-center rounded-full px-3 py-1 my-3 mx-1 text-sm font-bold text-poke-red ring-1 ring-inset">None</span>
+                                                                        }
                                                                     </li>
 
                                                                 </ul>
