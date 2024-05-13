@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react';
 import moment from 'moment';
 import typeColorSelector from '@/app/utils/typeColorSelector';
 import Link from 'next/link';
+import updateFavoritePokemon from '@/app/utils/updateFavoritePokemon';
 
 export default function MyPokemon() {
 
@@ -26,7 +27,7 @@ export default function MyPokemon() {
                 const data = await response.json();
 
                 if (data.length > 0) {
-                    
+
                     // * Set all pokemon data:
                     setPokemonData(data);
 
@@ -41,6 +42,11 @@ export default function MyPokemon() {
 
         fetchPokemons();
     }, [status]);
+
+    const handleFavoritePokemon = (e) => {
+        console.log(`Targeted Pokemon Name: ${e.target.value}`);
+        updateFavoritePokemon(e.target.value);
+    }
 
     return (
         <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -68,6 +74,8 @@ export default function MyPokemon() {
                             <div className="flex w-0 flex-1">
                                 <button
                                     className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+                                    value={`${pokemon.name}`}
+                                    onClick={handleFavoritePokemon}
                                 >
                                     <HeartIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
                                     Make My Favorite
