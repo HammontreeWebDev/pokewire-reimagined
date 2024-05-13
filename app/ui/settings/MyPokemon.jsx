@@ -44,7 +44,7 @@ export default function MyPokemon() {
     }, [status]);
 
     const handleFavoritePokemon = (e) => {
-        console.log(`Targeted Pokemon Name: ${e.target.value}`);
+        // console.log(`Targeted Pokemon Name: ${e.target.value}`);
         updateFavoritePokemon(e.target.value);
     }
 
@@ -73,11 +73,11 @@ export default function MyPokemon() {
                         <div className="-mt-px flex divide-x divide-gray-200">
                             <div className="flex w-0 flex-1">
                                 <button
-                                    className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900"
+                                    className={`relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-400`}
                                     value={`${pokemon.name}`}
                                     onClick={handleFavoritePokemon}
                                 >
-                                    <HeartIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+                                    <HeartIcon className={`h-5 w-5 text-gray-400 ${session.user.favoritePokemon[0] === pokemon.name ? "text-poke-red" : "text-gray-400"}`} aria-hidden="true" />
                                     Make My Favorite
                                 </button>
                             </div>

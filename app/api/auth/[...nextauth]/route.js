@@ -19,8 +19,13 @@ export const authOptions = {
         });
 
         if (user && await bcrypt.compare(credentials?.password, user.password)) {
-          // console.log('Authorization Check:', user);
-          return { id: user.id, name: user.name, email: user.email, image: user.image, favoritePokemon: user.favoritePokemon };
+          console.log('Authorization Check:', user);
+          return { 
+            id: user.id, 
+            name: user.name, 
+            email: user.email, 
+            image: user.image, 
+            favoritePokemon: user.favoritePokemon, };
         }
         return null;
       }
