@@ -1,7 +1,8 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import bcrypt from "bcrypt";
+import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
@@ -13,18 +14,17 @@ export const authOptions = {
         email: { label: "Email", type: "email", placeholder: "email@example.com" },
         password: { label: "Password", type: "password" }
       },
-      async authorize(credentials) {
+      authorize: async (credentials) => {
         const user = await prisma.user.findUnique({
-          where: { email: credentials?.email }
+          where: { email: credentials.email }
         });
 
-        if (user && await bcrypt.compare(credentials?.password, user.password)) {
-          console.log('Authorization Check:', user);
-          return { 
-            id: user.id, 
-            name: user.name, 
-            email: user.email, 
-            image: user.image, 
+        if (user && (await bcrypt.compare(credentials.password, user.password))) {
+          return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            image: user.image,
             favoritePokemon: user.favoritePokemon,
           };
         }
@@ -32,37 +32,30 @@ export const authOptions = {
       }
     })
   ],
-  secret: process.env.SECRET,
+  adapter: PrismaAdapter(prisma),
   session: {
     strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60, // 30 days
-    updateAge: 24 * 60 * 60, // 24 hours
-    cookies: {
-      sessionToken: {
-        name: `__Secure-next-auth.session-token`,
-        options: {
-          httpOnly: true,
-          sameSite: 'Lax',
-          path: '/',
-          secure: process.env.NODE_ENV === "production" // use secure cookies in production
-        }
-      }
-    }
   },
   callbacks: {
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
-        token.uid = user.id;
-        token.email = user.email;
+        token.id = user.id;
         token.name = user.name;
+        token.email = user.email;
         token.image = user.image;
         token.favoritePokemon = user.favoritePokemon;
+      }
+      if (trigger === 'update' && session) {
+        if (session.favoritePokemon) {
+          token.favoritePokemon = session.favoritePokemon;
+        }
       }
       return token;
     },
     async session({ session, token }) {
       session.user = {
-        id: token.uid,
+        id: token.id,
         email: token.email,
         name: token.name,
         image: token.image,
@@ -74,5 +67,4 @@ export const authOptions = {
 };
 
 const authHandler = NextAuth(authOptions);
-// Handling GET and POST requests
 export { authHandler as GET, authHandler as POST };
