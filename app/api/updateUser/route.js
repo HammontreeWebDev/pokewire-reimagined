@@ -26,47 +26,21 @@ export async function PUT(request) {
             return new Response(JSON.stringify({ error: 'User Not Found' }), { status: 404 });
         }
 
-        // const updatedUser = prisma.user.update({
-        //     data: {
-        //         favoritePokemon: userData.favoritePokemon ? userData.favoritePokemon : user.favoritePokemon,
+        let updatedUser = await prisma.user.update({
+            where: { id: user.id },
+            data: {
+                favoritePokemon: userData.favoritePokemon ? userData.favoritePokemon : user.favoritePokemon,
+                image: userData.image ? userData.image : user.image,
+            }
+        });
 
-        //         image: userData.image ? userData.image : user.image,
-        //     }
-        // })
-
-        let updatedUser;
-
-        if (userData.favoritePokemon) {
-            updatedUser = await prisma.user.update({
-                where: { id: user.id },
-                data: {
-                    favoritePokemon: [userData.favoritePokemon]
-                }
-            });
-
-            return new Response(JSON.stringify(updatedUser), {
-                status: 200,
-                headers: { 'Content-Type': 'application/json' },
-            });
-        }
-
-        if (userData.image) {
-            updatedUser = await prisma.user.update({
-                where: { id: user.id },
-                data: {
-                    image: userData.image
-                }
-            });
-
-            return new Response(JSON.stringify(updatedUser), {
-                status: 200,
-                headers: { 'Content-Type': 'application/json' },
-            });
-        }
-
+        return new Response(JSON.stringify(updatedUser), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' },
+        });
 
     } catch (error) {
         console.error("Error updating settings for user:", error);
-        return new Response(JSON.stringify({ error: 'Failed to update user settings' }), { status: 500 })
+        return new Response(JSON.stringify({ error: 'Failed to update user settings' }), { status: 500 });
     }
 }

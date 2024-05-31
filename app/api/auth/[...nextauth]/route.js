@@ -25,7 +25,8 @@ export const authOptions = {
             name: user.name, 
             email: user.email, 
             image: user.image, 
-            favoritePokemon: user.favoritePokemon, };
+            favoritePokemon: user.favoritePokemon,
+          };
         }
         return null;
       }
@@ -35,6 +36,18 @@ export const authOptions = {
   session: {
     strategy: 'jwt',
     maxAge: 30 * 24 * 60 * 60, // 30 days
+    updateAge: 24 * 60 * 60, // 24 hours
+    cookies: {
+      sessionToken: {
+        name: `__Secure-next-auth.session-token`,
+        options: {
+          httpOnly: true,
+          sameSite: 'Lax',
+          path: '/',
+          secure: process.env.NODE_ENV === "production" // use secure cookies in production
+        }
+      }
+    }
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -45,7 +58,6 @@ export const authOptions = {
         token.image = user.image;
         token.favoritePokemon = user.favoritePokemon;
       }
-      // console.log('JWT token generation:', token);
       return token;
     },
     async session({ session, token }) {
@@ -55,24 +67,12 @@ export const authOptions = {
         name: token.name,
         image: token.image,
         favoritePokemon: token.favoritePokemon,
-      }
-      // console.log('session check:', session)
+      };
       return session;
-    },
-    cookies: {
-      sessionToken: {
-        name: `__Secure-next-auth.session-token`,
-        options: {
-          httpOnly: true,
-          sameSite: 'Lax',
-          path:'/',
-          secure: true
-        }
-      }
     }
   }
 };
 
 const authHandler = NextAuth(authOptions);
 // Handling GET and POST requests
-export {authHandler as GET, authHandler as POST};
+export { authHandler as GET, authHandler as POST };

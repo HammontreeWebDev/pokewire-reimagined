@@ -4,11 +4,10 @@ import { useSession } from 'next-auth/react';
 import moment from 'moment';
 import typeColorSelector from '@/app/utils/typeColorSelector';
 import Link from 'next/link';
-import updateFavoritePokemon from '@/app/utils/updateFavoritePokemon';
 
 export default function MyPokemon() {
 
-    const { data: session, status } = useSession();
+    const { data: session, status, update } = useSession();
     const [pokemonData, setPokemonData] = useState([]);
 
     useEffect(() => {
@@ -27,26 +26,60 @@ export default function MyPokemon() {
                 const data = await response.json();
 
                 if (data.length > 0) {
-
-                    // * Set all pokemon data:
                     setPokemonData(data);
-
                 }
-
             } catch (error) {
                 console.error('Error fetching pokemons:', error);
             }
         };
-
-        console.log("Session Data", session);
-
         fetchPokemons();
-    }, [status]);
+    }, [status === "authenticated"]);
 
-    const handleFavoritePokemon = (e) => {
-        // console.log(`Targeted Pokemon Name: ${e.target.value}`);
-        updateFavoritePokemon(e.target.value);
-    }
+    const handleFavoritePokemon = async (e) => {
+        const pokemonName = e.target.value || e.target.closest('button').value;
+
+        const userData = {
+            userData: {
+                favoritePokemon: pokemonName
+            }
+        };
+
+        try {
+            const response = await fetch('/api/updateUser', {
+                method: 'PUT',
+                body: JSON.stringify(userData),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(`Failed to update user: ${errorData.error || 'Unknown Error'}`);
+            }
+
+            const data = await response.json();
+            console.log("Updated user details:", data);
+
+            const updateUser = {
+                ...session,
+                user: {
+                    ...session?.user,
+                    favoritePokemon: data.favoritePokemon,
+                },
+            };
+
+            await update({ ...session, user: updateUser });
+
+            console.log('actual update: ', updateUser);
+
+        } catch (error) {
+            console.error("Error updating user:", error);
+            return new Response(JSON.stringify({
+                error: "Failed to update user"
+            }), { status: 500, headers: { 'Content-Type': 'application/json' } });
+        }
+    };
 
     return (
         <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -77,7 +110,10 @@ export default function MyPokemon() {
                                     value={`${pokemon.name}`}
                                     onClick={handleFavoritePokemon}
                                 >
-                                    <HeartIcon className={`h-5 w-5 text-gray-400 ${session.user.favoritePokemon[0] === pokemon.name ? "text-poke-red" : "text-gray-400"}`} aria-hidden="true" />
+                                    <HeartIcon
+                                        className={`h-5 w-5 text-gray-400 ${session.user.favoritePokemon[0] === pokemon.name ? "text-poke-red" : "text-gray-400"}`}
+                                        aria-hidden="true"
+                                    />
                                     Make My Favorite
                                 </button>
                             </div>

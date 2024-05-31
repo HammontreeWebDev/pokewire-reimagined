@@ -16,7 +16,7 @@ model User {
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
   pokemons        Pokemon[]
-  favoritePokemon String[]  @default([])
+  favoritePokemon String    @default("")
 }
 
 model Pokemon {
