@@ -80,8 +80,6 @@ export default function MyPokemon() {
     }
   }, [session?.user?.favoritePokemon]);
 
-  console.log('Rendering component with favoritePokemon:', favoritePokemon);
-
   return (
     <ul role="list" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {pokemonData?.map((pokemon) => (

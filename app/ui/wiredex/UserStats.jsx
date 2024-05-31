@@ -101,7 +101,7 @@ export default function UserStats() {
                                 {/* //! Favorite Pokémon */}
                                 <p className="text-poke-yellow font-bold self-start">Favorite Pokémon:
                                     <span className="ml-1 px-1 rounded text-poke-white">
-                                        Placeholder Pikachu
+                                        {session?.user?.favoritePokemon || "None"}
                                     </span>
                                 </p>
                             </div>
