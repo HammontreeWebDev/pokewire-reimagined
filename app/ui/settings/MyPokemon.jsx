@@ -109,11 +109,23 @@ export default function MyPokemon() {
                   value={`${pokemon.name}`}
                   onClick={handleFavoritePokemon}
                 >
-                  <HeartIcon
-                    className={`h-5 w-5 ${favoritePokemon === pokemon.name ? "text-poke-red" : "text-gray-400"}`}
-                    aria-hidden="true"
-                  />
-                  Make My Favorite
+                  {
+                    favoritePokemon === pokemon.name ?
+                      <>
+                        I
+                        <HeartIcon
+                          className={`h-5 w-5 text-poke-red`}
+                        /> This Pokemon
+                      </>
+                      :
+                      <>
+                        <HeartIcon
+                          className={`h-5 w-5 text-gray-400`}
+                          aria-hidden="true"
+                        />
+                        Make My Favorite
+                      </>
+                  }
                 </button>
               </div>
               <div className="-ml-px flex w-0 flex-1">
