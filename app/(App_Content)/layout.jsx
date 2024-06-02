@@ -10,7 +10,7 @@ export default function Layout({ children }) {
             <header>
                 <LoggedInNav />
             </header>
-            <main className="flex min-h-screen flex-col items-center justify-between">
+            <main className="flex min-h-screen flex-col items-center">
                     <UserStats />
                 {children}
             </main>
