@@ -1,6 +1,6 @@
 'use client'
 import userAuthentication from "@/app/utils/userAuthentication";
-import RouteListDashboard from "@/app/ui/routelist/RouteListDashboard";
+import RouteListDropDown from "@/app/ui/routelist/RouteListDropDown";
 import RouteStats from "@/app/ui/routelist/RouteStats";
 
 export default function RouteListPage() {
@@ -8,9 +8,9 @@ export default function RouteListPage() {
 
     return (
         <>
-            <div className="min-h-full w-full flex">
-                <div className="mt-5 ml-5">
-                    <RouteListDashboard />
+            <div className="min-h-full w-full flex flex-col items-center">
+                <div className="mt-5 ml-5 w-full sm:w-1/3">
+                    <RouteListDropDown />
                 </div>
                 <div className="mt-5 ml-5 mr-5 w-full">
                     <RouteStats />
