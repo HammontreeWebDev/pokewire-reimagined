@@ -34,6 +34,7 @@ model Pokemon {
   moves          Move[]
   cries          Cry[]
   sprites        Sprite[]
+  routes         Json?
 }
 
 model Type {
@@ -91,4 +92,9 @@ model Sprite {
   legacy    String
   pokemonId Int
   pokemon   Pokemon @relation(fields: [pokemonId], references: [id])
+}
+
+model Routes {
+  id            Int    @id @default(autoincrement())
+  location_name String
 }
