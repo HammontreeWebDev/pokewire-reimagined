@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { Label, Listbox, ListboxButton, ListboxOption, ListboxOptions, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
@@ -20,7 +20,7 @@ export default function RouteListDropDown() {
         }
     ]);
     const [selected, setSelected] = useState(pokemonData[0]);
-    const { data: session, status, update } = useSession();
+    const { data: status } = useSession();
     const [routeData, setRouteData] = useState([]);
 
     useEffect(() => {
@@ -49,66 +49,68 @@ export default function RouteListDropDown() {
     }, [selected, pokemonData]);
 
     useEffect(() => {
-        const fetchSaveRouteData = async () => {
-            if (routeData.length > 0) {
-                const saveRouteData = {
-                    routes: routeData,
-                    name: selected.name,
-                };
+        if (selected.name !== "Choose A Pokémon!") {
+            const fetchSaveRouteData = async () => {
+                if (routeData.length > 0) {
+                    const saveRouteData = {
+                        routes: routeData,
+                        name: selected.name,
+                    };
 
-                try {
-                    const saveResponse = await fetch('/api/updatePokemon', {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        credentials: 'include',
-                        body: JSON.stringify(saveRouteData),
-                    });
+                    try {
+                        const saveResponse = await fetch('/api/updatePokemon', {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            credentials: 'include',
+                            body: JSON.stringify(saveRouteData),
+                        });
 
-                    const result = await saveResponse.json();
-                    if (!saveResponse.ok) {
-                        throw new Error(result.error);
-                    }
-
-                } catch (error) {
-                    console.error('Error saving route data:', error);
-                }
-            } else {
-                const noDataAvailable = {
-                    routes: [
-                        {
-                            location_area: {
-                                name: "This pokémon can't be encountered in the wild!"
-                            }
+                        const result = await saveResponse.json();
+                        if (!saveResponse.ok) {
+                            throw new Error(result.error);
                         }
-                    ],
-                    name: selected.name,
-                };
 
-                try {
-                    const saveNoData = await fetch('/api/updatePokemon', {
-                        method: 'PUT',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        credentials: 'include',
-                        body: JSON.stringify(noDataAvailable),
-                    });
+                    } catch (error) {
+                        console.error('Error saving route data:', error);
+                    }
+                } else {
+                    const noDataAvailable = {
+                        routes: [
+                            {
+                                location_area: {
+                                    name: "This pokémon can't be encountered in the wild!"
+                                }
+                            }
+                        ],
+                        name: selected.name,
+                    };
 
-                    const noDataResult = await saveNoData.json();
-                    if (!saveNoData.ok) {
-                        throw new Error(result.error);
+                    try {
+                        const saveNoData = await fetch('/api/updatePokemon', {
+                            method: 'PUT',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            credentials: 'include',
+                            body: JSON.stringify(noDataAvailable),
+                        });
+
+                        const noDataResult = await saveNoData.json();
+                        if (!saveNoData.ok) {
+                            throw new Error(result.error);
+                        }
+
+                    } catch (error) {
+                        console.error('Error saving route data:', error);
                     }
 
-                } catch (error) {
-                    console.error('Error saving route data:', error);
                 }
+            };
 
-            }
-        }
-
-        fetchSaveRouteData();
+            fetchSaveRouteData();
+        };
     }, [routeData]);
 
     useEffect(() => {
@@ -155,7 +157,7 @@ export default function RouteListDropDown() {
                             <ListboxOptions className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
                                 {pokemonData.map((pokemon) => (
                                     <ListboxOption
-                                        key={pokemon.id}
+                                        key={pokemon.name}
                                         className={({ focus }) =>
                                             classNames(
                                                 focus ? 'bg-indigo-600 text-white' : '',
