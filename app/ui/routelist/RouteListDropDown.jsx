@@ -49,10 +49,6 @@ export default function RouteListDropDown() {
     }, [selected, pokemonData]);
 
     useEffect(() => {
-        console.log('Route Data: ', routeData);
-    }, [routeData]);
-
-    useEffect(() => {
         const fetchSaveRouteData = async () => {
             if (routeData.length > 0) {
                 const saveRouteData = {
@@ -75,7 +71,6 @@ export default function RouteListDropDown() {
                         throw new Error(result.error);
                     }
 
-                    console.log('Updated Pokemon saved to database:', result);
                 } catch (error) {
                     console.error('Error saving route data:', error);
                 }
@@ -106,7 +101,6 @@ export default function RouteListDropDown() {
                         throw new Error(result.error);
                     }
 
-                    console.log('This pokemon is not able to be encountered in the wild:', noDataResult);
                 } catch (error) {
                     console.error('Error saving route data:', error);
                 }
@@ -140,10 +134,6 @@ export default function RouteListDropDown() {
         };
         fetchPokemons();
     }, [status]);
-
-    useEffect(() => {
-        console.log("DATA: ", pokemonData);
-    }, [pokemonData])
 
     return (
         <Listbox value={selected} onChange={setSelected}>
