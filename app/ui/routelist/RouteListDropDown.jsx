@@ -1,141 +1,22 @@
 import { useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
 import { Label, Listbox, ListboxButton, ListboxOption, ListboxOptions, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronUpDownIcon } from '@heroicons/react/20/solid';
-import localforage from 'localforage';
 
 function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function RouteListDropDown() {
-    const [pokemonData, setPokemonData] = useState([
-        {
-            name: "Choose A Pokémon!",
-            sprites: [
-                {
-                    main: "../img/profile_settings/HelpIcon.png",
-                },
-            ],
-        }
-    ]);
-    const [selected, setSelected] = useState(pokemonData[0]);
-    const { data: status } = useSession();
-    const [routeData, setRouteData] = useState([]);
+export default function RouteListDropDown({ pokemonData, selectedPokemon, setSelectedPokemon }) {
+    const [selected, setSelected] = useState(pokemonData[0] || {});
 
     useEffect(() => {
-        const fetchRouteData = async () => {
+        if (selected && selected.name) {
             const selectedPokemon = pokemonData.find(pokemon => pokemon.name === selected.name);
-
-            localforage.setItem("selectedPokemon", selected.name);
-
-            if (selected.name !== "Choose A Pokémon!" && selectedPokemon && selectedPokemon.routes === null) {
-                const encounterData = `https://pokeapi.co/api/v2/pokemon/${selected.name.toLowerCase()}/encounters`;
-
-                try {
-                    const response = await fetch(encounterData);
-                    if (!response.ok) {
-                        throw new Error(`Failed to get route data for ${selected.name}`);
-                    }
-                    const data = await response.json();
-                    setRouteData(data);
-                } catch (error) {
-                    console.error(error);
-                }
+            if (selectedPokemon) {
+                setSelectedPokemon(selectedPokemon);
             }
         }
-
-        fetchRouteData();
-    }, [selected, pokemonData]);
-
-    useEffect(() => {
-        if (selected.name !== "Choose A Pokémon!") {
-            const fetchSaveRouteData = async () => {
-                if (routeData.length > 0) {
-                    const saveRouteData = {
-                        routes: routeData,
-                        name: selected.name,
-                    };
-
-                    try {
-                        const saveResponse = await fetch('/api/updatePokemon', {
-                            method: 'PUT',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            credentials: 'include',
-                            body: JSON.stringify(saveRouteData),
-                        });
-
-                        const result = await saveResponse.json();
-                        if (!saveResponse.ok) {
-                            throw new Error(result.error);
-                        }
-
-                    } catch (error) {
-                        console.error('Error saving route data:', error);
-                    }
-                } else {
-                    const noDataAvailable = {
-                        routes: [
-                            {
-                                location_area: {
-                                    name: "This pokémon can't be encountered in the wild!"
-                                }
-                            }
-                        ],
-                        name: selected.name,
-                    };
-
-                    try {
-                        const saveNoData = await fetch('/api/updatePokemon', {
-                            method: 'PUT',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            credentials: 'include',
-                            body: JSON.stringify(noDataAvailable),
-                        });
-
-                        const noDataResult = await saveNoData.json();
-                        if (!saveNoData.ok) {
-                            throw new Error(result.error);
-                        }
-
-                    } catch (error) {
-                        console.error('Error saving route data:', error);
-                    }
-
-                }
-            };
-
-            fetchSaveRouteData();
-        };
-    }, [routeData]);
-
-    useEffect(() => {
-        const fetchPokemons = async () => {
-            try {
-                const response = await fetch('/api/getAllPokemon', {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    credentials: 'include'
-                });
-                if (!response.ok) {
-                    throw new Error('failed to fetch pokemons');
-                }
-                const data = await response.json();
-                if (data.length > 0) {
-                    setPokemonData(data);
-                }
-            } catch (error) {
-                console.error('Error fetching pokemons:', error);
-            }
-        };
-        fetchPokemons();
-    }, [status]);
+    }, [selected, pokemonData, setSelectedPokemon]);
 
     return (
         <Listbox value={selected} onChange={setSelected}>
@@ -145,7 +26,7 @@ export default function RouteListDropDown() {
                     <div className="relative mt-2">
                         <ListboxButton className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
                             <span className="flex items-center">
-                                <img src={selected.sprites[0].main} alt="" className="h-5 w-5 flex-shrink-0 rounded-full" />
+                                {selected.sprites && <img src={selected.sprites[0].main} alt="" className="h-5 w-5 flex-shrink-0 rounded-full" />}
                                 <span className="ml-3 block truncate">{selected.name}</span>
                             </span>
                             <span className="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
@@ -198,5 +79,5 @@ export default function RouteListDropDown() {
                 </>
             )}
         </Listbox>
-    )
+    );
 }

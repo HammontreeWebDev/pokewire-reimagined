@@ -1,57 +1,46 @@
 import { useEffect, useState } from "react";
-import { useSession } from 'next-auth/react';
 
-const stats = [
-  { name: 'Number of deploys', value: '405' },
-  { name: 'Average deploy time', value: '3.65', unit: 'mins' },
-  { name: 'Number of servers', value: '3' },
-  { name: 'Success rate', value: '98.5%' },
-]
+export default function RouteStats({ selectedPokemon }) {
 
-export default function RouteStats() {
-
-  const [pokemonData, setPokemonData] = useState([]);
-  const { data: status } = useSession();
+  const [routeData, setRouteData] = useState([]);
 
   useEffect(() => {
-    const fetchPokemons = async () => {
-      try {
-        const response = await fetch('/api/getAllPokemon', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          credentials: 'include'
-        });
-        if (!response.ok) {
-          throw new Error('failed to fetch pokemons');
-        }
-        const data = await response.json();
-        if (data.length > 0) {
-          setPokemonData(data);
-        }
-      } catch (error) {
-        console.error('Error fetching pokemons:', error);
-      }
-    };
-    fetchPokemons();
-  }, [status]);
+    if (selectedPokemon && selectedPokemon.routes) {
+      setRouteData(selectedPokemon.routes);
+    } else {
+      setRouteData([]);
+    }
+  }, [selectedPokemon]);
 
   return (
     <div className="bg-gray-900">
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 gap-px bg-white/5 sm:grid-cols-2 lg:grid-cols-4">
-          {stats.map((stat) => (
-            <div key={stat.name} className="bg-gray-900 px-4 py-6 sm:px-6 lg:px-8">
-              <p className="text-sm font-medium leading-6 text-gray-400">{stat.name}</p>
-              <p className="mt-2 flex items-baseline gap-x-2">
-                <span className="text-4xl font-semibold tracking-tight text-white">{stat.value}</span>
-                {stat.unit ? <span className="text-sm text-gray-400">{stat.unit}</span> : null}
-              </p>
+          {routeData.map((route, index) => (
+            <div key={index} className="bg-gray-900 px-4 py-6 sm:px-6 lg:px-8">
+              <p className="text-sm font-medium leading-6 text-gray-400">{`Location: ${route.location_area.name}`}</p>
+              <div className="mt-2">
+                {route.version_details.map((version, vIndex) => (
+                  <div key={vIndex} className="mb-4">
+                    <p className="text-sm font-medium leading-6 text-gray-400">{`Version: ${version.version.name}`}</p>
+                    {version.encounter_details.map((detail, dIndex) => (
+                      <div key={dIndex} className="mt-2 flex items-baseline gap-x-2">
+                        <p className="text-sm text-gray-400">{`Method: ${detail.method.name}`}</p>
+                        <p className="text-sm text-gray-400">{`Chance: ${detail.chance}`}</p>
+                        <p className="text-sm text-gray-400">{`Min Level: ${detail.min_level}`}</p>
+                        <p className="text-sm text-gray-400">{`Max Level: ${detail.max_level}`}</p>
+                        {detail.condition_values.length > 0 && (
+                          <p className="text-sm text-gray-400">{`Condition: ${detail.condition_values.map(cond => cond.name).join(', ')}`}</p>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>
       </div>
     </div>
-  )
+  );
 }
