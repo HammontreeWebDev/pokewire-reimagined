@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { ArrowsPointingOut, XMarkIcon } from "../svg/svgImagesHelper";
+import Pagination from "@/app/ui/pagination/Pagination";
 
 export default function RouteStats({ selectedPokemon }) {
   const [routeData, setRouteData] = useState([]);
   const [expandedSections, setExpandedSections] = useState({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const ROUTES_PER_PAGE = 5;
 
   useEffect(() => {
     if (selectedPokemon && selectedPokemon.routes) {
@@ -13,7 +16,7 @@ export default function RouteStats({ selectedPokemon }) {
       setRouteData([]);
       setExpandedSections({}); // Reset expanded sections
     }
-  }, [selectedPokemon]);  
+  }, [selectedPokemon]);
 
   const toggleSection = (index) => {
     setExpandedSections((prev) => ({
@@ -22,25 +25,25 @@ export default function RouteStats({ selectedPokemon }) {
     }));
   };
 
-  useEffect(() => { console.log("Expanded Section: ", expandedSections) }, [expandedSections]);
+  useEffect(() => {
+    console.log("Expanded Section: ", expandedSections);
+  }, [expandedSections]);
+
+  const indexOfLastRoute = currentPage * ROUTES_PER_PAGE;
+  const indexOfFirstRoute = indexOfLastRoute - ROUTES_PER_PAGE;
+  const currentRoutes = routeData.slice(indexOfFirstRoute, indexOfLastRoute);
 
   return (
     <div className="bg-poke-black min-h-screen overflow-y-auto">
       <div className="mx-auto max-w-7xl p-4">
         <div className="flex flex-col gap-4">
-          {routeData?.map((route, index, e) => (
+          {currentRoutes.map((route, index) => (
             <div key={index} className="bg-dark-yellow my-2 px-4 py-4 rounded-2xl box-shadow-rb">
               <div className={`bg-poke-black px-4 py-4 ${expandedSections[index] ? 'rounded-t-2xl' : 'rounded-2xl'}`}>
                 <button
                   className="text-poke-white"
                   onClick={() => toggleSection(index)}>
-                    {
-                      expandedSections[index]
-                      ?
-                      <XMarkIcon />
-                      :
-                      <ArrowsPointingOut />
-                    }
+                    {expandedSections[index] ? <XMarkIcon /> : <ArrowsPointingOut />}
                 </button>
                 <h2 className="text-2xl text-poke-red text-center font-bold">Location:</h2>
                 <p className="text-lg font-medium leading-6 text-poke-white text-center">
@@ -75,6 +78,12 @@ export default function RouteStats({ selectedPokemon }) {
               )}
             </div>
           ))}
+          <Pagination
+            currentPage={currentPage}
+            totalCount={routeData.length}
+            pageSize={ROUTES_PER_PAGE}
+            onPageChange={page => setCurrentPage(page)}
+          />
         </div>
       </div>
     </div>
