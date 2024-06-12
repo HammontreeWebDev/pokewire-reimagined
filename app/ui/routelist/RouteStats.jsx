@@ -8,14 +8,12 @@ export default function RouteStats({ selectedPokemon }) {
   useEffect(() => {
     if (selectedPokemon && selectedPokemon.routes) {
       setRouteData(selectedPokemon.routes);
+      setExpandedSections({}); // Reset expanded sections
     } else {
       setRouteData([]);
+      setExpandedSections({}); // Reset expanded sections
     }
-  }, [selectedPokemon]);
-
-  useEffect(() => {
-    console.log("DATA: ", routeData);
-  }, [routeData]);
+  }, [selectedPokemon]);  
 
   const toggleSection = (index) => {
     setExpandedSections((prev) => ({
